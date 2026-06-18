@@ -9,11 +9,11 @@ import {
   HERO_IMAGES,
   LEGAL_IMAGES,
   PROCESS_IMAGES,
-  TEAM_IMAGES,
   WHY_LP_IMAGES,
 } from "@/lib/images";
 import { COMPREHENSIVE_PROPERTY_SERVICES, SERVICE_GROUPS } from "@/lib/services";
 import HomeContactForm from "@/components/HomeContactForm";
+import TestimonialsSlider from "@/components/TestimonialsSlider";
 
 export const metadata: Metadata = {
   title: "Letting Partners | London Property Letting, Management & Tenant Services",
@@ -38,8 +38,7 @@ const STATS = [
 ];
 
 const PARTNER_LOGOS = [
-  "Rightmove", "Zoopla", "OnTheMarket", "OpenRent", "Gumtree",
-  "Spareroom", "Primelocation", "The DPS",
+  "OpenRent", "Gumtree", "Spareroom",
 ];
 
 const PROCESS_STEPS = [
@@ -80,27 +79,6 @@ const WHY_ITEMS = [
   { icon: "fa-users", title: "Local Market Knowledge", text: "Our team works across East London and Birmingham daily, providing genuine insight into each area's rental dynamics." },
   { icon: "fa-chart-line", title: "Results-Driven Letting", text: "Our structured approach to marketing, tenant matching, and management protects your income and reduces void periods." },
   { icon: "fa-headset", title: "Dedicated Support", text: "You have a named point of contact — not a call centre — from first enquiry through to the end of your tenancy." },
-];
-
-const TEAM = [
-  {
-    name: "Mohammed Khan",
-    role: "Director & Senior Letting Agent",
-    image: TEAM_IMAGES.member1,
-    bio: "Over 12 years of London property experience, specialising in East London residential lettings and portfolio management.",
-  },
-  {
-    name: "Priya Sharma",
-    role: "Tenant Services Manager",
-    image: TEAM_IMAGES.member2,
-    bio: "Dedicated to matching tenants with the right properties and guiding them from first enquiry to move-in day.",
-  },
-  {
-    name: "James Okafor",
-    role: "Landlord Relations Manager",
-    image: TEAM_IMAGES.member3,
-    bio: "Specialises in property management and compliance, helping landlords protect and grow their rental portfolios.",
-  },
 ];
 
 const TESTIMONIALS = [
@@ -583,38 +561,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ───────── TEAM ───────── */}
-      <section className="lp-section lp-section--light lp-team">
-        <div className="lp-container">
-          <div className="lp-section-header" data-lp-animate>
-            <span className="lp-eyebrow">The People Behind It</span>
-            <h2 className="lp-h2">Meet the Team</h2>
-            <p className="lp-section-subtitle">Experienced property professionals committed to delivering a better letting experience.</p>
-          </div>
-
-          <div className="lp-team-grid" data-lp-animate>
-            {TEAM.map((member) => (
-              <div key={member.name} className="lp-team-card">
-                <div className="lp-team-card-img">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
-                <div className="lp-team-card-body">
-                  <h3 className="lp-team-card-name">{member.name}</h3>
-                  <p className="lp-team-card-role">{member.role}</p>
-                  <p className="lp-team-card-bio">{member.bio}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ───────── TESTIMONIALS ───────── */}
       <section className="lp-section lp-testimonials">
         <div className="lp-container">
@@ -623,21 +569,8 @@ export default function HomePage() {
             <h2 className="lp-h2">Trusted by Landlords &amp; Tenants</h2>
           </div>
 
-          <div className="lp-testimonials-grid" data-lp-animate>
-            {TESTIMONIALS.map((t, i) => (
-              <blockquote key={i} className="lp-testimonial-card">
-                <div className="lp-testimonial-stars" aria-label={`${t.stars} stars`}>
-                  {Array.from({ length: t.stars }).map((_, j) => (
-                    <i key={j} className="fa-solid fa-star" aria-hidden="true" />
-                  ))}
-                </div>
-                <p className="lp-testimonial-text">&ldquo;{t.text}&rdquo;</p>
-                <footer className="lp-testimonial-author">
-                  <strong className="lp-testimonial-name">{t.name}</strong>
-                  <span className="lp-testimonial-role">{t.role}</span>
-                </footer>
-              </blockquote>
-            ))}
+          <div data-lp-animate>
+            <TestimonialsSlider items={TESTIMONIALS} />
           </div>
         </div>
       </section>

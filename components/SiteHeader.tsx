@@ -58,7 +58,7 @@ export default function SiteHeader() {
         <div className="lp-header-inner">
           {/* Logo */}
           <Link href="/" className="lp-header-logo" aria-label="Letting Partners Home">
-            <Image src={LOGO.main} alt="Letting Partners" width={160} height={44} priority />
+            <Image src={LOGO.main} alt="Letting Partners" width={200} height={56} priority />
           </Link>
 
           {/* Desktop Nav */}
