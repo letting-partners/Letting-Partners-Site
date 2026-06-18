@@ -2,15 +2,23 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AREAS, getAreaBySlug, getAreaHref, getAreaPropertiesHref } from "@/lib/areas";
-import { AREA_BANNER_IMAGES } from "@/lib/images";
 import AreaFaqAccordion from "@/components/AreaFaqAccordion";
+import LPIcon, { type LPIconName } from "@/components/LPIcon";
 import PropertiesGrid from "@/components/PropertiesGrid";
+import { AREAS, getAreaBySlug, getAreaPropertiesHref } from "@/lib/areas";
+import { AREA_BANNER_IMAGES } from "@/lib/images";
 
 type Props = { params: Promise<{ slug: string }> };
 
+const areaServices: Array<{ icon: LPIconName; title: string; text: string; href: string }> = [
+  { icon: "home", title: "Property Letting", text: "Market appraisal, listing, viewings, referencing, and tenancy setup.", href: "/landlord-services/property-letting" },
+  { icon: "building", title: "Property Management", text: "Rent, maintenance, inspections, renewals, and reporting.", href: "/landlord-services/property-management" },
+  { icon: "key", title: "Tenant Services", text: "Registration, property matching, application support, and move-in guidance.", href: "/tenant-services" },
+  { icon: "wrench", title: "Repairs & Maintenance", text: "Responsive repair coordination and planned property care.", href: "/other-services/repair-maintenance" },
+];
+
 export async function generateStaticParams() {
-  return AREAS.map((a) => ({ slug: a.slug }));
+  return AREAS.map((area) => ({ slug: area.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -38,163 +46,176 @@ export default async function AreaPage({ params }: Props) {
 
   return (
     <>
-      {/* Hero */}
-      <section className="lp-page-hero">
-        <div className="lp-page-hero-img-wrap">
-          <Image src={bannerImage} alt={area.title} fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-          <div className="lp-page-hero-overlay" />
-        </div>
+      <section className="lp-page-hero lp-page-hero--area">
+        <Image src={bannerImage} alt={`${area.title} property and street scene`} fill preload sizes="100vw" className="lp-cover-img" />
+        <div className="lp-image-overlay" />
         <div className="lp-container lp-page-hero-content">
-          <span className="lp-eyebrow lp-eyebrow--light">{area.coverageLabel}</span>
-          <h1 className="lp-page-hero-title">Letting Partners in {area.title}</h1>
-          <p className="lp-page-hero-text">{area.description}</p>
-          <div className="lp-page-hero-actions">
-            <Link href={getAreaPropertiesHref(area.slug)} className="lp-btn lp-btn--gold lp-btn--lg">
-              View Properties in {area.title}
+          <span className="lp-kicker lp-kicker--light">{area.coverageLabel}</span>
+          <h1>Letting and property management in {area.title}.</h1>
+          <p>{area.description} Letting Partners supports local landlords, tenants, and property owners with clear, professional service.</p>
+          <div className="lp-hero-actions">
+            <Link href={getAreaPropertiesHref(area.slug)} className="lp-btn lp-btn--gold">
+              View {area.title} Properties
+              <LPIcon name="arrow-right" size={18} />
             </Link>
-            <Link href="/contact" className="lp-btn lp-btn--outline-light lp-btn--lg">
-              Speak to Our Team
+            <Link href="/contact" className="lp-btn lp-btn--glass">
+              Speak to Letting Partners
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="lp-stats-bar" aria-label="Area statistics">
-        <div className="lp-container">
-          <div className="lp-stats-grid">
-            {area.stats.map((s) => (
-              <div key={s.label} className="lp-stat-item">
-                <span className="lp-stat-value">{s.value}</span>
-                <span className="lp-stat-label">{s.label}</span>
-              </div>
-            ))}
-          </div>
+      <section className="lp-stats-strip" aria-label={`${area.title} rental market highlights`}>
+        <div className="lp-container lp-stats-grid" data-lp-animate>
+          {area.stats.map((stat) => (
+            <div key={stat.label} className="lp-stat">
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Overview */}
       <section className="lp-section">
         <div className="lp-container">
-          <div className="lp-story-grid" data-lp-animate>
-            <div className="lp-story-content">
-              <span className="lp-eyebrow">{area.coverageLabel}</span>
-              <h2 className="lp-h2">Property Letting in {area.title}</h2>
-              <p className="lp-text-lg">{area.overview}</p>
+          <div className="lp-split lp-split--image" data-lp-animate>
+            <div>
+              <span className="lp-kicker">Local market intro</span>
+              <h2>{area.title} rental market overview.</h2>
+              <p>{area.overview}</p>
               <p>{area.marketSummary}</p>
-              <div className="lp-about-highlights" style={{ marginTop: "1.5rem" }}>
-                {area.focusPoints.map((fp) => (
-                  <div key={fp} className="lp-about-highlight-item">
-                    <i className="fa-solid fa-check-circle" aria-hidden="true" />
-                    <span>{fp}</span>
-                  </div>
+              <ul className="lp-check-list">
+                {area.focusPoints.map((point) => (
+                  <li key={point}>
+                    <LPIcon name="check" size={17} />
+                    {point}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-            <div className="lp-story-image">
-              <Image src={area.image} alt={area.title} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+            <div className="lp-image-frame">
+              <Image src={area.image} alt={`${area.title} residential property`} fill sizes="(max-width: 900px) 100vw, 50vw" className="lp-cover-img" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Neighbourhoods */}
-      <section className="lp-section lp-section--light">
+      <section className="lp-section lp-section--cream">
         <div className="lp-container">
-          <div className="lp-section-header" data-lp-animate>
-            <span className="lp-eyebrow">Where We Work</span>
-            <h2 className="lp-h2">Neighbourhoods in {area.title}</h2>
+          <div className="lp-section-head" data-lp-animate>
+            <span className="lp-kicker">Transport, lifestyle, property types</span>
+            <h2>Why renters and landlords look closely at {area.title}.</h2>
           </div>
-          <div className="lp-neighbourhood-tags" data-lp-animate>
-            {area.neighbourhoods.map((n) => (
-              <span key={n} className="lp-neighbourhood-tag">{n}</span>
+          <div className="lp-card-grid lp-card-grid--three" data-lp-animate>
+            <article className="lp-card">
+              <span className="lp-icon-badge"><LPIcon name="train" /></span>
+              <h3>Transport and commuting</h3>
+              <p>{area.focusPoints[0]}</p>
+            </article>
+            <article className="lp-card">
+              <span className="lp-icon-badge"><LPIcon name="map-pin" /></span>
+              <h3>Lifestyle and neighbourhoods</h3>
+              <p>{area.neighbourhoods.join(", ")} are key local pockets we regularly discuss with clients.</p>
+            </article>
+            <article className="lp-card">
+              <span className="lp-icon-badge"><LPIcon name="home" /></span>
+              <h3>Property mix</h3>
+              <p>{area.focusPoints[1] ?? "A practical mix of flats, houses, rooms, and managed rental homes supports different tenant needs."}</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="lp-section">
+        <div className="lp-container">
+          <div className="lp-section-head" data-lp-animate>
+            <span className="lp-kicker">Services in {area.title}</span>
+            <h2>Letting Partners services available locally.</h2>
+          </div>
+          <div className="lp-card-grid lp-card-grid--four" data-lp-animate>
+            {areaServices.map((service) => (
+              <Link key={service.href} href={service.href} className="lp-card lp-card--link">
+                <span className="lp-icon-badge"><LPIcon name={service.icon} /></span>
+                <h3>{service.title}</h3>
+                <p>{service.text}</p>
+                <span className="lp-text-link">Learn more <LPIcon name="arrow-right" size={16} /></span>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Highlights — Tenant & Landlord */}
-      <section className="lp-section">
-        <div className="lp-container">
-          <div className="lp-highlights-split" data-lp-animate>
-            <div className="lp-highlights-col">
-              <div className="lp-highlights-col-icon">
-                <i className="fa-solid fa-key" aria-hidden="true" />
-              </div>
-              <h3 className="lp-highlights-col-title">For Tenants</h3>
-              <ul className="lp-highlights-list">
-                {area.tenantHighlights.map((h) => (
-                  <li key={h}><i className="fa-solid fa-check" aria-hidden="true" /> {h}</li>
+      <section className="lp-section lp-section--navy">
+        <div className="lp-container lp-feature-split" data-lp-animate>
+          <div>
+            <span className="lp-kicker lp-kicker--light">For tenants and landlords</span>
+            <h2>Two sides of the {area.title} rental market, one coordinated service.</h2>
+          </div>
+          <div className="lp-mini-card-grid">
+            <article className="lp-dark-card">
+              <span className="lp-icon-badge lp-icon-badge--gold"><LPIcon name="key" /></span>
+              <h3>For Tenants</h3>
+              <ul className="lp-check-list lp-check-list--dark">
+                {area.tenantHighlights.map((highlight) => (
+                  <li key={highlight}><LPIcon name="check" size={17} /> {highlight}</li>
                 ))}
               </ul>
-              <Link href="/tenant-services/register-as-tenant" className="lp-btn lp-btn--outline lp-btn--sm">
-                Register as a Tenant
-              </Link>
-            </div>
-            <div className="lp-highlights-col">
-              <div className="lp-highlights-col-icon">
-                <i className="fa-solid fa-building-user" aria-hidden="true" />
-              </div>
-              <h3 className="lp-highlights-col-title">For Landlords</h3>
-              <ul className="lp-highlights-list">
-                {area.landlordHighlights.map((h) => (
-                  <li key={h}><i className="fa-solid fa-check" aria-hidden="true" /> {h}</li>
+              <Link href="/tenant-services/register-as-tenant" className="lp-btn lp-btn--gold lp-btn--sm">Register as a Tenant</Link>
+            </article>
+            <article className="lp-dark-card">
+              <span className="lp-icon-badge lp-icon-badge--gold"><LPIcon name="building" /></span>
+              <h3>For Landlords</h3>
+              <ul className="lp-check-list lp-check-list--dark">
+                {area.landlordHighlights.map((highlight) => (
+                  <li key={highlight}><LPIcon name="check" size={17} /> {highlight}</li>
                 ))}
               </ul>
-              <Link href="/landlord-services" className="lp-btn lp-btn--outline lp-btn--sm">
-                Landlord Services
-              </Link>
-            </div>
+              <Link href="/landlord-services/property-letting" className="lp-btn lp-btn--gold lp-btn--sm">List Your Property</Link>
+            </article>
           </div>
         </div>
       </section>
 
-      {/* Properties */}
-      <section className="lp-section lp-section--light">
+      <section className="lp-section lp-section--cream">
         <div className="lp-container">
-          <div className="lp-section-header" data-lp-animate>
-            <span className="lp-eyebrow">Available Now</span>
-            <h2 className="lp-h2">Properties in {area.title}</h2>
+          <div className="lp-section-head" data-lp-animate>
+            <span className="lp-kicker">Available now</span>
+            <h2>Properties in {area.title}.</h2>
           </div>
           <PropertiesGrid area={area.slug} limit={6} />
-          <div className="lp-section-footer" style={{ marginTop: "2rem", textAlign: "center" }}>
+          <div className="lp-section-actions">
             <Link href={getAreaPropertiesHref(area.slug)} className="lp-btn lp-btn--outline">
-              View All {area.title} Properties <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+              View all {area.title} properties
+              <LPIcon name="arrow-right" size={18} />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* FAQs */}
       <section className="lp-section">
         <div className="lp-container">
-          <div className="lp-faq-layout">
-            <div className="lp-faq-sidebar" data-lp-animate="slide-right">
-              <span className="lp-eyebrow">Questions Answered</span>
-              <h2 className="lp-h2">FAQs — {area.title}</h2>
-              <p>Have more questions? Our team is happy to help.</p>
-              <Link href="/contact" className="lp-btn lp-btn--navy" style={{ marginTop: "1.5rem" }}>
-                Ask Us Directly
-              </Link>
+          <div className="lp-faq-layout" data-lp-animate>
+            <div>
+              <span className="lp-kicker">Local FAQs</span>
+              <h2>{area.title} questions, answered.</h2>
+              <p className="lp-muted-text">Local rental market questions for tenants, landlords, and property owners.</p>
             </div>
-            <div data-lp-animate="slide-left">
-              <AreaFaqAccordion faqs={area.faqs} />
-            </div>
+            <AreaFaqAccordion faqs={area.faqs} />
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="lp-section lp-section--navy">
+      <section className="lp-section lp-section--cta">
         <div className="lp-container">
-          <div className="lp-cta-centered" data-lp-animate>
-            <h2 className="lp-cta-centered-title">Ready to get started in {area.title}?</h2>
-            <p className="lp-cta-centered-text">Whether you are a landlord or tenant, our team is here to guide you.</p>
-            <div className="lp-cta-centered-actions">
-              <Link href="/contact" className="lp-btn lp-btn--gold lp-btn--lg">Get In Touch</Link>
-              <a href="tel:07782273674" className="lp-btn lp-btn--outline-light lp-btn--lg">
-                <i className="fa-solid fa-phone" aria-hidden="true" /> 07782 273674
-              </a>
+          <div className="lp-cta-band" data-lp-animate>
+            <div>
+              <span className="lp-kicker lp-kicker--light">{area.title}</span>
+              <h2>Ready to get started in {area.title}?</h2>
+              <p>Register as a tenant, list your property, or ask for local market guidance.</p>
+            </div>
+            <div className="lp-cta-actions">
+              <Link href="/tenant-services/register-as-tenant" className="lp-btn lp-btn--gold">Register as a Tenant</Link>
+              <Link href="/contact" className="lp-btn lp-btn--glass">Speak to Letting Partners</Link>
             </div>
           </div>
         </div>

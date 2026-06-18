@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import LPIcon from "@/components/LPIcon";
 
 export default function ScrollToTopButton() {
   const [visible, setVisible] = useState(false);
@@ -19,7 +20,7 @@ export default function ScrollToTopButton() {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Scroll to top"
     >
-      <i className="fa-solid fa-arrow-up" aria-hidden="true" />
+      <LPIcon name="arrow-up" size={18} />
     </button>
   );
 }

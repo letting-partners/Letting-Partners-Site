@@ -17,16 +17,16 @@ export const HERO_IMAGES = {
 // PAGE BANNER IMAGES
 // ---------------------------------------------------------------------------
 export const PAGE_BANNER_IMAGES = {
-  about:                   "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80",
+  about:                   "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&q=80",
   areas:                   "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1600&q=80",
-  contact:                 "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&q=80",
+  contact:                 "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80",
   properties:              "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80",
   tenantServices:          "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=1600&q=80",
   tenantGuide:             "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=1600&q=80",
   studentAccommodation:    "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=1600&q=80",
   registerTenant:          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1600&q=80",
   landlordServices:        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80",
-  landlordGuide:           "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1600&q=80",
+  landlordGuide:           "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80",
   findTenant:              "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1600&q=80",
   propertyLetting:         "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1600&q=80",
   propertyManagement:      "https://images.unsplash.com/photo-1549924231-f129b911e442?w=1600&q=80",
@@ -87,7 +87,7 @@ export const AREA_MENU_IMAGES: Record<string, string> = {
 // ABOUT / STORY SECTION IMAGES
 // ---------------------------------------------------------------------------
 export const ABOUT_IMAGES = {
-  homeAbout:              "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80",
+  homeAbout:              "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80",
   tenantStory:            "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=900&q=80",
   landlordStory:          "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=900&q=80",
   propertyManagementStory:"https://images.unsplash.com/photo-1549924231-f129b911e442?w=900&q=80",
@@ -138,15 +138,6 @@ export const PROPERTY_FALLBACK_IMAGES = [
   "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600&q=80",
   "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
 ];
-
-// ---------------------------------------------------------------------------
-// TEAM IMAGES (placeholder professional photos)
-// ---------------------------------------------------------------------------
-export const TEAM_IMAGES = {
-  member1: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80",
-  member2: "https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?w=400&q=80",
-  member3: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
-};
 
 // ---------------------------------------------------------------------------
 // TENANT SERVICE ACTION IMAGES

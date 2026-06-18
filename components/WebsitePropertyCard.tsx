@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import LPIcon from "@/components/LPIcon";
 import { PROPERTY_FALLBACK_IMAGES } from "@/lib/images";
 
 export type WebsiteProperty = {
@@ -17,74 +18,76 @@ export type WebsiteProperty = {
 };
 
 function getFallbackImage(id: string | number): string {
-  const index = Math.abs(String(id).split("").reduce((a, c) => a + c.charCodeAt(0), 0)) % PROPERTY_FALLBACK_IMAGES.length;
+  const index = Math.abs(String(id).split("").reduce((total, char) => total + char.charCodeAt(0), 0)) % PROPERTY_FALLBACK_IMAGES.length;
   return PROPERTY_FALLBACK_IMAGES[index];
 }
 
 export default function WebsitePropertyCard({ property }: { property: WebsiteProperty }) {
   const image = property.image || getFallbackImage(property.id);
   const href = `/properties/${property.id}`;
-  const price = typeof property.price === "number" ? `£${property.price.toLocaleString("en-GB")}` : (property.price ?? "POA");
   const priceLabel = property.priceLabel ?? "pcm";
+  const numericPrice = typeof property.price === "number" ? property.price.toLocaleString("en-GB") : null;
+  const textPrice = typeof property.price === "string" ? property.price : null;
 
   return (
     <article className="lp-property-card">
-      <Link href={href} className="lp-property-card-img-wrap" tabIndex={-1} aria-hidden="true">
+      <Link href={href} className="lp-property-card-media" aria-label={`View ${property.title}`}>
         <Image
           src={image}
           alt={property.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          style={{ objectFit: "cover" }}
-          className="lp-property-card-img"
+          className="lp-cover-img"
         />
-        {property.available === false && (
-          <span className="lp-property-badge lp-property-badge--let">Let Agreed</span>
-        )}
-        {property.type && (
-          <span className="lp-property-badge lp-property-badge--type">{property.type}</span>
-        )}
+        {property.available === false && <span className="lp-property-badge">Let agreed</span>}
+        {property.type && <span className="lp-property-badge lp-property-badge--type">{property.type}</span>}
       </Link>
 
       <div className="lp-property-card-body">
         <div className="lp-property-price">
-          <span className="lp-property-amount">{price}</span>
-          <span className="lp-property-period"> /{priceLabel}</span>
+          {numericPrice ? (
+            <>
+              <span>&pound;{numericPrice}</span>
+              <small>/{priceLabel}</small>
+            </>
+          ) : (
+            <span>{textPrice ?? "POA"}</span>
+          )}
         </div>
 
-        <h3 className="lp-property-title">
+        <h3>
           <Link href={href}>{property.title}</Link>
         </h3>
 
         {property.address && (
           <p className="lp-property-address">
-            <i className="fa-solid fa-location-dot" aria-hidden="true" />
+            <LPIcon name="map-pin" size={16} />
             {property.address}
           </p>
         )}
 
         <div className="lp-property-meta">
           {property.bedrooms != null && (
-            <span className="lp-property-meta-item">
-              <i className="fa-solid fa-bed" aria-hidden="true" />
-              {property.bedrooms} {property.bedrooms === 1 ? "Bed" : "Beds"}
+            <span>
+              <LPIcon name="bed" size={16} />
+              {property.bedrooms} {property.bedrooms === 1 ? "bed" : "beds"}
             </span>
           )}
           {property.bathrooms != null && (
-            <span className="lp-property-meta-item">
-              <i className="fa-solid fa-bath" aria-hidden="true" />
-              {property.bathrooms} {property.bathrooms === 1 ? "Bath" : "Baths"}
+            <span>
+              <LPIcon name="bath" size={16} />
+              {property.bathrooms} {property.bathrooms === 1 ? "bath" : "baths"}
             </span>
           )}
           {property.area && (
-            <span className="lp-property-meta-item">
-              <i className="fa-solid fa-map-pin" aria-hidden="true" />
+            <span>
+              <LPIcon name="map-pin" size={16} />
               {property.area}
             </span>
           )}
         </div>
 
-        <Link href={href} className="lp-btn lp-btn--outline lp-btn--sm lp-property-cta">
+        <Link href={href} className="lp-btn lp-btn--outline lp-btn--sm">
           View Property
         </Link>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import LPIcon from "@/components/LPIcon";
 
 type FormState = {
   name: string;
@@ -64,10 +65,10 @@ export default function HomeContactForm() {
     return (
       <div className="lp-form-success">
         <div className="lp-form-success-icon">
-          <i className="fa-solid fa-circle-check" aria-hidden="true" />
+          <LPIcon name="check-circle" size={26} />
         </div>
-        <h3>Enquiry Received</h3>
-        <p>Thank you for reaching out. A member of our team will be in touch shortly.</p>
+        <h3>Enquiry received</h3>
+        <p>Thank you for reaching out. Letting Partners will be in touch shortly.</p>
       </div>
     );
   }
@@ -76,7 +77,7 @@ export default function HomeContactForm() {
     <form className="lp-contact-form" onSubmit={handleSubmit} noValidate>
       <div className="lp-form-row lp-form-row--two">
         <div className="lp-form-group">
-          <label htmlFor="cf-name" className="lp-form-label">Full Name *</label>
+          <label htmlFor="cf-name" className="lp-form-label">Full name *</label>
           <input
             id="cf-name"
             type="text"
@@ -89,7 +90,7 @@ export default function HomeContactForm() {
           />
         </div>
         <div className="lp-form-group">
-          <label htmlFor="cf-email" className="lp-form-label">Email Address *</label>
+          <label htmlFor="cf-email" className="lp-form-label">Email address *</label>
           <input
             id="cf-email"
             type="email"
@@ -105,7 +106,7 @@ export default function HomeContactForm() {
 
       <div className="lp-form-row lp-form-row--two">
         <div className="lp-form-group">
-          <label htmlFor="cf-phone" className="lp-form-label">Phone Number</label>
+          <label htmlFor="cf-phone" className="lp-form-label">Phone number</label>
           <input
             id="cf-phone"
             type="tel"
@@ -117,7 +118,7 @@ export default function HomeContactForm() {
           />
         </div>
         <div className="lp-form-group">
-          <label htmlFor="cf-enquiry" className="lp-form-label">Enquiry Type</label>
+          <label htmlFor="cf-enquiry" className="lp-form-label">Enquiry type</label>
           <select
             id="cf-enquiry"
             className="lp-form-input lp-form-select"
@@ -126,19 +127,19 @@ export default function HomeContactForm() {
             disabled={status === "loading"}
           >
             <option value="">Select an option</option>
-            {ENQUIRY_TYPES.map((t) => (
-              <option key={t} value={t}>{t}</option>
+            {ENQUIRY_TYPES.map((type) => (
+              <option key={type} value={type}>{type}</option>
             ))}
           </select>
         </div>
       </div>
 
       <div className="lp-form-group">
-        <label htmlFor="cf-message" className="lp-form-label">Your Message *</label>
+        <label htmlFor="cf-message" className="lp-form-label">Your message *</label>
         <textarea
           id="cf-message"
           className="lp-form-input lp-form-textarea"
-          placeholder="Tell us how we can help…"
+          placeholder="Tell us how we can help..."
           rows={5}
           value={form.message}
           onChange={(e) => update("message", e.target.value)}
@@ -149,15 +150,15 @@ export default function HomeContactForm() {
 
       {status === "error" && (
         <p className="lp-form-error" role="alert">
-          <i className="fa-solid fa-triangle-exclamation" aria-hidden="true" /> {errorMsg}
+          <LPIcon name="alert" size={18} /> {errorMsg}
         </p>
       )}
 
-      <button type="submit" className="lp-btn lp-btn--gold lp-btn--lg" disabled={status === "loading"}>
+      <button type="submit" className="lp-btn lp-btn--gold" disabled={status === "loading"}>
         {status === "loading" ? (
-          <><i className="fa-solid fa-spinner fa-spin" aria-hidden="true" /> Sending…</>
+          <><span className="lp-spinner" aria-hidden="true" /> Sending...</>
         ) : (
-          <>Send Enquiry <i className="fa-solid fa-arrow-right" aria-hidden="true" /></>
+          <>Send Enquiry <LPIcon name="arrow-right" size={18} /></>
         )}
       </button>
     </form>

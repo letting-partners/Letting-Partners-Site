@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import LPIcon from "@/components/LPIcon";
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState("");
@@ -34,8 +35,8 @@ export default function NewsletterForm() {
   if (status === "success") {
     return (
       <div className="lp-newsletter-success">
-        <i className="fa-solid fa-circle-check" aria-hidden="true" />
-        <span>You&apos;re subscribed. We&apos;ll be in touch.</span>
+        <LPIcon name="check-circle" size={18} />
+        <span>You are subscribed. We will be in touch.</span>
       </div>
     );
   }
@@ -47,23 +48,15 @@ export default function NewsletterForm() {
         className="lp-newsletter-input"
         placeholder="Your email address"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(event) => setEmail(event.target.value)}
         required
         aria-label="Email address for newsletter"
         disabled={status === "loading"}
       />
       <button type="submit" className="lp-btn lp-btn--gold" disabled={status === "loading"}>
-        {status === "loading" ? (
-          <i className="fa-solid fa-spinner fa-spin" aria-hidden="true" />
-        ) : (
-          "Subscribe"
-        )}
+        {status === "loading" ? <span className="lp-spinner" aria-hidden="true" /> : "Subscribe"}
       </button>
-      {status === "error" && (
-        <p style={{ color: "#dc2626", fontSize: "13px", marginTop: "8px", width: "100%" }}>
-          {errorMsg}
-        </p>
-      )}
+      {status === "error" && <p className="lp-form-error">{errorMsg}</p>}
     </form>
   );
 }

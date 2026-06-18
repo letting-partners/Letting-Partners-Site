@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ServiceDetailPage from "@/components/ServiceDetailPage";
 import { getServiceDetailByHref } from "@/lib/service-pages";
 
-const service = getServiceDetailByHref("/tenant-services/student-accommodation")!;
+const service = getServiceDetailByHref("/landlord-services/rent-to-rent")!;
 
 export const metadata: Metadata = {
   title: service.seoTitle,
@@ -10,6 +10,6 @@ export const metadata: Metadata = {
   keywords: service.keywords,
 };
 
-export default function StudentAccommodationPage() {
+export default function RentToRentPage() {
   return <ServiceDetailPage service={service} />;
 }

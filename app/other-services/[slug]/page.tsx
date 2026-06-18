@@ -1,28 +1,29 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { OTHER_SERVICE_PAGES, getOtherServicePage } from "@/lib/services";
-import OtherServicePage from "@/components/OtherServicePage";
+import ServiceDetailPage from "@/components/ServiceDetailPage";
+import { OTHER_SERVICE_PAGES } from "@/lib/services";
+import { getServiceDetailBySlug } from "@/lib/service-pages";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return OTHER_SERVICE_PAGES.map((p) => ({ slug: p.slug }));
+  return OTHER_SERVICE_PAGES.map((page) => ({ slug: page.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const page = getOtherServicePage(slug);
-  if (!page) return {};
+  const service = getServiceDetailBySlug(slug);
+  if (!service) return {};
   return {
-    title: `${page.label} | Letting Partners`,
-    description: page.heroText,
-    keywords: [page.label, "property services London", "Letting Partners"],
+    title: service.seoTitle,
+    description: service.seoDescription,
+    keywords: service.keywords,
   };
 }
 
 export default async function OtherServiceSlugPage({ params }: Props) {
   const { slug } = await params;
-  const page = getOtherServicePage(slug);
-  if (!page) notFound();
-  return <OtherServicePage page={page} />;
+  const service = getServiceDetailBySlug(slug);
+  if (!service) notFound();
+  return <ServiceDetailPage service={service} />;
 }

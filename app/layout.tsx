@@ -1,43 +1,35 @@
 import type { Metadata } from "next";
-import { Nunito, Playfair_Display } from "next/font/google";
+import { Inter } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
-import SiteHeader from "@/components/SiteHeader";
+import LPIcon from "@/components/LPIcon";
 import ScrollAnimator from "@/components/ScrollAnimator";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
+import SiteHeader from "@/components/SiteHeader";
 import { LOGO } from "@/lib/images";
 
-const nunito = Nunito({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-nunito",
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-playfair",
+  variable: "--lp-font",
   display: "swap",
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://letting-partners-site.vercel.app"),
   title: {
-    default: "Letting Partners | London Property Letting & Management",
+    default: "Letting Partners | UK Property Letting & Management",
     template: "%s | Letting Partners",
   },
   description:
-    "Letting Partners — expert property letting, management, and tenant services across London and Birmingham. Professional support for landlords and tenants.",
+    "Premium property letting, management, tenant support, legal coordination, maintenance, mortgage consultancy, and development support across London and Birmingham.",
   keywords: [
-    "property letting London",
-    "landlord services London",
+    "letting agents London",
+    "property management London",
+    "landlord services Birmingham",
     "tenant services London",
-    "property management Ilford",
-    "rental properties East London",
-    "letting agents Birmingham",
+    "UK property letting",
   ],
-  metadataBase: new URL("https://www.lettingpartners.co.uk"),
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
@@ -45,166 +37,110 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_GB",
     siteName: "Letting Partners",
+    title: "Letting Partners | UK Property Letting & Management",
+    description:
+      "Professional letting, management, tenant, legal, maintenance, mortgage, and development support across London and Birmingham.",
   },
 };
 
 const footerAreas = [
-  { label: "Ilford", href: "/areas/ilford" },
-  { label: "Redbridge", href: "/areas/redbridge" },
-  { label: "Stratford", href: "/areas/stratford" },
-  { label: "Barking", href: "/areas/barking" },
-  { label: "Walthamstow", href: "/areas/walthamstow" },
-  { label: "Croydon", href: "/areas/croydon" },
-  { label: "Hounslow", href: "/areas/hounslow" },
-  { label: "Birmingham", href: "/areas/birmingham" },
+  ["Ilford", "/areas/ilford"],
+  ["Redbridge", "/areas/redbridge"],
+  ["Stratford", "/areas/stratford"],
+  ["Barking", "/areas/barking"],
+  ["Walthamstow", "/areas/walthamstow"],
+  ["Croydon", "/areas/croydon"],
+  ["Hounslow", "/areas/hounslow"],
+  ["Birmingham", "/areas/birmingham"],
 ];
 
 const footerServices = [
-  { label: "Property Letting", href: "/landlord-services/property-letting" },
-  { label: "Property Management", href: "/landlord-services/property-management" },
-  { label: "Find A Tenant", href: "/landlord-services/find-a-tenant" },
-  { label: "Rent To Rent", href: "/landlord-services/rent-to-rent" },
-  { label: "Tenant Registration", href: "/tenant-services/register-as-tenant" },
-  { label: "Specialist Legal Support", href: "/specialist-legal-support" },
-  { label: "Repair & Maintenance", href: "/other-services/repair-maintenance" },
-  { label: "Mortgage Consultancy", href: "/other-services/mortgage-consultancy" },
+  ["Property Letting", "/landlord-services/property-letting"],
+  ["Property Management", "/landlord-services/property-management"],
+  ["Find a Tenant", "/landlord-services/find-a-tenant"],
+  ["Rent to Rent", "/landlord-services/rent-to-rent"],
+  ["Tenant Services", "/tenant-services"],
+  ["Specialist Legal Support", "/specialist-legal-support"],
+  ["Repair & Maintenance", "/other-services/repair-maintenance"],
+  ["Mortgage Consultancy", "/other-services/mortgage-consultancy"],
 ];
 
 const footerCompany = [
-  { label: "About Us", href: "/about" },
-  { label: "Contact", href: "/contact" },
-  { label: "Properties", href: "/properties" },
-  { label: "All Areas", href: "/areas" },
-  { label: "Landlord Guide", href: "/landlord-services/landlord-guide" },
-  { label: "Tenant Guide", href: "/tenant-services/tenant-guide" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms & Conditions", href: "/terms-conditions" },
+  ["About", "/about"],
+  ["Properties", "/properties"],
+  ["Areas", "/areas"],
+  ["Contact", "/contact"],
+  ["Landlord Guide", "/landlord-services/landlord-guide"],
+  ["Tenant Guide", "/tenant-services/tenant-guide"],
+  ["Privacy Policy", "/privacy-policy"],
+  ["Terms & Conditions", "/terms-conditions"],
 ];
+
+function FooterLinkList({ title, items }: { title: string; items: string[][] }) {
+  return (
+    <div className="lp-footer-col">
+      <h2>{title}</h2>
+      <ul>
+        {items.map(([label, href]) => (
+          <li key={href}>
+            <Link href={href}>
+              <LPIcon name="arrow-right" size={15} />
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${nunito.variable} ${playfair.variable}`}>
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-          crossOrigin="anonymous"
-        />
-      </head>
+    <html lang="en" className={inter.variable}>
       <body>
         <ScrollAnimator />
         <SiteHeader />
-
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-
-        {/* Footer */}
-        <footer className="lp-footer" role="contentinfo">
-          <div className="lp-footer-top">
-            <div className="lp-container">
-              <div className="lp-footer-grid">
-                {/* Brand column */}
-                <div className="lp-footer-brand">
-                  <Link href="/" className="lp-footer-logo-link" aria-label="Letting Partners Home">
-                    <Image src={LOGO.footer} alt="Letting Partners" width={160} height={44} />
-                  </Link>
-                  <p className="lp-footer-tagline">
-                    Professional property letting and management services across London and Birmingham — built on transparency, reliability, and results.
-                  </p>
-                  <div className="lp-footer-contact">
-                    <a href="tel:07782273674" className="lp-footer-contact-item">
-                      <i className="fa-solid fa-phone" aria-hidden="true" />
-                      <span>07782 273674</span>
-                    </a>
-                    <a href="mailto:info@lettingpartners.co.uk" className="lp-footer-contact-item">
-                      <i className="fa-solid fa-envelope" aria-hidden="true" />
-                      <span>info@lettingpartners.co.uk</span>
-                    </a>
-                    <div className="lp-footer-contact-item">
-                      <i className="fa-solid fa-location-dot" aria-hidden="true" />
-                      <span>London &amp; Birmingham, UK</span>
-                    </div>
-                  </div>
-                  <div className="lp-footer-socials">
-                    <a href="#" className="lp-footer-social" aria-label="Facebook">
-                      <i className="fa-brands fa-facebook-f" aria-hidden="true" />
-                    </a>
-                    <a href="#" className="lp-footer-social" aria-label="Instagram">
-                      <i className="fa-brands fa-instagram" aria-hidden="true" />
-                    </a>
-                    <a href="#" className="lp-footer-social" aria-label="LinkedIn">
-                      <i className="fa-brands fa-linkedin-in" aria-hidden="true" />
-                    </a>
-                    <a href="#" className="lp-footer-social" aria-label="X (Twitter)">
-                      <i className="fa-brands fa-x-twitter" aria-hidden="true" />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Areas column */}
-                <div className="lp-footer-col">
-                  <h4 className="lp-footer-col-title">Our Areas</h4>
-                  <ul className="lp-footer-links">
-                    {footerAreas.map((item) => (
-                      <li key={item.href}>
-                        <Link href={item.href} className="lp-footer-link">
-                          <i className="fa-solid fa-location-dot" aria-hidden="true" />
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Services column */}
-                <div className="lp-footer-col">
-                  <h4 className="lp-footer-col-title">Our Services</h4>
-                  <ul className="lp-footer-links">
-                    {footerServices.map((item) => (
-                      <li key={item.href}>
-                        <Link href={item.href} className="lp-footer-link">
-                          <i className="fa-solid fa-chevron-right" aria-hidden="true" />
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Company column */}
-                <div className="lp-footer-col">
-                  <h4 className="lp-footer-col-title">Company</h4>
-                  <ul className="lp-footer-links">
-                    {footerCompany.map((item) => (
-                      <li key={item.href}>
-                        <Link href={item.href} className="lp-footer-link">
-                          <i className="fa-solid fa-chevron-right" aria-hidden="true" />
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+        <main id="main-content">{children}</main>
+        <footer className="lp-footer">
+          <div className="lp-container lp-footer-grid">
+            <div className="lp-footer-brand">
+              <Link href="/" aria-label="Letting Partners home" className="lp-footer-logo">
+                <Image src={LOGO.footer} alt="Letting Partners" width={190} height={54} />
+              </Link>
+              <p>
+                Premium property letting, management, tenant support, legal coordination, maintenance, mortgage, and development services across London and Birmingham.
+              </p>
+              <div className="lp-footer-contact">
+                <a href="tel:07782273674">
+                  <LPIcon name="phone" size={17} />
+                  07782 273674
+                </a>
+                <a href="mailto:info@lettingpartners.co.uk">
+                  <LPIcon name="mail" size={17} />
+                  info@lettingpartners.co.uk
+                </a>
+                <span>
+                  <LPIcon name="map-pin" size={17} />
+                  London & Birmingham, UK
+                </span>
               </div>
             </div>
+
+            <FooterLinkList title="Services" items={footerServices} />
+            <FooterLinkList title="Areas" items={footerAreas} />
+            <FooterLinkList title="Company" items={footerCompany} />
           </div>
 
           <div className="lp-footer-bottom">
-            <div className="lp-container">
-              <div className="lp-footer-bottom-inner">
-                <p className="lp-footer-copy">
-                  &copy; {new Date().getFullYear()} Letting Partners. All rights reserved. Registered in England &amp; Wales.
-                </p>
-                <div className="lp-footer-legal-links">
-                  <Link href="/privacy-policy">Privacy Policy</Link>
-                  <Link href="/terms-conditions">Terms &amp; Conditions</Link>
-                </div>
+            <div className="lp-container lp-footer-bottom-inner">
+              <p>&copy; {new Date().getFullYear()} Letting Partners. All rights reserved.</p>
+              <div>
+                <Link href="/privacy-policy">Privacy Policy</Link>
+                <Link href="/terms-conditions">Terms & Conditions</Link>
               </div>
             </div>
           </div>
         </footer>
-
         <ScrollToTopButton />
       </body>
     </html>

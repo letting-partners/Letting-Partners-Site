@@ -3,285 +3,225 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import LPIcon, { type LPIconName } from "@/components/LPIcon";
 import { AREAS, getAreaHref } from "@/lib/areas";
-import { AREA_MENU_IMAGES, LOGO } from "@/lib/images";
+import { LOGO } from "@/lib/images";
 import { SERVICE_GROUPS, isServicesCurrent } from "@/lib/services";
+
+const topLinks = [
+  { label: "Home", href: "/" },
+  { label: "Properties", href: "/properties" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+];
+
+const serviceIcons: Record<string, LPIconName> = {
+  "/tenant-services": "key",
+  "/landlord-services": "building",
+  "/specialist-legal-support": "scale",
+  "/other-services": "wrench",
+};
 
 export default function SiteHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeMega, setActiveMega] = useState<"areas" | "services" | null>(null);
-  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
-  const headerRef = useRef<HTMLElement>(null);
-  const megaTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [openMenu, setOpenMenu] = useState<"services" | "areas" | null>(null);
+  const [mobileGroup, setMobileGroup] = useState<"services" | "areas" | null>("services");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
     setMobileOpen(false);
-    setActiveMega(null);
+    setOpenMenu(null);
   }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [mobileOpen]);
 
-  function openMega(key: "areas" | "services") {
-    if (megaTimerRef.current) clearTimeout(megaTimerRef.current);
-    setActiveMega(key);
-  }
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpenMenu(null);
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
-  function closeMegaDelayed() {
-    megaTimerRef.current = setTimeout(() => setActiveMega(null), 180);
-  }
-
-  function cancelClose() {
-    if (megaTimerRef.current) clearTimeout(megaTimerRef.current);
-  }
-
-  const isAreaCurrent = pathname.startsWith("/areas");
+  const areaActive = pathname.startsWith("/areas");
+  const servicesActive = isServicesCurrent(pathname);
 
   return (
     <>
-      <header
-        ref={headerRef}
-        className={`lp-header${scrolled ? " lp-header--scrolled" : ""}`}
-        role="banner"
-      >
-        <div className="lp-header-inner">
-          {/* Logo */}
-          <Link href="/" className="lp-header-logo" aria-label="Letting Partners Home">
-            <Image src={LOGO.main} alt="Letting Partners" width={200} height={56} priority />
+      <header className={`lp-header${scrolled ? " lp-header--scrolled" : ""}`}>
+        <div className="lp-container lp-header-inner">
+          <Link href="/" className="lp-header-logo" aria-label="Letting Partners home">
+            <Image src={LOGO.main} alt="Letting Partners" width={190} height={54} preload />
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="lp-header-nav" aria-label="Primary navigation">
-            <Link
-              href="/"
-              className={`lp-header-link${pathname === "/" ? " active" : ""}`}
-            >
+          <nav className="lp-desktop-nav" aria-label="Primary navigation">
+            <Link className={pathname === "/" ? "is-active" : ""} href="/">
               Home
             </Link>
 
-            {/* Areas Mega Trigger */}
-            <button
-              className={`lp-header-link lp-header-link--btn${isAreaCurrent ? " active" : ""}${activeMega === "areas" ? " lp-header-link--open" : ""}`}
-              onMouseEnter={() => openMega("areas")}
-              onMouseLeave={closeMegaDelayed}
-              onClick={() => setActiveMega(activeMega === "areas" ? null : "areas")}
-              aria-haspopup="true"
-              aria-expanded={activeMega === "areas"}
+            <div
+              className="lp-nav-dropdown"
+              onMouseEnter={() => setOpenMenu("services")}
+              onMouseLeave={() => setOpenMenu(null)}
             >
-              Areas <i className="fa-solid fa-chevron-down lp-header-chevron" aria-hidden="true" />
-            </button>
-
-            {/* Services Mega Trigger */}
-            <button
-              className={`lp-header-link lp-header-link--btn${isServicesCurrent(pathname) ? " active" : ""}${activeMega === "services" ? " lp-header-link--open" : ""}`}
-              onMouseEnter={() => openMega("services")}
-              onMouseLeave={closeMegaDelayed}
-              onClick={() => setActiveMega(activeMega === "services" ? null : "services")}
-              aria-haspopup="true"
-              aria-expanded={activeMega === "services"}
-            >
-              Services <i className="fa-solid fa-chevron-down lp-header-chevron" aria-hidden="true" />
-            </button>
-
-            <Link
-              href="/properties"
-              className={`lp-header-link${pathname.startsWith("/properties") ? " active" : ""}`}
-            >
-              Properties
-            </Link>
-
-            <Link
-              href="/about"
-              className={`lp-header-link${pathname === "/about" ? " active" : ""}`}
-            >
-              About
-            </Link>
-
-            <Link
-              href="/contact"
-              className={`lp-header-link${pathname === "/contact" ? " active" : ""}`}
-            >
-              Contact
-            </Link>
-          </nav>
-
-          {/* CTA */}
-          <div className="lp-header-cta">
-            <a href="tel:07782273674" className="lp-header-phone" aria-label="Call Letting Partners">
-              <i className="fa-solid fa-phone" aria-hidden="true" />
-              <span>07782 273674</span>
-            </a>
-            <Link href="/contact" className="lp-btn lp-btn--gold lp-btn--sm">
-              Get In Touch
-            </Link>
-          </div>
-
-          {/* Mobile Hamburger */}
-          <button
-            className={`lp-hamburger${mobileOpen ? " lp-hamburger--open" : ""}`}
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-          >
-            <span /><span /><span />
-          </button>
-        </div>
-
-        {/* Areas Mega Menu */}
-        {activeMega === "areas" && (
-          <div
-            className="lp-mega-menu lp-mega-menu--areas"
-            onMouseEnter={cancelClose}
-            onMouseLeave={closeMegaDelayed}
-            role="navigation"
-            aria-label="Areas menu"
-          >
-            <div className="lp-mega-inner">
-              <div className="lp-mega-header">
-                <span className="lp-mega-eyebrow">Where we operate</span>
-                <h3 className="lp-mega-title">Our Coverage Areas</h3>
-                <p className="lp-mega-subtitle">Expert letting support across London and Birmingham.</p>
-              </div>
-              <div className="lp-mega-areas-grid">
-                {AREAS.map((area) => (
-                  <Link
-                    key={area.slug}
-                    href={getAreaHref(area.slug)}
-                    className="lp-mega-area-card"
-                  >
-                    <div className="lp-mega-area-img">
-                      <Image
-                        src={AREA_MENU_IMAGES[area.slug] ?? area.image}
-                        alt={area.title}
-                        fill
-                        sizes="180px"
-                        style={{ objectFit: "cover" }}
-                      />
-                    </div>
-                    <div className="lp-mega-area-info">
-                      <span className="lp-mega-area-label">{area.coverageLabel}</span>
-                      <strong className="lp-mega-area-name">{area.title}</strong>
-                      <p className="lp-mega-area-desc">{area.menuDescription}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-              <div className="lp-mega-footer">
-                <Link href="/areas" className="lp-mega-all-link">
-                  View all areas <i className="fa-solid fa-arrow-right" aria-hidden="true" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Services Mega Menu */}
-        {activeMega === "services" && (
-          <div
-            className="lp-mega-menu lp-mega-menu--services"
-            onMouseEnter={cancelClose}
-            onMouseLeave={closeMegaDelayed}
-            role="navigation"
-            aria-label="Services menu"
-          >
-            <div className="lp-mega-inner">
-              <div className="lp-mega-header">
-                <span className="lp-mega-eyebrow">What we offer</span>
-                <h3 className="lp-mega-title">Our Services</h3>
-                <p className="lp-mega-subtitle">End-to-end property support for landlords, tenants, and investors.</p>
-              </div>
-              <div className="lp-mega-services-grid">
-                {SERVICE_GROUPS.map((group) => (
-                  <div key={group.href} className="lp-mega-service-group">
-                    <div className="lp-mega-service-group-header">
-                      <i className={`fa-solid ${group.icon} lp-mega-service-icon`} aria-hidden="true" />
-                      <div>
-                        <span className="lp-mega-service-eyebrow">{group.eyebrow}</span>
-                        <Link href={group.href} className="lp-mega-service-title">
-                          {group.label}
-                        </Link>
-                      </div>
-                    </div>
-                    <ul className="lp-mega-service-items">
-                      {group.items.map((item) => (
-                        <li key={item.href}>
-                          <Link href={item.href} className="lp-mega-service-item">
-                            <i className={`fa-solid ${item.icon}`} aria-hidden="true" />
-                            <span>{item.label}</span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </header>
-
-      {/* Mobile Nav Drawer */}
-      {mobileOpen && (
-        <div className="lp-mobile-nav" aria-label="Mobile navigation" role="dialog" aria-modal="true">
-          <div className="lp-mobile-nav-inner">
-            <div className="lp-mobile-nav-logo">
-              <Image src={LOGO.main} alt="Letting Partners" width={140} height={38} />
-            </div>
-
-            <nav>
-              <Link href="/" className="lp-mobile-link">Home</Link>
-
-              {/* Mobile Areas */}
               <button
-                className="lp-mobile-link lp-mobile-link--toggle"
-                onClick={() => setMobileExpanded(mobileExpanded === "areas" ? null : "areas")}
-                aria-expanded={mobileExpanded === "areas"}
-              >
-                Areas
-                <i className={`fa-solid fa-chevron-down lp-mobile-chevron${mobileExpanded === "areas" ? " open" : ""}`} aria-hidden="true" />
-              </button>
-              {mobileExpanded === "areas" && (
-                <div className="lp-mobile-submenu">
-                  {AREAS.map((area) => (
-                    <Link key={area.slug} href={getAreaHref(area.slug)} className="lp-mobile-sub-link">
-                      <i className="fa-solid fa-location-dot" aria-hidden="true" />
-                      {area.title}
-                    </Link>
-                  ))}
-                  <Link href="/areas" className="lp-mobile-sub-link lp-mobile-sub-link--all">
-                    All Areas <i className="fa-solid fa-arrow-right" aria-hidden="true" />
-                  </Link>
-                </div>
-              )}
-
-              {/* Mobile Services */}
-              <button
-                className="lp-mobile-link lp-mobile-link--toggle"
-                onClick={() => setMobileExpanded(mobileExpanded === "services" ? null : "services")}
-                aria-expanded={mobileExpanded === "services"}
+                type="button"
+                className={servicesActive ? "is-active" : ""}
+                aria-expanded={openMenu === "services"}
+                aria-controls="lp-services-menu"
+                onClick={() => setOpenMenu(openMenu === "services" ? null : "services")}
               >
                 Services
-                <i className={`fa-solid fa-chevron-down lp-mobile-chevron${mobileExpanded === "services" ? " open" : ""}`} aria-hidden="true" />
+                <LPIcon name="chevron-down" size={16} />
               </button>
-              {mobileExpanded === "services" && (
-                <div className="lp-mobile-submenu">
+              {openMenu === "services" && (
+                <div id="lp-services-menu" className="lp-mega lp-mega--services">
+                  <div className="lp-mega-intro">
+                    <span>Complete property support</span>
+                    <h2>Services for landlords, tenants, and property owners.</h2>
+                    <p>Choose a route, or speak with us if you are not sure where to start.</p>
+                  </div>
+                  <div className="lp-mega-service-grid">
+                    {SERVICE_GROUPS.map((group) => (
+                      <section key={group.href} className="lp-mega-service-group">
+                        <Link href={group.href} className="lp-mega-group-title">
+                          <span className="lp-icon-badge lp-icon-badge--sm">
+                            <LPIcon name={serviceIcons[group.href] ?? "sparkles"} size={18} />
+                          </span>
+                          {group.label}
+                        </Link>
+                        <ul>
+                          {group.items.map((item) => (
+                            <li key={item.href}>
+                              <Link href={item.href}>{item.label}</Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div
+              className="lp-nav-dropdown"
+              onMouseEnter={() => setOpenMenu("areas")}
+              onMouseLeave={() => setOpenMenu(null)}
+            >
+              <button
+                type="button"
+                className={areaActive ? "is-active" : ""}
+                aria-expanded={openMenu === "areas"}
+                aria-controls="lp-areas-menu"
+                onClick={() => setOpenMenu(openMenu === "areas" ? null : "areas")}
+              >
+                Areas
+                <LPIcon name="chevron-down" size={16} />
+              </button>
+              {openMenu === "areas" && (
+                <div id="lp-areas-menu" className="lp-mega lp-mega--areas">
+                  <div className="lp-mega-intro">
+                    <span>London and Birmingham</span>
+                    <h2>Local letting support where demand is moving.</h2>
+                    <p>Explore area guides, market highlights, and services available nearby.</p>
+                  </div>
+                  <div className="lp-mega-area-grid">
+                    {AREAS.map((area) => (
+                      <Link key={area.slug} href={getAreaHref(area.slug)}>
+                        <span>{area.title}</span>
+                        <small>{area.coverageLabel}</small>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {topLinks.slice(1).map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={pathname === link.href || (link.href !== "/" && pathname.startsWith(`${link.href}/`)) ? "is-active" : ""}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="lp-header-actions">
+            <a href="tel:07782273674" className="lp-phone-link">
+              <LPIcon name="phone" size={17} />
+              07782 273674
+            </a>
+            <Link href="/contact" className="lp-btn lp-btn--gold lp-btn--sm">
+              Speak to Us
+            </Link>
+          </div>
+
+          <button
+            type="button"
+            className="lp-menu-button"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((value) => !value)}
+          >
+            <LPIcon name={mobileOpen ? "x" : "menu"} size={24} />
+          </button>
+        </div>
+      </header>
+
+      {mobileOpen && (
+        <div className="lp-mobile-shell" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+          <div className="lp-mobile-panel">
+            <div className="lp-mobile-panel-head">
+              <Image src={LOGO.main} alt="Letting Partners" width={154} height={44} />
+              <button type="button" onClick={() => setMobileOpen(false)} aria-label="Close menu">
+                <LPIcon name="x" size={24} />
+              </button>
+            </div>
+
+            <nav className="lp-mobile-nav" aria-label="Mobile primary navigation">
+              {topLinks.map((link) => (
+                <Link key={link.href} href={link.href}>
+                  {link.label}
+                </Link>
+              ))}
+
+              <button
+                type="button"
+                aria-expanded={mobileGroup === "services"}
+                onClick={() => setMobileGroup(mobileGroup === "services" ? null : "services")}
+              >
+                Services
+                <LPIcon name="chevron-down" size={17} />
+              </button>
+              {mobileGroup === "services" && (
+                <div className="lp-mobile-subnav">
                   {SERVICE_GROUPS.map((group) => (
-                    <div key={group.href} className="lp-mobile-sub-group">
-                      <span className="lp-mobile-sub-group-label">{group.eyebrow}</span>
+                    <div key={group.href}>
+                      <Link href={group.href} className="lp-mobile-subnav-heading">
+                        {group.label}
+                      </Link>
                       {group.items.map((item) => (
-                        <Link key={item.href} href={item.href} className="lp-mobile-sub-link">
-                          <i className={`fa-solid ${item.icon}`} aria-hidden="true" />
+                        <Link key={item.href} href={item.href}>
                           {item.label}
                         </Link>
                       ))}
@@ -290,35 +230,44 @@ export default function SiteHeader() {
                 </div>
               )}
 
-              <Link href="/properties" className="lp-mobile-link">Properties</Link>
-              <Link href="/about" className="lp-mobile-link">About</Link>
-              <Link href="/contact" className="lp-mobile-link">Contact</Link>
+              <button
+                type="button"
+                aria-expanded={mobileGroup === "areas"}
+                onClick={() => setMobileGroup(mobileGroup === "areas" ? null : "areas")}
+              >
+                Areas
+                <LPIcon name="chevron-down" size={17} />
+              </button>
+              {mobileGroup === "areas" && (
+                <div className="lp-mobile-subnav lp-mobile-subnav--areas">
+                  {AREAS.map((area) => (
+                    <Link key={area.slug} href={getAreaHref(area.slug)}>
+                      {area.title}
+                    </Link>
+                  ))}
+                  <Link href="/areas" className="lp-mobile-subnav-heading">
+                    All Areas
+                  </Link>
+                </div>
+              )}
             </nav>
 
-            <div className="lp-mobile-nav-footer">
-              <a href="tel:07782273674" className="lp-mobile-phone">
-                <i className="fa-solid fa-phone" aria-hidden="true" />
+            <div className="lp-mobile-contact">
+              <a href="tel:07782273674">
+                <LPIcon name="phone" size={17} />
                 07782 273674
               </a>
-              <a href="mailto:info@lettingpartners.co.uk" className="lp-mobile-email">
-                <i className="fa-solid fa-envelope" aria-hidden="true" />
+              <a href="mailto:info@lettingpartners.co.uk">
+                <LPIcon name="mail" size={17} />
                 info@lettingpartners.co.uk
               </a>
-              <Link href="/contact" className="lp-btn lp-btn--gold" style={{ width: "100%", textAlign: "center" }}>
-                Get In Touch
+              <Link href="/contact" className="lp-btn lp-btn--gold">
+                Speak to Letting Partners
               </Link>
             </div>
           </div>
+          <button className="lp-mobile-backdrop" aria-label="Close menu" onClick={() => setMobileOpen(false)} />
         </div>
-      )}
-
-      {/* Mobile overlay */}
-      {mobileOpen && (
-        <div
-          className="lp-mobile-overlay"
-          onClick={() => setMobileOpen(false)}
-          aria-hidden="true"
-        />
       )}
     </>
   );

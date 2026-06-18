@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import LPIcon from "@/components/LPIcon";
 import WebsitePropertyCard, { WebsiteProperty } from "@/components/WebsitePropertyCard";
 import { getWebsiteApiJson, WebsiteApiEnvelope } from "@/lib/website-api";
 
@@ -45,19 +46,21 @@ export default function PropertiesGrid({ limit, area, showSearch }: Props) {
   }, [limit, area]);
 
   const filtered = search
-    ? properties.filter(
-        (p) =>
-          p.title?.toLowerCase().includes(search.toLowerCase()) ||
-          p.address?.toLowerCase().includes(search.toLowerCase()) ||
-          p.area?.toLowerCase().includes(search.toLowerCase())
-      )
+    ? properties.filter((property) => {
+        const value = search.toLowerCase();
+        return (
+          property.title?.toLowerCase().includes(value) ||
+          property.address?.toLowerCase().includes(value) ||
+          property.area?.toLowerCase().includes(value)
+        );
+      })
     : properties;
 
   if (loading) {
     return (
       <div className="lp-properties-grid">
-        {Array.from({ length: limit ?? 6 }).map((_, i) => (
-          <div key={i} className="lp-skeleton lp-skeleton--card" aria-hidden="true" />
+        {Array.from({ length: limit ?? 6 }).map((_, index) => (
+          <div key={index} className="lp-skeleton lp-skeleton--card" aria-hidden="true" />
         ))}
       </div>
     );
@@ -66,7 +69,7 @@ export default function PropertiesGrid({ limit, area, showSearch }: Props) {
   if (error) {
     return (
       <div className="lp-empty-state">
-        <i className="fa-solid fa-triangle-exclamation lp-empty-icon" aria-hidden="true" />
+        <LPIcon name="alert" className="lp-empty-icon" size={48} />
         <p>{error}</p>
       </div>
     );
@@ -77,13 +80,13 @@ export default function PropertiesGrid({ limit, area, showSearch }: Props) {
       {showSearch && (
         <div className="lp-properties-search-bar">
           <div className="lp-properties-search-input-wrap">
-            <i className="fa-solid fa-magnifying-glass" aria-hidden="true" />
+            <LPIcon name="search" size={18} />
             <input
               type="search"
               className="lp-form-input"
-              placeholder="Search by title, address, or area…"
+              placeholder="Search by title, address, or area..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(event) => setSearch(event.target.value)}
               aria-label="Search properties"
             />
           </div>
@@ -92,14 +95,14 @@ export default function PropertiesGrid({ limit, area, showSearch }: Props) {
 
       {filtered.length === 0 ? (
         <div className="lp-empty-state">
-          <i className="fa-solid fa-house-circle-xmark lp-empty-icon" aria-hidden="true" />
+          <LPIcon name="home" className="lp-empty-icon" size={48} />
           <h3>No properties found</h3>
-          <p>Check back soon — we are regularly adding new listings.</p>
+          <p>Check back soon. We are regularly adding new listings.</p>
         </div>
       ) : (
         <div className="lp-properties-grid">
-          {filtered.map((p) => (
-            <WebsitePropertyCard key={p.id} property={p} />
+          {filtered.map((property) => (
+            <WebsitePropertyCard key={property.id} property={property} />
           ))}
         </div>
       )}

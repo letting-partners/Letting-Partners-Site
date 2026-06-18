@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import LPIcon from "@/components/LPIcon";
 
 type Testimonial = {
   name: string;
@@ -42,7 +43,7 @@ export default function TestimonialsSlider({ items }: { items: Testimonial[] }) 
           <blockquote key={i} className="lp-testimonial-slide">
             <div className="lp-testimonial-stars" aria-label={`${t.stars} stars`}>
               {Array.from({ length: t.stars }).map((_, j) => (
-                <i key={j} className="fa-solid fa-star" aria-hidden="true" />
+                <LPIcon key={j} name="star" size={18} />
               ))}
             </div>
             <p className="lp-testimonial-text">&ldquo;{t.text}&rdquo;</p>
@@ -60,7 +61,7 @@ export default function TestimonialsSlider({ items }: { items: Testimonial[] }) 
           onClick={() => goTo((current - 1 + items.length) % items.length)}
           aria-label="Previous review"
         >
-          <i className="fa-solid fa-chevron-left" aria-hidden="true" />
+          <LPIcon name="chevron-left" size={18} />
         </button>
 
         <div className="lp-testimonials-dots" role="tablist">
@@ -81,7 +82,7 @@ export default function TestimonialsSlider({ items }: { items: Testimonial[] }) 
           onClick={() => goTo((current + 1) % items.length)}
           aria-label="Next review"
         >
-          <i className="fa-solid fa-chevron-right" aria-hidden="true" />
+          <LPIcon name="chevron-right" size={18} />
         </button>
       </div>
     </div>

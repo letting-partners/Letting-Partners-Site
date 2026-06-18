@@ -1,19 +1,18 @@
 import Link from "next/link";
+import LPIcon from "@/components/LPIcon";
 
 export default function NotFound() {
   return (
-    <section className="lp-section" style={{ paddingTop: "140px", minHeight: "70vh", display: "flex", alignItems: "center" }}>
+    <section className="lp-section lp-not-found">
       <div className="lp-container">
         <div className="lp-empty-state">
-          <div className="lp-empty-icon" style={{ fontSize: "4rem", color: "var(--lp-gold)" }}>
-            <i className="fa-solid fa-house-circle-exclamation" aria-hidden="true" />
-          </div>
-          <h1 style={{ fontSize: "3rem", fontWeight: 800, marginBottom: "0.5rem" }}>404</h1>
-          <h2>Page not found</h2>
+          <LPIcon name="home" className="lp-empty-icon" size={58} />
+          <p className="lp-kicker">404</p>
+          <h1>Page not found</h1>
           <p>The page you are looking for does not exist or has been moved.</p>
-          <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/" className="lp-btn lp-btn--gold lp-btn--lg">Go Home</Link>
-            <Link href="/contact" className="lp-btn lp-btn--outline lp-btn--lg">Contact Us</Link>
+          <div className="lp-inline-actions lp-inline-actions--center">
+            <Link href="/" className="lp-btn lp-btn--gold">Go Home</Link>
+            <Link href="/contact" className="lp-btn lp-btn--outline">Contact Us</Link>
           </div>
         </div>
       </div>

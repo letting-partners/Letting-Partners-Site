@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import LPIcon from "@/components/LPIcon";
 
 type Faq = { question: string; answer: string };
 
@@ -17,10 +18,7 @@ export default function AreaFaqAccordion({ faqs }: { faqs: Faq[] }) {
             aria-expanded={open === i}
           >
             <span>{faq.question}</span>
-            <i
-              className={`fa-solid ${open === i ? "fa-minus" : "fa-plus"} lp-faq-icon`}
-              aria-hidden="true"
-            />
+            <LPIcon name={open === i ? "minus" : "plus"} size={18} />
           </button>
           {open === i && (
             <div className="lp-faq-body">

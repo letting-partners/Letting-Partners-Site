@@ -1,22 +1,15 @@
 import type { Metadata } from "next";
-import { SERVICE_GROUPS } from "@/lib/services";
-import ServiceLandingPage from "@/components/ServiceLandingPage";
+import ServiceDetailPage from "@/components/ServiceDetailPage";
+import { getServiceDetailByHref } from "@/lib/service-pages";
 
-const group = SERVICE_GROUPS.find((g) => g.href === "/specialist-legal-support")!;
+const service = getServiceDetailByHref("/specialist-legal-support")!;
 
 export const metadata: Metadata = {
-  title: "Specialist Legal Support | Letting Partners",
-  description:
-    "Access SRA-regulated legal specialists for tenancy disputes, Section 8 and 21 notices, rent arrears, and possession proceedings with Letting Partners.",
-  keywords: [
-    "specialist legal support landlords London",
-    "Section 8 notice London",
-    "Section 21 notice London",
-    "rent arrears recovery London",
-    "tenancy dispute solicitor",
-  ],
+  title: service.seoTitle,
+  description: service.seoDescription,
+  keywords: service.keywords,
 };
 
 export default function SpecialistLegalSupportPage() {
-  return <ServiceLandingPage group={group} />;
+  return <ServiceDetailPage service={service} />;
 }

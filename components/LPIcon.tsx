@@ -1,8 +1,11 @@
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
+  ArrowUp,
   Award,
   Banknote,
+  Bath,
+  BedDouble,
   BookOpen,
   Building2,
   CalendarCheck,
@@ -48,8 +51,11 @@ import {
 export type LPIconName =
   | "alert"
   | "arrow-right"
+  | "arrow-up"
   | "award"
   | "banknote"
+  | "bath"
+  | "bed"
   | "book"
   | "building"
   | "calendar"
@@ -92,8 +98,11 @@ export type LPIconName =
 const ICONS: Record<LPIconName, LucideIcon> = {
   alert: CircleAlert,
   "arrow-right": ArrowRight,
+  "arrow-up": ArrowUp,
   award: Award,
   banknote: Banknote,
+  bath: Bath,
+  bed: BedDouble,
   book: BookOpen,
   building: Building2,
   calendar: CalendarCheck,

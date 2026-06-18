@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { SERVICE_GROUPS } from "@/lib/services";
-import ServiceLandingPage from "@/components/ServiceLandingPage";
+import ServiceDetailPage from "@/components/ServiceDetailPage";
+import { getServiceDetailByHref } from "@/lib/service-pages";
 
-const group = SERVICE_GROUPS.find((g) => g.href === "/tenant-services")!;
+const service = getServiceDetailByHref("/tenant-services")!;
 
 export const metadata: Metadata = {
-  title: "Tenant Services | Letting Partners",
-  description:
-    "Tenant services from Letting Partners — register as a tenant, explore student accommodation, and access our comprehensive tenant guide for London and Birmingham rentals.",
-  keywords: ["tenant services London", "register as tenant London", "renting guide London", "student accommodation London"],
+  title: service.seoTitle,
+  description: service.seoDescription,
+  keywords: service.keywords,
 };
 
 export default function TenantServicesPage() {
-  return <ServiceLandingPage group={group} />;
+  return <ServiceDetailPage service={service} />;
 }

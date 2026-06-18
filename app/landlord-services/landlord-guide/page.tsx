@@ -1,66 +1,70 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import LPIcon, { type LPIconName } from "@/components/LPIcon";
 import { PAGE_BANNER_IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Landlord Guide | Letting Partners",
   description:
-    "The Letting Partners landlord guide — ASTs, deposit protection, compliance obligations, and what to expect from a letting agent in England.",
+    "The Letting Partners landlord guide covers ASTs, deposit protection, safety certificates, Right to Rent, repairs, and notices in England.",
   keywords: ["landlord guide UK", "landlord obligations England", "AST guide landlord", "deposit protection landlord UK"],
 };
 
-const GUIDE_SECTIONS = [
-  { icon: "fa-file-signature", title: "Assured Shorthold Tenancies (ASTs)", content: "The majority of private residential lettings are governed by Assured Shorthold Tenancies. An AST gives your tenant the right to occupy the property for a fixed or periodic term. It must be in writing and should clearly set out rent, term, deposit details, and obligations on both sides." },
-  { icon: "fa-shield-halved", title: "Deposit Protection", content: "All deposits taken from assured shorthold tenants must be protected in a government-approved scheme (TDS, DPS, or MyDeposits) within 30 days of receipt. You must provide the tenant with prescribed information about the scheme. Failure to comply carries significant financial penalties." },
-  { icon: "fa-screwdriver-wrench", title: "Repair & Maintenance Obligations", content: "Landlords are legally required to maintain the structure, exterior, heating, hot water, and electrical and gas installations in proper working order under the Landlord and Tenant Act 1985. The Homes (Fitness for Human Habitation) Act 2018 adds further obligations around habitability." },
-  { icon: "fa-file-certificate", title: "Safety Certificates", content: "You must provide an annual gas safety certificate (CP12), carry out an EICR (Electrical Installation Condition Report) every five years, and ensure the property has working smoke alarms on each floor and carbon monoxide detectors where required. A valid EPC (rated E or above) is required before letting." },
-  { icon: "fa-passport", title: "Right to Rent", content: "Before granting a tenancy, landlords and agents must carry out Right to Rent checks to confirm all adult occupants have the legal right to rent residential property in England. Failure to comply carries civil and criminal penalties." },
-  { icon: "fa-door-open", title: "Possession & Notices", content: "If you need to regain possession of your property, you must follow the correct legal process. Section 21 (no-fault) and Section 8 (fault-based) notices have specific requirements around timing, service, and form. These rules are subject to ongoing legislative change — our team stays current with all updates." },
+const guideSections: Array<{ icon: LPIconName; title: string; content: string }> = [
+  { icon: "file", title: "Assured Shorthold Tenancies", content: "Most private residential lettings are governed by Assured Shorthold Tenancies. The AST should set out rent, term, deposit details, obligations, and the possession process clearly." },
+  { icon: "shield", title: "Deposit Protection", content: "Deposits for assured shorthold tenants must be protected in a government-approved scheme within 30 days, with prescribed information served correctly." },
+  { icon: "wrench", title: "Repair Obligations", content: "Landlords must maintain the structure, exterior, heating, hot water, and electrical and gas installations in proper working order." },
+  { icon: "file-check", title: "Safety Certificates", content: "Gas safety, EICR, EPC, smoke alarms, and carbon monoxide requirements must be handled before and during a tenancy where applicable." },
+  { icon: "clipboard", title: "Right to Rent", content: "Right to Rent checks must confirm all adult occupants have the legal right to rent residential property in England." },
+  { icon: "scale", title: "Possession and Notices", content: "Section 21 and Section 8 notices have strict requirements around timing, form, service, and supporting documents." },
 ];
 
 export default function LandlordGuidePage() {
   return (
     <>
       <section className="lp-page-hero">
-        <div className="lp-page-hero-img-wrap">
-          <Image src={PAGE_BANNER_IMAGES.landlordGuide} alt="Landlord guide" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-          <div className="lp-page-hero-overlay" />
-        </div>
+        <Image src={PAGE_BANNER_IMAGES.landlordGuide} alt="Landlord property paperwork" fill preload sizes="100vw" className="lp-cover-img" />
+        <div className="lp-image-overlay" />
         <div className="lp-container lp-page-hero-content">
-          <span className="lp-eyebrow lp-eyebrow--light">For Landlords</span>
-          <h1 className="lp-page-hero-title">The Letting Partners Landlord Guide</h1>
-          <p className="lp-page-hero-text">Your obligations, your rights, and what to expect — explained clearly and without jargon.</p>
+          <span className="lp-kicker lp-kicker--light">For Landlords</span>
+          <h1>The Letting Partners landlord guide.</h1>
+          <p>Your obligations, documents, notices, and best-practice letting steps explained clearly.</p>
         </div>
       </section>
 
       <section className="lp-section">
         <div className="lp-container">
-          <div className="lp-section-header" data-lp-animate>
-            <span className="lp-eyebrow">Key Topics</span>
-            <h2 className="lp-h2">Landlord Obligations &amp; Best Practice</h2>
-            <p className="lp-section-subtitle">A plain-English guide updated to reflect current UK letting legislation.</p>
+          <div className="lp-section-head" data-lp-animate>
+            <span className="lp-kicker">Key Topics</span>
+            <h2>Landlord obligations and best practice.</h2>
+            <p>This guide is a practical starting point. For a specific case, speak to Letting Partners directly.</p>
           </div>
-          <div className="lp-feature-cards" data-lp-animate>
-            {GUIDE_SECTIONS.map((s) => (
-              <div key={s.title} className="lp-feature-card">
-                <div className="lp-feature-card-icon"><i className={`fa-solid ${s.icon}`} aria-hidden="true" /></div>
-                <h3 className="lp-feature-card-title">{s.title}</h3>
-                <p className="lp-feature-card-text">{s.content}</p>
-              </div>
+          <div className="lp-card-grid lp-card-grid--three" data-lp-animate>
+            {guideSections.map((section) => (
+              <article key={section.title} className="lp-card">
+                <span className="lp-icon-badge">
+                  <LPIcon name={section.icon} />
+                </span>
+                <h3>{section.title}</h3>
+                <p>{section.content}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="lp-section lp-section--navy">
+      <section className="lp-section lp-section--cta">
         <div className="lp-container">
-          <div className="lp-cta-centered" data-lp-animate>
-            <h2 className="lp-cta-centered-title">Ready to let your property compliantly?</h2>
-            <p className="lp-cta-centered-text">Our team manages compliance obligations on your behalf — from safety certificates to deposit protection.</p>
-            <div className="lp-cta-centered-actions">
-              <Link href="/contact" className="lp-btn lp-btn--gold lp-btn--lg">Speak to Our Team</Link>
-              <Link href="/landlord-services" className="lp-btn lp-btn--outline-light lp-btn--lg">Landlord Services</Link>
+          <div className="lp-cta-band" data-lp-animate>
+            <div>
+              <span className="lp-kicker lp-kicker--light">Need managed support?</span>
+              <h2>Letting Partners can handle the details for you.</h2>
+              <p>From safety documents to tenant placement and full management, we help landlords move forward with clarity.</p>
+            </div>
+            <div className="lp-cta-actions">
+              <Link href="/landlord-services/property-letting" className="lp-btn lp-btn--gold">List Your Property</Link>
+              <Link href="/contact" className="lp-btn lp-btn--glass">Speak to Letting Partners</Link>
             </div>
           </div>
         </div>
