@@ -285,21 +285,17 @@ a:hover .lp-text-link svg,
   display: inline-flex;
   align-items: center;
   flex: 0 0 auto;
-  border-radius: 14px;
-  padding: 6px 10px;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 10px 26px rgba(7, 24, 38, 0.12);
-  transition: background 220ms var(--lp-ease), box-shadow 220ms var(--lp-ease);
-}
-
-.lp-header--scrolled .lp-header-logo {
-  background: transparent;
-  box-shadow: none;
 }
 
 .lp-header-logo img {
   width: 178px;
   height: auto;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45));
+  transition: filter 220ms var(--lp-ease);
+}
+
+.lp-header--scrolled .lp-header-logo img {
+  filter: none;
 }
 
 .lp-desktop-nav {

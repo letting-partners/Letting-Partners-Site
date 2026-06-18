@@ -139,7 +139,7 @@ export const AREAS: Area[] = [
     title: "Stratford",
     coverageLabel: "Regeneration Hotspot",
     description: "East London's most transformed rental destination.",
-    image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=900&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/London_Queen_Elizabeth_Olympic_Park.jpg/1280px-London_Queen_Elizabeth_Olympic_Park.jpg",
     menuDescription: "Post-Olympic regeneration area with new-build demand and exceptional transport links.",
     overview:
       "Stratford has undergone one of London's most dramatic regenerations, driven by the 2012 Olympics and substantial ongoing investment. Today it attracts young professionals, international tenants, and investors drawn by its connectivity, modern housing stock, and thriving local economy. Letting Partners helps clients make the most of this dynamic market.",

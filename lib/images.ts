@@ -10,7 +10,7 @@ export const LOGO = {
 // HERO / BANNER
 // ---------------------------------------------------------------------------
 export const HERO_IMAGES = {
-  home: "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=1600&q=80",
+  home: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Terraced_houses_in_Kensington_%28Unsplash%29.jpg",
 };
 
 // ---------------------------------------------------------------------------
@@ -47,7 +47,7 @@ export const PAGE_BANNER_IMAGES = {
 export const AREA_BANNER_IMAGES: Record<string, string> = {
   ilford:       "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1600&q=80",
   redbridge:    "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1600&q=80",
-  stratford:    "https://images.unsplash.com/photo-1535077975-5cad2f9c5b9a?w=1600&q=80",
+  stratford:    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/London_Queen_Elizabeth_Olympic_Park.jpg/1280px-London_Queen_Elizabeth_Olympic_Park.jpg",
   barking:      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1600&q=80",
   walthamstow:  "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1600&q=80",
   croydon:      "https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=1600&q=80",
@@ -61,7 +61,7 @@ export const AREA_BANNER_IMAGES: Record<string, string> = {
 export const AREA_IMAGES: Record<string, string> = {
   ilford:       "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80",
   redbridge:    "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=600&q=80",
-  stratford:    "https://images.unsplash.com/photo-1535077975-5cad2f9c5b9a?w=600&q=80",
+  stratford:    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/London_Queen_Elizabeth_Olympic_Park.jpg/640px-London_Queen_Elizabeth_Olympic_Park.jpg",
   barking:      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&q=80",
   walthamstow:  "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80",
   croydon:      "https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=600&q=80",
@@ -75,7 +75,7 @@ export const AREA_IMAGES: Record<string, string> = {
 export const AREA_MENU_IMAGES: Record<string, string> = {
   ilford:       "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=480&q=80",
   redbridge:    "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=480&q=80",
-  stratford:    "https://images.unsplash.com/photo-1535077975-5cad2f9c5b9a?w=480&q=80",
+  stratford:    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/London_Queen_Elizabeth_Olympic_Park.jpg/640px-London_Queen_Elizabeth_Olympic_Park.jpg",
   barking:      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=480&q=80",
   walthamstow:  "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=480&q=80",
   croydon:      "https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=480&q=80",
