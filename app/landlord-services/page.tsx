@@ -7,7 +7,7 @@ const group = SERVICE_GROUPS.find((g) => g.href === "/landlord-services")!;
 export const metadata: Metadata = {
   title: "Landlord Services | Letting Partners",
   description:
-    "Professional landlord services from Letting Partners — property letting, tenant placement, rent to rent, full management, and compliance support across London and Birmingham.",
+    "Professional landlord services from Letting Partners - property letting, tenant placement, rent to rent, full management, and compliance support across London and Birmingham.",
   keywords: [
     "landlord services London",
     "property letting London",

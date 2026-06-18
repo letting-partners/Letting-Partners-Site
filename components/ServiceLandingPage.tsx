@@ -106,7 +106,7 @@ export default function ServiceLandingPage({ group }: { group: ServiceGroup }) {
             {group.items.map((item) => (
               <Link key={item.href} href={item.href} className="lp-card lp-card--link">
                 <span className="lp-icon-badge">
-                  <LPIcon name="arrow-right" />
+                  <LPIcon name={item.icon as LPIconName} />
                 </span>
                 <h3>{item.label}</h3>
                 <p>{item.description}</p>

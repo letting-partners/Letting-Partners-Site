@@ -45,7 +45,7 @@ export type ComprehensiveServiceCard = {
 
 export const COMPREHENSIVE_PROPERTY_SERVICES: ComprehensiveServiceCard[] = [
   {
-    icon: "fa-house-chimney",
+    icon: "home",
     title: "Property Letting",
     text: "Achieve the right rental figure with a structured, professional approach to letting.",
     points: [
@@ -57,7 +57,7 @@ export const COMPREHENSIVE_PROPERTY_SERVICES: ComprehensiveServiceCard[] = [
     ctaLabel: "Start Letting",
   },
   {
-    icon: "fa-screwdriver-wrench",
+    icon: "wrench",
     title: "Property Management",
     text: "Structured day-to-day management so your property runs smoothly without your constant involvement.",
     points: [
@@ -69,7 +69,7 @@ export const COMPREHENSIVE_PROPERTY_SERVICES: ComprehensiveServiceCard[] = [
     ctaLabel: "Explore Management",
   },
   {
-    icon: "fa-arrows-rotate",
+    icon: "trending",
     title: "Rent to Rent",
     text: "Structured rent-to-rent solutions offering predictable income for landlords.",
     points: [
@@ -81,9 +81,9 @@ export const COMPREHENSIVE_PROPERTY_SERVICES: ComprehensiveServiceCard[] = [
     ctaLabel: "Explore Rent To Rent",
   },
   {
-    icon: "fa-hammer",
+    icon: "hammer",
     title: "Repair & Maintenance",
-    text: "Prompt, professional repairs — coordinated so you never need to chase.",
+    text: "Prompt, professional repairs - coordinated so you never need to chase.",
     points: [
       "Rapid response to urgent maintenance callouts across all property types",
       "Vetted contractors delivering consistent, reliable workmanship",
@@ -93,7 +93,7 @@ export const COMPREHENSIVE_PROPERTY_SERVICES: ComprehensiveServiceCard[] = [
     ctaLabel: "Request Repairs",
   },
   {
-    icon: "fa-building-columns",
+    icon: "landmark",
     title: "Mortgage Consultancy",
     text: "Straightforward mortgage guidance for buyers, landlords, and property investors.",
     points: [
@@ -105,7 +105,7 @@ export const COMPREHENSIVE_PROPERTY_SERVICES: ComprehensiveServiceCard[] = [
     ctaLabel: "Discuss Options",
   },
   {
-    icon: "fa-helmet-safety",
+    icon: "hardhat",
     title: "Construction & Development",
     text: "End-to-end support for extensions, conversions, and new-build projects.",
     points: [
@@ -124,9 +124,9 @@ export const OTHER_SERVICE_PAGES: OtherServicePage[] = [
     href: "/other-services/repair-maintenance",
     label: "Repair & Maintenance",
     description: "Prompt, professional repairs coordinated so you never have to chase.",
-    icon: "fa-hammer",
+    icon: "hammer",
     ctaLabel: "Request Repair Support",
-    heroTitle: "Reliable repair and maintenance — handled from start to finish.",
+    heroTitle: "Reliable repair and maintenance - handled from start to finish.",
     heroText:
       "Letting Partners coordinates responsive repair and maintenance support for landlords and tenants across London and Birmingham. We take ownership of the process so issues move from reported to resolved without unnecessary delay.",
     panelLabel: "Responsive Property Care",
@@ -173,11 +173,11 @@ export const OTHER_SERVICE_PAGES: OtherServicePage[] = [
     href: "/other-services/mortgage-consultancy",
     label: "Mortgage Consultancy",
     description: "Straightforward mortgage guidance for buyers, landlords, and investors.",
-    icon: "fa-building-columns",
+    icon: "landmark",
     ctaLabel: "Discuss Mortgage Options",
     heroTitle: "Mortgage guidance that makes the path forward clearer.",
     heroText:
-      "Letting Partners connects clients with experienced mortgage professionals who provide plain-English advice on residential, buy-to-let, and portfolio finance — helping you move forward with confidence.",
+      "Letting Partners connects clients with experienced mortgage professionals who provide plain-English advice on residential, buy-to-let, and portfolio finance - helping you move forward with confidence.",
     panelLabel: "Practical Finance Guidance",
     image: PAGE_BANNER_IMAGES.mortgageConsultancy,
     storyImage: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=900&q=80",
@@ -222,11 +222,11 @@ export const OTHER_SERVICE_PAGES: OtherServicePage[] = [
     href: "/other-services/construction-development",
     label: "Construction & Development",
     description: "End-to-end support for extensions, conversions, and new-build projects.",
-    icon: "fa-helmet-safety",
+    icon: "hardhat",
     ctaLabel: "Plan Your Project",
     heroTitle: "Construction and development delivered on time and on brief.",
     heroText:
-      "Letting Partners supports property owners with extensions, conversions, loft developments, and new-build projects — combining reliable contractor coordination with clear communication throughout every stage.",
+      "Letting Partners supports property owners with extensions, conversions, loft developments, and new-build projects - combining reliable contractor coordination with clear communication throughout every stage.",
     panelLabel: "Build With Confidence",
     image: PAGE_BANNER_IMAGES.constructionDevelopment,
     storyImage: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80",
@@ -240,7 +240,7 @@ export const OTHER_SERVICE_PAGES: OtherServicePage[] = [
     support: [
       {
         title: "Extensions & Conversions",
-        text: "Plan practical improvements — loft conversions, rear extensions, or outbuilding works — that add genuine value and improve the property's long-term rental or resale appeal.",
+        text: "Plan practical improvements - loft conversions, rear extensions, or outbuilding works - that add genuine value and improve the property's long-term rental or resale appeal.",
       },
       {
         title: "New-Build Development",
@@ -277,10 +277,10 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     href: "/tenant-services",
     label: "Tenant Services",
     eyebrow: "For Renters",
-    description: "Practical support for every stage of your tenancy — from your first search to moving in and beyond.",
+    description: "Practical support for every stage of your tenancy - from your first search to moving in and beyond.",
     overview:
       "Register your requirements, access our tenant guide, or explore student accommodation options with a team that genuinely supports renters.",
-    icon: "fa-key",
+    icon: "key",
     image: "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=600&q=80",
     ctaLabel: "View Tenant Services",
     highlights: [
@@ -293,19 +293,19 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
         href: "/tenant-services/register-as-tenant",
         label: "Register As A Tenant",
         description: "Share your requirements and we will match you to available properties.",
-        icon: "fa-clipboard-check",
+        icon: "clipboard",
       },
       {
         href: "/tenant-services/student-accommodation",
         label: "Student Accommodation",
         description: "Rooms, studios, and shared houses suited to student life in London.",
-        icon: "fa-graduation-cap",
+        icon: "graduation",
       },
       {
         href: "/tenant-services/tenant-guide",
         label: "Tenant Guide",
         description: "Everything you need to know about ASTs, deposits, referencing, and your rights.",
-        icon: "fa-book-open",
+        icon: "book",
       },
     ],
   },
@@ -316,7 +316,7 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     description: "Professional letting, management, and compliance support designed to protect your investment.",
     overview:
       "From tenant placement to full portfolio management, we handle the details so you can focus on what matters.",
-    icon: "fa-building-user",
+    icon: "building",
     image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80",
     ctaLabel: "View Landlord Services",
     highlights: [
@@ -329,31 +329,31 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
         href: "/landlord-services/property-letting",
         label: "Property Letting",
         description: "List, market, and let your property with a professional, structured approach.",
-        icon: "fa-house-chimney",
+        icon: "home",
       },
       {
         href: "/landlord-services/find-a-tenant",
         label: "Find A Tenant",
         description: "Reduce void periods with proactive listing and our pre-registered tenant pool.",
-        icon: "fa-user-plus",
+        icon: "user-plus",
       },
       {
         href: "/landlord-services/rent-to-rent",
         label: "Rent To Rent",
         description: "Explore guaranteed-income arrangements with structured sublet management.",
-        icon: "fa-arrows-rotate",
+        icon: "trending",
       },
       {
         href: "/landlord-services/property-management",
         label: "Property Management",
         description: "Day-to-day management, maintenance co-ordination, and regular reporting.",
-        icon: "fa-screwdriver-wrench",
+        icon: "wrench",
       },
       {
         href: "/landlord-services/landlord-guide",
         label: "Landlord Guide",
         description: "Read our guide to ASTs, deposits, compliance obligations, and service levels.",
-        icon: "fa-file-lines",
+        icon: "file",
       },
     ],
   },
@@ -364,7 +364,7 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     description: "Access to SRA-regulated legal specialists for disputes, rent arrears, and possession proceedings.",
     overview:
       "When a tenancy issue requires specialist attention, we connect you with trusted legal partners and remain your property point of contact throughout.",
-    icon: "fa-scale-balanced",
+    icon: "scale",
     image: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=600&q=80",
     ctaLabel: "View Legal Support",
     highlights: [
@@ -377,19 +377,19 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
         href: "/specialist-legal-support/disputes-notices",
         label: "Disputes & Legal Notices",
         description: "Section 8 and 21 notices, breach of tenancy, and deposit disputes.",
-        icon: "fa-file-contract",
+        icon: "file-check",
       },
       {
         href: "/specialist-legal-support/rent-arrears-possession",
         label: "Rent Arrears & Possession",
         description: "Arrears recovery strategies, possession proceedings, and court representation.",
-        icon: "fa-coins",
+        icon: "coins",
       },
       {
         href: "/specialist-legal-support/request-support",
         label: "Request Legal Support",
         description: "Complete a short form and we will connect you with the right specialist promptly.",
-        icon: "fa-headset",
+        icon: "headphones",
       },
     ],
   },
@@ -400,7 +400,7 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     description: "Maintenance co-ordination, mortgage guidance, and construction support for property owners.",
     overview:
       "Complete your property plans with dependable maintenance co-ordination, plain-English mortgage guidance, and full construction oversight.",
-    icon: "fa-toolbox",
+    icon: "wrench",
     image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80",
     ctaLabel: "View Additional Services",
     highlights: [

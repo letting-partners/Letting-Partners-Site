@@ -17,10 +17,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://letting-partners-site.vercel.app"),
-  title: {
-    default: "Letting Partners | UK Property Letting & Management",
-    template: "%s | Letting Partners",
-  },
+  title: "Letting Partners | UK Property Letting & Management",
   description:
     "Premium property letting, management, tenant support, legal coordination, maintenance, mortgage consultancy, and development support across London and Birmingham.",
   keywords: [
