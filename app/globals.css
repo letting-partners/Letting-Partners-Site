@@ -155,7 +155,7 @@ h1 {
 
 h2,
 .lp-h2 {
-  font-size: clamp(2rem, 4vw, 3.45rem);
+  font-size: clamp(1.75rem, 3.2vw, 2.65rem);
 }
 
 h3 {
@@ -937,6 +937,12 @@ a:hover .lp-text-link svg,
 
 .lp-split--intro {
   align-items: start;
+}
+
+.lp-split--intro h2 {
+  font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
 }
 
 .lp-split--image {
@@ -2091,7 +2097,7 @@ a:hover .lp-text-link svg,
 
   h2,
   .lp-h2 {
-    font-size: 2rem;
+    font-size: 1.65rem;
   }
 
   .lp-inline-actions .lp-btn,
