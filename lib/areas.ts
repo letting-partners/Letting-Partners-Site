@@ -484,12 +484,13 @@ export const AREAS: Area[] = [
   },
 ];
 
-export function getAreaHref(area: Area) {
-  return `/areas/${area.slug}`;
+export function getAreaHref(slug: string) {
+  return `/areas/${slug}`;
 }
 
-export function getAreaPropertiesHref(area: Area) {
-  return `/properties?area=${encodeURIComponent(area.title)}`;
+export function getAreaPropertiesHref(slug: string) {
+  const area = AREAS.find((a) => a.slug === slug);
+  return `/properties?area=${encodeURIComponent(area?.title ?? slug)}`;
 }
 
 export function getAreaBySlug(slug: string) {
