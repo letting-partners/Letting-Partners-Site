@@ -47,7 +47,7 @@ export const PAGE_BANNER_IMAGES = {
 export const AREA_BANNER_IMAGES: Record<string, string> = {
   ilford:       "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1600&q=80",
   redbridge:    "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1600&q=80",
-  stratford:    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/London_Queen_Elizabeth_Olympic_Park.jpg/1280px-London_Queen_Elizabeth_Olympic_Park.jpg",
+  stratford:    "https://unsplash.com/photos/white-and-red-tower-sqVnnuKD-Zw",
   barking:      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1600&q=80",
   walthamstow:  "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1600&q=80",
   croydon:      "https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=1600&q=80",
