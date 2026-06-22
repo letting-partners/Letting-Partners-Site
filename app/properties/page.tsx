@@ -22,7 +22,7 @@ export default function PropertiesPage() {
   return (
     <>
       <section className="lp-page-hero">
-        <Image src={PAGE_BANNER_IMAGES.properties} alt="Rental property interior" fill preload sizes="100vw" className="lp-cover-img" />
+        <Image src={PAGE_BANNER_IMAGES.properties} alt="Rental property interior" fill priority sizes="100vw" className="lp-cover-img" />
         <div className="lp-image-overlay" />
         <div className="lp-container lp-page-hero-content">
           <span className="lp-kicker lp-kicker--light">Available to Rent</span>

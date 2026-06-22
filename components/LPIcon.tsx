@@ -15,7 +15,6 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleAlert,
-  CircleCheck,
   ClipboardCheck,
   Clock,
   Coins,

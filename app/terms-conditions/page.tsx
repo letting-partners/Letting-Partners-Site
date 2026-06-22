@@ -15,7 +15,7 @@ export default function TermsConditionsPage() {
           src={PAGE_BANNER_IMAGES.landlordGuide}
           alt="Terms and Conditions"
           fill
-          preload
+          priority
           sizes="100vw"
           className="lp-cover-img"
         />

@@ -22,7 +22,7 @@ export default function RequestLegalSupportPage() {
   return (
     <>
       <section className="lp-page-hero">
-        <Image src={PAGE_BANNER_IMAGES.requestSupport} alt="Property legal support paperwork" fill preload sizes="100vw" className="lp-cover-img" />
+        <Image src={PAGE_BANNER_IMAGES.requestSupport} alt="Property legal support paperwork" fill priority sizes="100vw" className="lp-cover-img" />
         <div className="lp-image-overlay" />
         <div className="lp-container lp-page-hero-content">
           <span className="lp-kicker lp-kicker--light">Legal Support</span>

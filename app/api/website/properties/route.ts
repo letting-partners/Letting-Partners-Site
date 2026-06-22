@@ -1,10 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
+import { buildWebsiteApiUrl, websiteApiHeaders } from "@/lib/website-api";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const limit = parseInt(searchParams.get("limit") ?? "50", 10);
-  const area = searchParams.get("area") ?? "";
+  const query = searchParams.toString();
+  const upstreamUrl = buildWebsiteApiUrl(`/properties${query ? `?${query}` : ""}`, {
+    serverPortal: true,
+  });
 
-  // Stub: return empty list until a CMS/property feed is connected
-  return NextResponse.json({ ok: true, properties: [], total: 0, limit, area });
+  try {
+    const response = await fetch(upstreamUrl, {
+      cache: "no-store",
+      headers: websiteApiHeaders(),
+    });
+    const payload = await response.json().catch(() => ({
+      ok: false,
+      error: "Unable to load properties.",
+    }));
+
+    return NextResponse.json(payload, { status: response.status });
+  } catch (error) {
+    console.error("Website property proxy error:", error);
+    return NextResponse.json(
+      { ok: false, error: "Unable to load properties." },
+      { status: 502 },
+    );
+  }
 }

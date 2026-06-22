@@ -68,7 +68,7 @@ export default function SiteHeader() {
       <header className={`lp-header${scrolled ? " lp-header--scrolled" : ""}`}>
         <div className="lp-container lp-header-inner">
           <Link href="/" className="lp-header-logo" aria-label="Letting Partners home">
-            <Image src={LOGO.main} alt="Letting Partners" width={190} height={54} preload />
+            <Image src={LOGO.main} alt="Letting Partners" width={190} height={54} priority />
           </Link>
 
           <nav className="lp-desktop-nav" aria-label="Primary navigation">

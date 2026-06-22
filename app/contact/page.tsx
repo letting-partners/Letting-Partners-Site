@@ -22,7 +22,7 @@ export default function ContactPage() {
   return (
     <>
       <section className="lp-page-hero">
-        <Image src={PAGE_BANNER_IMAGES.contact} alt="UK residential property enquiry" fill preload sizes="100vw" className="lp-cover-img" />
+        <Image src={PAGE_BANNER_IMAGES.contact} alt="UK residential property enquiry" fill priority sizes="100vw" className="lp-cover-img" />
         <div className="lp-image-overlay" />
         <div className="lp-container lp-page-hero-content">
           <span className="lp-kicker lp-kicker--light">Contact Letting Partners</span>

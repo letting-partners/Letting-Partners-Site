@@ -156,7 +156,7 @@ export default function HomePage() {
   return (
     <>
       <section className="lp-home-hero">
-        <Image src={HERO_IMAGES.home} alt="London residential property street" fill preload sizes="100vw" className="lp-cover-img" />
+        <Image src={HERO_IMAGES.home} alt="London residential property street" fill priority sizes="100vw" className="lp-cover-img" />
         <div className="lp-image-overlay lp-image-overlay--hero" />
         <div className="lp-container lp-home-hero-grid">
           <div className="lp-home-hero-copy" data-lp-animate="fade">

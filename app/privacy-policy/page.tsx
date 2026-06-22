@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
           src={PAGE_BANNER_IMAGES.specialistLegal}
           alt="Privacy Policy"
           fill
-          preload
+          priority
           sizes="100vw"
           className="lp-cover-img"
         />

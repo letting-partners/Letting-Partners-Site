@@ -28,7 +28,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="lp-page-hero">
-        <Image src={PAGE_BANNER_IMAGES.about} alt="Premium UK residential property" fill preload sizes="100vw" className="lp-cover-img" />
+        <Image src={PAGE_BANNER_IMAGES.about} alt="Premium UK residential property" fill priority sizes="100vw" className="lp-cover-img" />
         <div className="lp-image-overlay" />
         <div className="lp-container lp-page-hero-content">
           <span className="lp-kicker lp-kicker--light">About Letting Partners</span>

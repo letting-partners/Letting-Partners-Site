@@ -53,7 +53,7 @@ export default function ServiceLandingPage({ group }: { group: ServiceGroup }) {
           src={group.image}
           alt={`${group.label} from Letting Partners`}
           fill
-          preload
+          priority
           sizes="100vw"
           className="lp-cover-img"
         />

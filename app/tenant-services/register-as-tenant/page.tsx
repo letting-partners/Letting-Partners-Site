@@ -23,7 +23,7 @@ export default function RegisterAsTenantPage() {
   return (
     <>
       <section className="lp-page-hero">
-        <Image src={PAGE_BANNER_IMAGES.registerTenant} alt="Modern rental apartment interior" fill preload sizes="100vw" className="lp-cover-img" />
+        <Image src={PAGE_BANNER_IMAGES.registerTenant} alt="Modern rental apartment interior" fill priority sizes="100vw" className="lp-cover-img" />
         <div className="lp-image-overlay" />
         <div className="lp-container lp-page-hero-content">
           <span className="lp-kicker lp-kicker--light">For Renters</span>

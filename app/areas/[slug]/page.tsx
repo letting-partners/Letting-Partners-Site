@@ -47,7 +47,7 @@ export default async function AreaPage({ params }: Props) {
   return (
     <>
       <section className="lp-page-hero lp-page-hero--area">
-        <Image src={bannerImage} alt={`${area.title} property and street scene`} fill preload sizes="100vw" className="lp-cover-img" />
+        <Image src={bannerImage} alt={`${area.title} property and street scene`} fill priority sizes="100vw" className="lp-cover-img" />
         <div className="lp-image-overlay" />
         <div className="lp-container lp-page-hero-content">
           <span className="lp-kicker lp-kicker--light">{area.coverageLabel}</span>

@@ -15,7 +15,7 @@ export default function ServiceDetailPage({ service }: Props) {
           src={service.image}
           alt={`${service.title} property service`}
           fill
-          preload
+          priority
           sizes="100vw"
           className="lp-cover-img"
         />

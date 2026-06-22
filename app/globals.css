@@ -1575,6 +1575,64 @@ a:hover .lp-text-link svg,
   gap: 10px;
 }
 
+.lp-property-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.lp-property-detail-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--lp-radius);
+  aspect-ratio: 4 / 3;
+  background: rgba(7, 24, 38, 0.06);
+}
+
+.lp-property-detail-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.lp-property-detail-panel h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.lp-property-detail-panel h2 {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+
+.lp-property-detail-price {
+  margin-top: -4px;
+}
+
+.lp-property-detail-facts {
+  display: grid;
+  gap: 8px;
+}
+
+.lp-property-detail-rooms {
+  display: grid;
+  gap: 10px;
+}
+
+.lp-property-detail-room {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--lp-border);
+}
+
+.lp-property-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .lp-skeleton {
   border-radius: var(--lp-radius);
   min-height: 330px;
@@ -2044,6 +2102,7 @@ a:hover .lp-text-link svg,
   .lp-image-process-grid,
   .lp-process-list,
   .lp-process-list--three,
+  .lp-property-detail,
   .lp-properties-grid,
   .lp-mini-card-grid,
   .lp-footer-grid,
