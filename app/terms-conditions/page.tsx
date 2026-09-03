@@ -53,7 +53,10 @@ export default function TermsConditionsPage() {
             <h2>7. Governing Law</h2>
             <p>These terms are governed by English law. Any disputes arising in connection with these terms shall be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
 
-            <h2>8. Contact</h2>
+            <h2>8. Complaints Procedure</h2>
+            <p>If you have a complaint, please email <a href="mailto:info@lettingpartners.co.uk">info@lettingpartners.co.uk</a>. We will acknowledge receipt within 3 working days and issue a formal response within 15 working days. If you remain unsatisfied after 8 weeks, you have the right to escalate the issue to the Property Redress Scheme.</p>
+
+            <h2>9. Contact</h2>
             <p>For any questions about these terms, contact us at <a href="mailto:info@lettingpartners.co.uk">info@lettingpartners.co.uk</a> or call <a href="tel:07782273674">07782 273674</a>.</p>
           </div>
         </div>
