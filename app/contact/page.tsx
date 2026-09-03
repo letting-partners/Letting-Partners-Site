@@ -52,6 +52,16 @@ export default function ContactPage() {
                 </div>
               ))}
             </div>
+
+            <div className="lp-contact-complaints">
+              <h3>Complaints Procedure</h3>
+              <p>
+                If you have a complaint, please email{" "}
+                <a href="mailto:info@lettingpartners.co.uk">info@lettingpartners.co.uk</a>. We will acknowledge
+                receipt within 3 working days and issue a formal response within 15 working days. If you remain
+                unsatisfied after 8 weeks, you have the right to escalate the issue to the Property Redress Scheme.
+              </p>
+            </div>
           </div>
           <div className="lp-contact-card">
             <HomeContactForm />

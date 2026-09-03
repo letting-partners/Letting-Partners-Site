@@ -1465,6 +1465,29 @@ a:hover .lp-text-link svg,
   font-weight: 850;
 }
 
+.lp-contact-complaints {
+  margin-top: 28px;
+  border: 1px solid var(--lp-border);
+  border-radius: var(--lp-radius);
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.lp-contact-complaints h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.lp-contact-complaints p {
+  margin: 0;
+  color: var(--lp-muted);
+}
+
+.lp-contact-complaints a {
+  color: var(--lp-navy);
+  font-weight: 850;
+}
+
 .lp-properties-search-bar {
   margin-bottom: 28px;
 }
