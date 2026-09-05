@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import LPIcon, { type LPIconName } from "@/components/LPIcon";
-import { ABOUT_IMAGES, PAGE_BANNER_IMAGES } from "@/lib/images";
+import PartnersSlider from "@/components/PartnersSlider";
+import { ABOUT_IMAGES, PAGE_BANNER_IMAGES, PARTNER_LOGOS } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "About Letting Partners",
   description:
     "Learn about Letting Partners, a UK property letting and management company supporting landlords, tenants, and property owners across London and Birmingham.",
   keywords: ["about Letting Partners", "UK letting agency", "London property management", "Birmingham landlord services"],
+  alternates: { canonical: "/about" },
 };
 
 const values: Array<{ icon: LPIconName; title: string; text: string }> = [
@@ -82,7 +84,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="lp-section lp-section--navy">
+      <section className="lp-section lp-section--navy lp-photo-panel">
+        <Image src={ABOUT_IMAGES.howWeHelp} alt="Modern UK apartment building" fill sizes="100vw" className="lp-cover-img" />
+        <div className="lp-image-overlay lp-image-overlay--strong" />
         <div className="lp-container lp-feature-split" data-lp-animate>
           <div>
             <span className="lp-kicker lp-kicker--light">How we help</span>
@@ -100,6 +104,18 @@ export default function AboutPage() {
                 <p>{text}</p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="lp-section">
+        <div className="lp-container">
+          <div className="lp-section-head lp-section-head--center" data-lp-animate>
+            <span className="lp-kicker">Partners &amp; Trust</span>
+            <h2>Working with recognised property and compliance bodies.</h2>
+          </div>
+          <div data-lp-animate>
+            <PartnersSlider items={PARTNER_LOGOS} />
           </div>
         </div>
       </section>

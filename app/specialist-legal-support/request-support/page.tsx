@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description:
     "Request specialist legal support coordination from Letting Partners for tenancy disputes, notices, rent arrears, and possession matters.",
   keywords: ["request legal support landlord London", "tenancy legal advice London", "specialist legal support property"],
+  alternates: { canonical: "/specialist-legal-support/request-support" },
 };
 
 const steps = [

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description:
     "Register your property requirements with Letting Partners and get matched to suitable rental homes across London and Birmingham.",
   keywords: ["register as tenant London", "find rental property London", "tenant registration East London"],
+  alternates: { canonical: "/tenant-services/register-as-tenant" },
 };
 
 const benefits = [

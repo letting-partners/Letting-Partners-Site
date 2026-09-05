@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description:
     "Contact Letting Partners for property letting, management, tenant services, legal support coordination, maintenance, mortgage consultancy, and development support.",
   keywords: ["contact Letting Partners", "letting agents London phone", "property enquiry London", "landlord services contact"],
+  alternates: { canonical: "/contact" },
 };
 
 const contactDetails: Array<{ icon: LPIconName; label: string; value: string; href?: string }> = [
@@ -58,8 +59,7 @@ export default function ContactPage() {
               <p>
                 If you have a complaint, please email{" "}
                 <a href="mailto:info@lettingpartners.co.uk">info@lettingpartners.co.uk</a>. We will acknowledge
-                receipt within 3 working days and issue a formal response within 15 working days. If you remain
-                unsatisfied after 8 weeks, you have the right to escalate the issue to the Property Redress Scheme.
+                receipt within 3 working days and issue a formal response within 15 working days.
               </p>
             </div>
           </div>

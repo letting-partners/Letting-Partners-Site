@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description:
     "The Letting Partners landlord guide covers ASTs, deposit protection, safety certificates, Right to Rent, repairs, and notices in England.",
   keywords: ["landlord guide UK", "landlord obligations England", "AST guide landlord", "deposit protection landlord UK"],
+  alternates: { canonical: "/landlord-services/landlord-guide" },
 };
 
 const guideSections: Array<{ icon: LPIconName; title: string; content: string }> = [

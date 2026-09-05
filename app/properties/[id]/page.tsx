@@ -6,10 +6,6 @@ import { WebsiteProperty } from "@/components/WebsitePropertyCard";
 import { PROPERTY_FALLBACK_IMAGES } from "@/lib/images";
 import { getWebsiteApiJson, WebsiteApiEnvelope } from "@/lib/website-api";
 
-export const metadata: Metadata = {
-  title: "Property Details | Letting Partners",
-};
-
 type WebsitePropertyDetails = WebsiteProperty & {
   description?: string;
   deposit?: number;
@@ -44,6 +40,47 @@ function formatDate(value?: string | null) {
     month: "long",
     year: "numeric",
   }).format(date);
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const data = await getWebsiteApiJson<PropertyApiResponse>(
+    `/properties/${encodeURIComponent(id)}`,
+    undefined,
+    { serverPortal: true },
+  ).catch(() => null);
+  const property = data?.property;
+
+  if (!property) {
+    return {
+      title: "Property Not Found | Letting Partners",
+      robots: { index: false, follow: true },
+    };
+  }
+
+  const price =
+    typeof property.price === "number"
+      ? `£${property.price.toLocaleString("en-GB")}/${property.priceLabel ?? "pcm"}`
+      : property.price ?? "POA";
+  const bedroomLabel =
+    property.bedrooms != null ? `${property.bedrooms} bed ` : "";
+  const title = `${bedroomLabel}${property.title} - ${price} | Letting Partners`;
+  const description =
+    property.description?.slice(0, 155) ??
+    `${property.title}${property.address ? ` in ${property.address}` : ""} - rental property from Letting Partners, ${price}.`;
+  const image = property.image || getFallbackImage(property.id);
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/properties/${id}` },
+    openGraph: {
+      title,
+      description,
+      url: `/properties/${id}`,
+      images: [{ url: image }],
+    },
+  };
 }
 
 export default async function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
