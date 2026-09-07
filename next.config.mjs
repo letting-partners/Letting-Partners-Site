@@ -3,6 +3,22 @@ import { fileURLToPath } from "node:url";
 
 const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
+/**
+ * Property photos live in the portal's object store. Set IMAGE_HOST_URL to the
+ * same public base URL the portal uploads to (an R2 custom domain, or the
+ * bucket's public development URL) so the image optimiser will serve them.
+ */
+function storageHostPattern() {
+  const base = process.env.IMAGE_HOST_URL;
+  if (!base) return [];
+  try {
+    const { protocol, hostname } = new URL(base);
+    return [{ protocol: protocol.replace(":", ""), hostname }];
+  } catch {
+    return [];
+  }
+}
+
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   images: {
@@ -10,6 +26,8 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "upload.wikimedia.org" },
       // Property photos and agent avatars published from the portal.
+      ...storageHostPattern(),
+      { protocol: "https", hostname: "*.r2.dev" },
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
     ],
   },
