@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description:
     "Letting Partners covers Ilford, Redbridge, Stratford, Barking, Walthamstow, Croydon, Hounslow, and Birmingham with letting and property management services.",
   keywords: ["letting agents Ilford", "property management East London", "letting agents Birmingham", "London rental areas"],
+  alternates: { canonical: "/areas" },
 };
 
 export default function AreasPage() {

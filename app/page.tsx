@@ -4,8 +4,9 @@ import Link from "next/link";
 import LPIcon, { type LPIconName } from "@/components/LPIcon";
 import HomeContactForm from "@/components/HomeContactForm";
 import TestimonialsSlider from "@/components/TestimonialsSlider";
+import PartnersSlider from "@/components/PartnersSlider";
 import { AREAS, getAreaHref } from "@/lib/areas";
-import { AREA_IMAGES, ABOUT_IMAGES, CTA_IMAGES, HERO_IMAGES, LEGAL_IMAGES, PROCESS_IMAGES } from "@/lib/images";
+import { AREA_IMAGES, ABOUT_IMAGES, CTA_IMAGES, HERO_IMAGES, LEGAL_IMAGES, PARTNER_LOGOS, PROCESS_IMAGES, WHY_LP_IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Letting Partners | London & Birmingham Letting, Management & Tenant Services",
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     "tenant services London",
     "property letting Ilford",
   ],
+  alternates: { canonical: "/" },
 };
 
 const stats = [
@@ -226,14 +228,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="lp-stats-strip" aria-label="Letting Partners trust statistics">
-        <div className="lp-container lp-stats-grid" data-lp-animate>
-          {stats.map((stat) => (
-            <div key={stat.label} className="lp-stat">
-              <strong>{stat.value}</strong>
-              <span>{stat.label}</span>
-            </div>
-          ))}
+      <section className="lp-section lp-section--cream">
+        <div className="lp-container">
+          <div className="lp-section-head lp-section-head--center" data-lp-animate>
+            <span className="lp-kicker">Partners &amp; Trust</span>
+            <h2>Working with recognised property and compliance bodies.</h2>
+          </div>
+          <div data-lp-animate>
+            <PartnersSlider items={PARTNER_LOGOS} />
+          </div>
         </div>
       </section>
 
@@ -308,7 +311,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="lp-section lp-section--navy">
+      <section className="lp-section lp-section--navy lp-photo-panel">
+        <Image src={WHY_LP_IMAGES.main} alt="UK residential neighbourhood street" fill sizes="100vw" className="lp-cover-img" />
+        <div className="lp-image-overlay lp-image-overlay--strong" />
         <div className="lp-container lp-feature-split" data-lp-animate>
           <div>
             <span className="lp-kicker lp-kicker--light">Why Letting Partners</span>
@@ -391,6 +396,23 @@ export default function HomePage() {
           <div className="lp-inline-actions">
             <Link href="/specialist-legal-support" className="lp-btn lp-btn--gold">Explore Legal Support</Link>
             <Link href="/specialist-legal-support/request-support" className="lp-btn lp-btn--glass">Request Support</Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="lp-section lp-section--cream">
+        <div className="lp-container">
+          <div className="lp-section-head lp-section-head--center" data-lp-animate>
+            <span className="lp-kicker">Letting Partners in numbers</span>
+            <h2>A track record landlords and tenants can rely on.</h2>
+          </div>
+          <div className="lp-stats-grid" data-lp-animate>
+            {stats.map((stat) => (
+              <div key={stat.label} className="lp-stat">
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: service.seoTitle,
   description: service.seoDescription,
   keywords: service.keywords,
+  alternates: { canonical: service.href },
 };
 
 export default function TenantServicesPage() {

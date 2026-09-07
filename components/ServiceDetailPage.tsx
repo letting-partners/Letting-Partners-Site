@@ -85,7 +85,9 @@ export default function ServiceDetailPage({ service }: Props) {
         </div>
       </section>
 
-      <section className="lp-section lp-section--navy lp-service-why">
+      <section className="lp-section lp-section--navy lp-service-why lp-photo-panel">
+        <Image src={service.image} alt={`${service.title} property service`} fill sizes="100vw" className="lp-cover-img" />
+        <div className="lp-image-overlay lp-image-overlay--strong" />
         <div className="lp-container">
           <div className="lp-section-head lp-section-head--light" data-lp-animate>
             <span className="lp-kicker lp-kicker--light">Why Choose This Service</span>

@@ -7,6 +7,17 @@ export const LOGO = {
 };
 
 // ---------------------------------------------------------------------------
+// PARTNERS & TRUST
+// ---------------------------------------------------------------------------
+export const PARTNER_LOGOS = [
+  { name: "Companies House", src: "/Partners-and-Trust/Companies House.webp" },
+  { name: "Property Redress Scheme", src: "/Partners-and-Trust/PRS.webp" },
+  { name: "SpareRoom", src: "/Partners-and-Trust/SpareRoom.webp" },
+  { name: "Tenancy Deposit Scheme", src: "/Partners-and-Trust/TDS.webp" },
+  { name: "Zoopla", src: "/Partners-and-Trust/Zoopla.webp" },
+];
+
+// ---------------------------------------------------------------------------
 // HERO / BANNER
 // ---------------------------------------------------------------------------
 export const HERO_IMAGES = {
@@ -92,6 +103,7 @@ export const ABOUT_IMAGES = {
   landlordStory:          "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=900&q=80",
   propertyManagementStory:"https://images.unsplash.com/photo-1549924231-f129b911e442?w=900&q=80",
   studentStory:           "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=900&q=80",
+  howWeHelp:              "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1600&q=80",
 };
 
 // ---------------------------------------------------------------------------
@@ -108,7 +120,7 @@ export const PROCESS_IMAGES = {
 // WHY LETTING PARTNERS
 // ---------------------------------------------------------------------------
 export const WHY_LP_IMAGES = {
-  main: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&q=80",
+  main: "https://images.unsplash.com/photo-1560184897-ae75f418493e?w=1600&q=80",
 };
 
 // ---------------------------------------------------------------------------

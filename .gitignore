@@ -29,3 +29,6 @@ Thumbs.db
 
 # Vercel
 .vercel
+
+# The portal is a separate application with its own repository.
+portal/

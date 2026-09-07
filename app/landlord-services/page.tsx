@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     "rent to rent London",
     "property management East London",
   ],
+  alternates: { canonical: "/landlord-services" },
 };
 
 export default function LandlordServicesPage() {

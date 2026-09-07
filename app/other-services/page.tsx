@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "construction development property London",
     "property services London",
   ],
+  alternates: { canonical: "/other-services" },
 };
 
 export default function OtherServicesPage() {

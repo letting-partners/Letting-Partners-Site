@@ -9,6 +9,8 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "upload.wikimedia.org" },
+      // Property photos and agent avatars published from the portal.
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
     ],
   },
   async redirects() {

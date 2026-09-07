@@ -5,6 +5,7 @@ import { PAGE_BANNER_IMAGES } from "@/lib/images";
 export const metadata: Metadata = {
   title: "Privacy Policy | Letting Partners",
   description: "Letting Partners privacy policy — how we collect, use, and protect your personal information.",
+  alternates: { canonical: "/privacy-policy" },
 };
 
 export default function PrivacyPolicyPage() {

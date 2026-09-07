@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     "houses to rent Birmingham",
     "letting agents London rentals",
   ],
+  alternates: { canonical: "/properties" },
 };
 
 export default function PropertiesPage() {

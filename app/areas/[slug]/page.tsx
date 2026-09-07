@@ -6,7 +6,7 @@ import AreaFaqAccordion from "@/components/AreaFaqAccordion";
 import LPIcon, { type LPIconName } from "@/components/LPIcon";
 import PropertiesGrid from "@/components/PropertiesGrid";
 import { AREAS, getAreaBySlug, getAreaPropertiesHref } from "@/lib/areas";
-import { AREA_BANNER_IMAGES } from "@/lib/images";
+import { AREA_BANNER_IMAGES, AREA_MENU_IMAGES } from "@/lib/images";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `landlord services ${area.title}`,
       `letting agents ${area.title}`,
     ],
+    alternates: { canonical: `/areas/${area.slug}` },
   };
 }
 
@@ -145,7 +146,9 @@ export default async function AreaPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="lp-section lp-section--navy">
+      <section className="lp-section lp-section--navy lp-photo-panel">
+        <Image src={AREA_MENU_IMAGES[slug] ?? bannerImage} alt={`${area.title} neighbourhood street`} fill sizes="100vw" className="lp-cover-img" />
+        <div className="lp-image-overlay lp-image-overlay--strong" />
         <div className="lp-container lp-feature-split" data-lp-animate>
           <div>
             <span className="lp-kicker lp-kicker--light">For tenants and landlords</span>
