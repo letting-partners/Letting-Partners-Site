@@ -2,10 +2,39 @@ import type { MetadataRoute } from "next";
 import { AREAS } from "@/lib/areas";
 import { SERVICE_DETAIL_PAGES } from "@/lib/service-pages";
 import { OTHER_SERVICE_PAGES } from "@/lib/services";
+import { getWebsiteApiJson, WebsiteApiEnvelope } from "@/lib/website-api";
 
 const SITE_URL = "https://www.lettingpartners.co.uk";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+type PropertyIndexResponse = WebsiteApiEnvelope & {
+  properties?: { id: string | number }[];
+};
+
+/**
+ * Published listings come from the portal, so the sitemap stays in step with
+ * whatever is actually live. A failure here must not break the sitemap, so the
+ * static routes are always returned.
+ */
+async function propertyRoutes(now: Date): Promise<MetadataRoute.Sitemap> {
+  try {
+    const data = await getWebsiteApiJson<PropertyIndexResponse>(
+      "/properties?limit=100",
+      undefined,
+      { serverPortal: true },
+    );
+
+    return (data?.properties ?? []).map((property) => ({
+      url: `${SITE_URL}/properties/${property.id}`,
+      lastModified: now,
+      changeFrequency: "daily" as const,
+      priority: 0.8,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -44,7 +73,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  const allRoutes = [...staticRoutes, ...areaRoutes, ...serviceRoutes, ...otherServiceRoutes];
+  const propertyPages = await propertyRoutes(now);
+
+  const allRoutes = [
+    ...staticRoutes,
+    ...areaRoutes,
+    ...serviceRoutes,
+    ...otherServiceRoutes,
+    ...propertyPages,
+  ];
   const seen = new Set<string>();
   return allRoutes.filter((route) => {
     if (seen.has(route.url)) return false;

@@ -2255,3 +2255,269 @@ a:hover .lp-text-link svg,
     width: 100%;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   PROPERTY CHAT
+   Visitor chat panel on a property page. Messages reach the agent who
+   published the listing, through the portal.
+--------------------------------------------------------------------------- */
+
+.lp-chat-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(7, 24, 38, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.lp-chat-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(400px, 100%);
+  max-height: min(640px, 88dvh);
+  background: var(--lp-white);
+  border-radius: var(--lp-radius-lg);
+  box-shadow: 0 30px 70px rgba(7, 24, 38, 0.35);
+  overflow: hidden;
+}
+
+.lp-chat-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background: var(--lp-navy);
+  color: var(--lp-white);
+}
+
+.lp-chat-header strong {
+  font-size: 0.98rem;
+}
+
+.lp-chat-header p {
+  margin-top: 3px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.lp-chat-header button {
+  color: rgba(255, 255, 255, 0.8);
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: var(--lp-radius-sm);
+}
+
+.lp-chat-header button:hover {
+  color: var(--lp-white);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.lp-chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--lp-cream-2);
+}
+
+.lp-chat-intro {
+  font-size: 0.87rem;
+  color: var(--lp-muted);
+  line-height: 1.6;
+}
+
+.lp-chat-bubble {
+  max-width: 84%;
+  padding: 9px 13px;
+  border-radius: 14px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.lp-chat-bubble--in {
+  align-self: flex-start;
+  background: var(--lp-white);
+  border: 1px solid var(--lp-border);
+  border-bottom-left-radius: 4px;
+}
+
+.lp-chat-bubble--out {
+  align-self: flex-end;
+  background: var(--lp-navy);
+  color: var(--lp-white);
+  border-bottom-right-radius: 4px;
+}
+
+.lp-chat-author {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--lp-gold);
+  margin-bottom: 2px;
+}
+
+.lp-chat-lead {
+  display: grid;
+  gap: 8px;
+  padding: 12px 16px 0;
+}
+
+.lp-chat-composer {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  padding: 12px 16px;
+}
+
+.lp-chat-composer textarea {
+  flex: 1;
+  resize: vertical;
+}
+
+.lp-chat-error {
+  padding: 0 16px;
+  color: #a32020;
+  font-size: 0.82rem;
+}
+
+.lp-chat-privacy {
+  padding: 0 16px 14px;
+  font-size: 0.74rem;
+  color: var(--lp-muted);
+}
+
+.lp-chat-privacy a {
+  text-decoration: underline;
+}
+
+@media (max-width: 560px) {
+  .lp-chat-scrim {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .lp-chat-panel {
+    width: 100%;
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   AGENT CARD
+   The publishing agent shown on a property page.
+--------------------------------------------------------------------------- */
+
+.lp-agent-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px;
+  border: 1px solid var(--lp-border);
+  border-radius: var(--lp-radius);
+  background: var(--lp-white);
+  box-shadow: var(--lp-shadow-soft);
+}
+
+.lp-agent-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--lp-cream);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: var(--lp-navy);
+}
+
+.lp-agent-card h3 {
+  font-size: 1rem;
+}
+
+.lp-agent-role {
+  font-size: 0.8rem;
+  color: var(--lp-muted);
+}
+
+.lp-agent-bio {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--lp-muted);
+  line-height: 1.55;
+}
+
+.lp-agent-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+}
+
+.lp-agent-contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--lp-navy);
+  font-weight: 600;
+}
+
+.lp-agent-contact a:hover {
+  color: var(--lp-gold);
+}
+
+/* Room availability table on a shared property. */
+.lp-room-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.lp-room-table th,
+.lp-room-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--lp-border);
+}
+
+.lp-room-table th {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--lp-muted);
+}
+
+.lp-room-status {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.lp-room-status--available {
+  background: #e3f5ea;
+  color: #1b6b3f;
+}
+
+.lp-room-status--offer {
+  background: #fdf1dc;
+  color: #8a5b00;
+}
+
+.lp-room-status--let {
+  background: #eef1f4;
+  color: #4a5a68;
+}
