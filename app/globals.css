@@ -1746,7 +1746,8 @@ a:hover .lp-text-link svg,
 .lp-scroll-top {
   position: fixed;
   right: 22px;
-  bottom: 22px;
+  /* Clear of the chat launcher, which owns the corner itself. */
+  bottom: 84px;
   z-index: 900;
   width: 48px;
   height: 48px;
@@ -2380,7 +2381,18 @@ a:hover .lp-text-link svg,
 
 .lp-chat-composer textarea {
   flex: 1;
+  min-width: 0;
   resize: vertical;
+}
+
+/*
+ * Buttons go full width on narrow screens, which in a row beside the message
+ * box leaves the box a few pixels wide. Send is a fixed label, so it keeps its
+ * own size here and the space goes to what the visitor is typing.
+ */
+.lp-chat-composer .lp-btn {
+  flex: 0 0 auto;
+  width: auto;
 }
 
 .lp-chat-error {
@@ -2409,6 +2421,80 @@ a:hover .lp-text-link svg,
     width: 100%;
     max-height: 100dvh;
     border-radius: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   CHAT LAUNCHER
+   The corner button that opens the site-wide chat.
+--------------------------------------------------------------------------- */
+
+.lp-chat-launcher {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 110;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 52px;
+  padding: 0 20px 0 17px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 999px;
+  color: var(--lp-navy);
+  background: linear-gradient(135deg, var(--lp-gold-2), var(--lp-gold));
+  box-shadow: var(--lp-shadow-soft);
+  font-weight: 600;
+  font-size: 0.94rem;
+  cursor: pointer;
+  transition: transform 180ms var(--lp-ease), box-shadow 180ms var(--lp-ease);
+}
+
+.lp-chat-launcher:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(7, 24, 38, 0.28);
+}
+
+.lp-chat-launcher-text {
+  white-space: nowrap;
+}
+
+/* An unread reply that arrived while the panel was closed. */
+.lp-chat-launcher-dot {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e5484d;
+  border: 2px solid var(--lp-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-chat-launcher {
+    transition: none;
+  }
+
+  .lp-chat-launcher:hover {
+    transform: none;
+  }
+}
+
+/* Narrow screens: a circle, so it never crowds the content it sits over. */
+@media (max-width: 560px) {
+  .lp-chat-launcher {
+    width: 52px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .lp-chat-launcher-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
   }
 }
 

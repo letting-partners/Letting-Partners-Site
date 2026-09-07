@@ -7,6 +7,7 @@ import "./globals.css";
 import LPIcon from "@/components/LPIcon";
 import ScrollAnimator from "@/components/ScrollAnimator";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
+import SiteChat from "@/components/SiteChat";
 import SiteHeader from "@/components/SiteHeader";
 import { LOGO } from "@/lib/images";
 
@@ -197,6 +198,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
         <ScrollToTopButton />
+        <SiteChat />
       </body>
     </html>
   );

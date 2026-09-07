@@ -32,6 +32,7 @@ import {
   Mail,
   MapPin,
   Menu,
+  MessageCircle,
   Minus,
   Phone,
   Plus,
@@ -80,6 +81,7 @@ export type LPIconName =
   | "mail"
   | "map-pin"
   | "menu"
+  | "message-circle"
   | "minus"
   | "phone"
   | "plus"
@@ -125,6 +127,7 @@ const ICONS: Record<LPIconName, LucideIcon> = {
   key: KeyRound,
   landmark: Landmark,
   mail: Mail,
+  "message-circle": MessageCircle,
   "map-pin": MapPin,
   menu: Menu,
   minus: Minus,
