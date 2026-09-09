@@ -363,35 +363,32 @@ a:hover .lp-text-link svg,
   background: rgba(198, 154, 75, 0.16);
 }
 
+/*
+ * Static, so the mega panel inside it positions against the fixed header and
+ * therefore starts at the header's bottom edge rather than the button's.
+ */
 .lp-nav-dropdown {
-  position: relative;
+  position: static;
 }
 
-.lp-nav-dropdown::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: -18px;
-  right: -18px;
-  height: 18px;
-}
-
+/*
+ * Anchored to the header rather than to the button, so it begins exactly at
+ * the header's bottom edge and cannot sit over the navigation. The header
+ * changes height when the page scrolls, and 100% follows it.
+ */
 .lp-mega {
   position: absolute;
-  top: calc(100% + 8px);
+  top: 100%;
   left: 50%;
-  width: min(980px, calc(100vw - 40px));
-  max-height: calc(100vh - 110px);
+  width: min(1080px, calc(100vw - 32px));
+  max-height: calc(100dvh - 120px);
   overflow: auto;
   transform: translateX(-50%);
-  display: grid;
-  grid-template-columns: 270px minmax(0, 1fr);
-  gap: 20px;
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.42);
+  padding: 18px;
+  border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius-lg);
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: var(--lp-shadow);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 28px 70px rgba(7, 24, 38, 0.18);
   backdrop-filter: blur(20px);
   animation: lp-menu-in 160ms var(--lp-ease);
 }
@@ -399,7 +396,7 @@ a:hover .lp-text-link svg,
 @keyframes lp-menu-in {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(-8px);
+    transform: translateX(-50%) translateY(-6px);
   }
   to {
     opacity: 1;
@@ -407,33 +404,11 @@ a:hover .lp-text-link svg,
   }
 }
 
-.lp-mega-intro {
-  border-radius: 18px;
-  padding: 22px;
-  color: var(--lp-white);
-  background:
-    linear-gradient(145deg, rgba(198, 154, 75, 0.25), transparent 70%),
-    var(--lp-navy);
-}
+/* ------------------------------------------------------------- services */
 
-.lp-mega-intro span {
-  display: block;
-  margin-bottom: 10px;
-  color: var(--lp-gold-2);
-  font-size: 0.76rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.lp-mega-intro h2 {
-  color: var(--lp-white);
-  font-size: 1.35rem;
-}
-
-.lp-mega-intro p {
-  margin-top: 10px;
-  color: rgba(255, 255, 255, 0.72);
+.lp-mega--services {
+  display: grid;
+  gap: 14px;
 }
 
 .lp-mega-service-grid {
@@ -442,74 +417,246 @@ a:hover .lp-text-link svg,
   gap: 12px;
 }
 
-.lp-mega-service-group {
-  border-radius: 16px;
-  padding: 14px;
-  background: var(--lp-cream-2);
+.lp-mega-card {
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  padding: 16px;
+  background: #fff;
+  transition: border-color 180ms var(--lp-ease), box-shadow 180ms var(--lp-ease),
+    transform 180ms var(--lp-ease);
 }
 
-.lp-mega-group-title {
+.lp-mega-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(198, 154, 75, 0.6);
+  box-shadow: 0 14px 32px rgba(7, 24, 38, 0.1);
+}
+
+.lp-mega-card-head {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
+  padding-bottom: 12px;
   margin-bottom: 10px;
-  color: var(--lp-navy);
-  font-size: 0.92rem;
-  font-weight: 900;
+  border-bottom: 1px solid var(--lp-border);
 }
 
-.lp-mega-service-group ul {
+.lp-mega-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  color: var(--lp-navy);
+  background: linear-gradient(135deg, rgba(226, 191, 119, 0.55), rgba(198, 154, 75, 0.3));
+}
+
+.lp-mega-card-head strong {
+  display: block;
+  color: var(--lp-navy);
+  font-size: 0.93rem;
+  line-height: 1.25;
+}
+
+.lp-mega-card-head small {
+  display: block;
+  margin-top: 2px;
+  color: var(--lp-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.lp-mega-card ul {
   display: grid;
-  gap: 4px;
+  gap: 1px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.lp-mega-service-group li a {
-  display: block;
-  border-radius: 10px;
-  padding: 7px 8px;
+.lp-mega-card li a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 9px;
+  padding: 6px 8px;
   color: var(--lp-muted);
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.83rem;
+  font-weight: 600;
+  transition: background 150ms var(--lp-ease), color 150ms var(--lp-ease);
 }
 
-.lp-mega-service-group li a:hover {
+/* The arrow is a hover cue, so it stays out of the way until then. */
+.lp-mega-card li a svg {
+  flex: 0 0 auto;
+  opacity: 0;
+  color: var(--lp-gold);
+  transition: opacity 150ms var(--lp-ease), transform 150ms var(--lp-ease);
+  transform: translateX(-3px);
+}
+
+.lp-mega-card li a:hover {
   color: var(--lp-navy);
-  background: rgba(198, 154, 75, 0.14);
+  background: rgba(198, 154, 75, 0.13);
 }
 
-.lp-mega-area-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+.lp-mega-card li a:hover svg {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-.lp-mega-area-grid a {
-  display: grid;
-  gap: 4px;
-  border: 1px solid var(--lp-border);
+.lp-mega-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
   border-radius: 14px;
-  padding: 15px;
+  padding: 13px 18px;
   background: var(--lp-cream-2);
-  transition: transform 180ms var(--lp-ease), border-color 180ms var(--lp-ease);
+  border: 1px solid var(--lp-border);
 }
 
-.lp-mega-area-grid a:hover {
-  transform: translateY(-3px);
-  border-color: var(--lp-gold);
-}
-
-.lp-mega-area-grid span {
-  color: var(--lp-navy);
-  font-weight: 900;
-}
-
-.lp-mega-area-grid small {
+.lp-mega-foot p {
+  margin: 0;
   color: var(--lp-muted);
-  font-weight: 700;
+  font-size: 0.87rem;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- areas */
+
+.lp-mega--areas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.lp-mega-area-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  align-content: start;
+}
+
+.lp-mega-area-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 11px 13px;
+  border: 1px solid transparent;
+  transition: background 150ms var(--lp-ease), border-color 150ms var(--lp-ease);
+}
+
+.lp-mega-area-list a strong {
+  display: block;
+  color: var(--lp-navy);
+  font-size: 0.92rem;
+}
+
+.lp-mega-area-list a small {
+  display: block;
+  margin-top: 1px;
+  color: var(--lp-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.lp-mega-area-list a svg {
+  flex: 0 0 auto;
+  opacity: 0;
+  color: var(--lp-gold);
+  transition: opacity 150ms var(--lp-ease), transform 150ms var(--lp-ease);
+  transform: translateX(-4px);
+}
+
+/* Marked on the one being previewed, not only the one under the pointer, so
+   the list and the picture always agree. */
+.lp-mega-area-list a.is-previewing {
+  background: rgba(198, 154, 75, 0.13);
+  border-color: rgba(198, 154, 75, 0.4);
+}
+
+.lp-mega-area-list a.is-previewing svg {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.lp-mega-area-preview {
+  position: relative;
+  display: block;
+  min-height: 300px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--lp-navy);
+}
+
+.lp-mega-area-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 24, 38, 0.05) 30%, rgba(7, 24, 38, 0.88) 100%);
+}
+
+/* Keyed on the slug, so React remounts it and this runs on every change. */
+.lp-mega-area-preview img {
+  animation: lp-area-fade 260ms var(--lp-ease);
+}
+
+@keyframes lp-area-fade {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}
+
+.lp-mega-area-preview-body {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 2;
+  display: grid;
+  gap: 3px;
+  padding: 20px;
+  color: #fff;
+}
+
+.lp-mega-area-preview-body small {
+  color: var(--lp-gold-2);
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lp-mega-area-preview-body strong {
+  font-size: 1.45rem;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.lp-mega-area-preview-body .lp-text-link {
+  margin-top: 6px;
+  color: #fff;
+  font-size: 0.86rem;
+}
+
+@media (max-width: 1180px) {
+  .lp-mega-service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lp-mega--areas {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
 }
 
 .lp-header-actions {

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import LPIcon, { type LPIconName } from "@/components/LPIcon";
 import { AREAS, getAreaHref } from "@/lib/areas";
-import { LOGO } from "@/lib/images";
+import { AREA_MENU_IMAGES, LOGO } from "@/lib/images";
 import { SERVICE_GROUPS, isServicesCurrent } from "@/lib/services";
 
 const topLinks = [
@@ -29,6 +29,9 @@ export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<"services" | "areas" | null>(null);
+  /* Which area the pointer is over, previewed beside the list. */
+  const [previewSlug, setPreviewSlug] = useState(AREAS[0].slug);
+  const previewArea = AREAS.find((area) => area.slug === previewSlug) ?? AREAS[0];
   const [mobileGroup, setMobileGroup] = useState<"services" | "areas" | null>("services");
 
   /*
@@ -105,29 +108,39 @@ export default function SiteHeader() {
               </button>
               {openMenu === "services" && (
                 <div id="lp-services-menu" className="lp-mega lp-mega--services">
-                  <div className="lp-mega-intro">
-                    <span>Complete property support</span>
-                    <h2>Services for landlords, tenants, and property owners.</h2>
-                    <p>Choose a route, or speak with us if you are not sure where to start.</p>
-                  </div>
                   <div className="lp-mega-service-grid">
                     {SERVICE_GROUPS.map((group) => (
-                      <section key={group.href} className="lp-mega-service-group">
-                        <Link href={group.href} className="lp-mega-group-title">
-                          <span className="lp-icon-badge lp-icon-badge--sm">
-                            <LPIcon name={serviceIcons[group.href] ?? "sparkles"} size={18} />
+                      <section key={group.href} className="lp-mega-card">
+                        <Link href={group.href} className="lp-mega-card-head">
+                          <span className="lp-mega-card-icon">
+                            <LPIcon name={serviceIcons[group.href] ?? "sparkles"} size={19} />
                           </span>
-                          {group.label}
+                          <span>
+                            <strong>{group.label}</strong>
+                            <small>{group.eyebrow}</small>
+                          </span>
                         </Link>
+
                         <ul>
                           {group.items.map((item) => (
                             <li key={item.href}>
-                              <Link href={item.href}>{item.label}</Link>
+                              <Link href={item.href}>
+                                <LPIcon name="arrow-right" size={13} />
+                                {item.label}
+                              </Link>
                             </li>
                           ))}
                         </ul>
                       </section>
                     ))}
+                  </div>
+
+                  <div className="lp-mega-foot">
+                    <p>Not sure which service you need? We will point you to the right one.</p>
+                    <Link href="/contact" className="lp-btn lp-btn--gold lp-btn--sm">
+                      Speak to Us
+                      <LPIcon name="arrow-right" size={15} />
+                    </Link>
                   </div>
                 </div>
               )}
@@ -150,19 +163,48 @@ export default function SiteHeader() {
               </button>
               {openMenu === "areas" && (
                 <div id="lp-areas-menu" className="lp-mega lp-mega--areas">
-                  <div className="lp-mega-intro">
-                    <span>London and Birmingham</span>
-                    <h2>Local letting support where demand is moving.</h2>
-                    <p>Explore area guides, market highlights, and services available nearby.</p>
-                  </div>
-                  <div className="lp-mega-area-grid">
+                  <div className="lp-mega-area-list">
                     {AREAS.map((area) => (
-                      <Link key={area.slug} href={getAreaHref(area.slug)}>
-                        <span>{area.title}</span>
-                        <small>{area.coverageLabel}</small>
+                      <Link
+                        key={area.slug}
+                        href={getAreaHref(area.slug)}
+                        className={area.slug === previewArea.slug ? "is-previewing" : ""}
+                        // Hover and keyboard focus both drive the preview, so
+                        // tabbing through the list shows the same thing.
+                        onMouseEnter={() => setPreviewSlug(area.slug)}
+                        onFocus={() => setPreviewSlug(area.slug)}
+                      >
+                        <span>
+                          <strong>{area.title}</strong>
+                          <small>{area.coverageLabel}</small>
+                        </span>
+                        <LPIcon name="arrow-right" size={15} />
                       </Link>
                     ))}
                   </div>
+
+                  <Link
+                    href={getAreaHref(previewArea.slug)}
+                    className="lp-mega-area-preview"
+                    aria-label={`Letting services in ${previewArea.title}`}
+                  >
+                    <Image
+                      key={previewArea.slug}
+                      src={AREA_MENU_IMAGES[previewArea.slug] ?? AREA_MENU_IMAGES.ilford}
+                      alt=""
+                      fill
+                      sizes="340px"
+                      className="lp-cover-img"
+                    />
+                    <span className="lp-mega-area-preview-body">
+                      <small>{previewArea.coverageLabel}</small>
+                      <strong>{previewArea.title}</strong>
+                      <span className="lp-text-link">
+                        Letting services in {previewArea.title}
+                        <LPIcon name="arrow-right" size={15} />
+                      </span>
+                    </span>
+                  </Link>
                 </div>
               )}
             </div>
