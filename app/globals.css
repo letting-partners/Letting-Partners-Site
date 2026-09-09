@@ -3052,6 +3052,27 @@ a:hover .lp-text-link svg,
   background: rgba(7, 24, 38, 0.06);
   /* The arrows sit over the photo; stop a drag selecting it instead. */
   user-select: none;
+  cursor: grab;
+  /* Horizontal drags belong to the gallery, vertical ones to the page. */
+  touch-action: pan-y;
+}
+
+.lp-gallery-stage.is-dragging {
+  cursor: grabbing;
+}
+
+/* An image is the easiest thing to drag by accident instead of the frame. */
+.lp-gallery-stage img {
+  -webkit-user-drag: none;
+}
+
+/*
+ * The photo follows the pointer while dragging, and the fade is suppressed so
+ * it tracks the hand rather than easing behind it.
+ */
+.lp-gallery-stage.is-dragging .lp-gallery-photo {
+  transform: translateX(var(--lp-drag, 0));
+  animation: none;
 }
 
 /* Keyed on src, so React remounts it and this runs on every change. */

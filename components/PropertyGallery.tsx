@@ -28,6 +28,7 @@ export default function PropertyGallery({
   const [selected, setSelected] = useState(0);
   const [preview, setPreview] = useState<number | null>(null);
   const stripRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
 
   const total = images.length;
   const active = preview ?? selected;
@@ -70,23 +71,64 @@ export default function PropertyGallery({
     }
   }, [selected]);
 
-  /* ------------------------------------------------------------- swipe */
+  /* -------------------------------------------------------------- drag */
 
-  const touchStartX = useRef<number | null>(null);
+  /*
+   * Pointer events, so one implementation covers mouse, touch and pen. The
+   * photo follows the pointer and springs back if the drag was too short to
+   * count, which keeps a tap or a vertical scroll from changing the photo.
+   */
+  const dragStartX = useRef<number | null>(null);
+  const moved = useRef(0);
+  const [dragX, setDragX] = useState(0);
+  const [dragging, setDragging] = useState(false);
 
-  function onTouchStart(event: React.TouchEvent) {
-    touchStartX.current = event.touches[0]?.clientX ?? null;
+  function onPointerDown(event: React.PointerEvent) {
+    if (total < 2 || (event.pointerType === "mouse" && event.button !== 0)) return;
+    dragStartX.current = event.clientX;
+    moved.current = 0;
+    setDragging(true);
+    stageRef.current?.setPointerCapture(event.pointerId);
   }
 
-  function onTouchEnd(event: React.TouchEvent) {
-    const start = touchStartX.current;
-    touchStartX.current = null;
+  function onPointerMove(event: React.PointerEvent) {
+    if (dragStartX.current == null) return;
+    const delta = event.clientX - dragStartX.current;
+    moved.current = Math.abs(delta);
+    setDragX(delta);
+  }
+
+  function endDrag(event: React.PointerEvent) {
+    const start = dragStartX.current;
+    dragStartX.current = null;
+    setDragging(false);
+    setDragX(0);
+    stageRef.current?.releasePointerCapture?.(event.pointerId);
+
     if (start == null || total < 2) return;
 
-    const delta = (event.changedTouches[0]?.clientX ?? start) - start;
-    // Ignore small movements, which are usually a tap or a vertical scroll.
-    if (Math.abs(delta) < 40) return;
+    const delta = event.clientX - start;
+    const width = stageRef.current?.clientWidth ?? 1;
+    // A tenth of the frame, or 40px, whichever is smaller.
+    if (Math.abs(delta) < Math.min(width / 10, 40)) return;
+
     step(delta < 0 ? 1 : -1);
+  }
+
+  /*
+   * A drag that finishes over an arrow must not also press it.
+   *
+   * `detail` is how a real pointer click is told apart from a keyboard one:
+   * activating a button with Enter or Space fires a click with detail 0 and no
+   * pointerdown before it, so without this check a stale drag distance would
+   * swallow it.
+   */
+  function onClickCapture(event: React.MouseEvent) {
+    if (event.detail > 0 && moved.current > 6) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    moved.current = 0;
   }
 
   return (
@@ -99,9 +141,14 @@ export default function PropertyGallery({
       onKeyDown={onKeyDown}
     >
       <div
-        className="lp-gallery-stage"
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
+        ref={stageRef}
+        className={dragging ? "lp-gallery-stage is-dragging" : "lp-gallery-stage"}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onClickCapture={onClickCapture}
+        style={dragX ? { "--lp-drag": `${dragX}px` } as React.CSSProperties : undefined}
       >
         <Image
           key={current.url}

@@ -127,11 +127,12 @@ export default function FeaturedProperties({ limit = 9 }: { limit?: number }) {
    * a click and navigates away from the page the visitor was browsing.
    */
   function onClickCapture(event: React.MouseEvent) {
-    if (moved.current > 6) {
+    // detail is 0 for a keyboard activation, which is never a drag.
+    if (event.detail > 0 && moved.current > 6) {
       event.preventDefault();
       event.stopPropagation();
-      moved.current = 0;
     }
+    moved.current = 0;
   }
 
   if (loading || properties.length === 0) return null;
