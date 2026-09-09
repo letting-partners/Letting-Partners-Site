@@ -3319,29 +3319,6 @@ a:hover .lp-text-link svg,
    Index, article cards, and the article itself.
 --------------------------------------------------------------------------- */
 
-.lp-blog-hero {
-  padding-top: 150px;
-  padding-bottom: 46px;
-  background: var(--lp-cream-2);
-  border-bottom: 1px solid var(--lp-border);
-}
-
-.lp-blog-hero h1 {
-  margin: 10px 0 0;
-  font-size: clamp(2.1rem, 4.4vw, 3.3rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  max-width: 16ch;
-}
-
-.lp-blog-hero p {
-  margin-top: 14px;
-  max-width: 62ch;
-  color: var(--lp-muted);
-  font-size: 1.02rem;
-  line-height: 1.7;
-}
-
 .lp-blog-meta {
   display: flex;
   align-items: center;
@@ -3454,10 +3431,41 @@ a:hover .lp-text-link svg,
 
 /* --------------------------------------------------------------- article */
 
+/* The banner above it already clears the fixed header. */
 .lp-article {
-  padding-top: 122px;
+  padding-top: 44px;
   padding-bottom: 60px;
   background: var(--lp-cream-2);
+}
+
+/* Taller than a standard page banner, because it carries the whole headline. */
+.lp-article-hero .lp-page-hero-content {
+  max-width: 900px;
+}
+
+.lp-article-hero h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.lp-article-hero .lp-article-standfirst {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.lp-article-crumbs--light,
+.lp-article-crumbs--light span,
+.lp-blog-meta--light {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.lp-article-crumbs--light a {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.lp-article-crumbs--light a:hover {
+  color: #fff;
 }
 
 .lp-article-inner {
@@ -3484,33 +3492,11 @@ a:hover .lp-text-link svg,
   white-space: nowrap;
 }
 
-.lp-article-head h1 {
-  margin: 0;
-  font-size: clamp(1.9rem, 4vw, 2.9rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-
 .lp-article-standfirst {
   margin: 14px 0 0;
   font-size: 1.1rem;
   line-height: 1.65;
   color: var(--lp-muted);
-}
-
-.lp-article-head .lp-blog-meta {
-  margin-top: 16px;
-  padding-bottom: 22px;
-  border-bottom: 1px solid var(--lp-border);
-}
-
-.lp-article-banner {
-  position: relative;
-  margin: 26px 0 30px;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--lp-radius);
-  overflow: hidden;
-  background: rgba(7, 24, 38, 0.06);
 }
 
 /*
@@ -3630,11 +3616,7 @@ a:hover .lp-text-link svg,
     padding: 24px 20px;
   }
 
-  .lp-blog-hero {
-    padding-top: 118px;
-  }
-
   .lp-article {
-    padding-top: 100px;
+    padding-top: 30px;
   }
 }

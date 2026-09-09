@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import LPIcon from "@/components/LPIcon";
 import { fetchBlogPost, fetchBlogPosts, formatArticleDate } from "@/lib/blog";
+import { PAGE_BANNER_IMAGES } from "@/lib/images";
 
 const SITE_URL = "https://www.lettingpartners.co.uk";
 
@@ -103,44 +104,47 @@ export default async function BlogPostPage({
         />
       )}
 
-      <article className="lp-article">
-        <div className="lp-container lp-article-inner">
-          <nav className="lp-article-crumbs" aria-label="Breadcrumb">
+      {/*
+        The article's own image is the page banner, the same treatment every
+        other top-level page gets, rather than a figure below the headline.
+      */}
+      <section className="lp-page-hero lp-article-hero">
+        <Image
+          src={post.bannerImage || PAGE_BANNER_IMAGES.blog}
+          alt={post.bannerImageAlt ?? post.title}
+          fill
+          priority
+          sizes="100vw"
+          className="lp-cover-img"
+        />
+        <div className="lp-image-overlay" />
+
+        <div className="lp-container lp-page-hero-content">
+          <nav className="lp-article-crumbs lp-article-crumbs--light" aria-label="Breadcrumb">
             <Link href="/blog">Insights</Link>
             <span aria-hidden="true">/</span>
             <span>{post.title}</span>
           </nav>
 
-          <header className="lp-article-head">
-            <h1>{post.title}</h1>
-            {post.excerpt && <p className="lp-article-standfirst">{post.excerpt}</p>}
+          <h1>{post.title}</h1>
+          {post.excerpt && <p className="lp-article-standfirst">{post.excerpt}</p>}
 
-            <div className="lp-blog-meta">
-              {published && <span>{published}</span>}
-              <span aria-hidden="true">·</span>
-              <span>{post.readingMinutes} min read</span>
-              {post.author && (
-                <>
-                  <span aria-hidden="true">·</span>
-                  <span>{post.author}</span>
-                </>
-              )}
-            </div>
-          </header>
+          <div className="lp-blog-meta lp-blog-meta--light">
+            {published && <span>{published}</span>}
+            <span aria-hidden="true">·</span>
+            <span>{post.readingMinutes} min read</span>
+            {post.author && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>{post.author}</span>
+              </>
+            )}
+          </div>
+        </div>
+      </section>
 
-          {post.bannerImage && (
-            <figure className="lp-article-banner">
-              <Image
-                src={post.bannerImage}
-                alt={post.bannerImageAlt ?? post.title}
-                fill
-                priority
-                sizes="(max-width: 960px) 100vw, 860px"
-                className="lp-cover-img"
-              />
-            </figure>
-          )}
-
+      <article className="lp-article">
+        <div className="lp-container lp-article-inner">
           {/*
             The body is sanitised in the portal on save, against an allowed list
             of tags and attributes, so what arrives here cannot execute.

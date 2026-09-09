@@ -29,6 +29,7 @@ export const HERO_IMAGES = {
 // ---------------------------------------------------------------------------
 export const PAGE_BANNER_IMAGES = {
   about:                   "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&q=80",
+  blog:                    "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1600&q=80",
   areas:                   "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1600&q=80",
   contact:                 "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80",
   properties:              "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80",

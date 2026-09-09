@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import LPIcon from "@/components/LPIcon";
 import { fetchBlogPosts, formatArticleDate } from "@/lib/blog";
-import { PROPERTY_FALLBACK_IMAGES } from "@/lib/images";
+import { PAGE_BANNER_IMAGES, PROPERTY_FALLBACK_IMAGES } from "@/lib/images";
 
 const SITE_URL = "https://www.lettingpartners.co.uk";
 
@@ -53,9 +53,19 @@ export default async function BlogIndexPage() {
         }}
       />
 
-      <section className="lp-blog-hero">
-        <div className="lp-container">
-          <span className="lp-kicker">Insights</span>
+      {/* Same banner treatment as every other top-level page. */}
+      <section className="lp-page-hero">
+        <Image
+          src={PAGE_BANNER_IMAGES.blog}
+          alt="A bright living room in a let property"
+          fill
+          priority
+          sizes="100vw"
+          className="lp-cover-img"
+        />
+        <div className="lp-image-overlay" />
+        <div className="lp-container lp-page-hero-content">
+          <span className="lp-kicker lp-kicker--light">Insights</span>
           <h1>Property advice worth reading.</h1>
           <p>
             Practical guidance for landlords and tenants on letting, managing, compliance and
