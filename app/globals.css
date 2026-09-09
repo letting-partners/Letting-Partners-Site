@@ -2811,34 +2811,6 @@ a:hover .lp-text-link svg,
 
 /* --------------------------------------------------------------- gallery */
 
-.lp-listing-gallery {
-  margin: 0;
-  display: grid;
-  gap: 10px;
-}
-
-.lp-listing-gallery-hero {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  border-radius: var(--lp-radius);
-  overflow: hidden;
-  background: rgba(7, 24, 38, 0.06);
-}
-
-.lp-listing-gallery-strip {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
-  gap: 10px;
-}
-
-.lp-listing-thumb {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--lp-radius-sm, 10px);
-  overflow: hidden;
-  background: rgba(7, 24, 38, 0.06);
-}
-
 /* ---------------------------------------------------------------- blocks */
 
 .lp-listing-block {
@@ -3049,5 +3021,159 @@ a:hover .lp-text-link svg,
   .lp-listing-block,
   .lp-listing-card {
     padding: 18px 16px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   PROPERTY GALLERY
+   Large frame plus a thumbnail strip. Thumbnails preview into the frame on
+   hover and commit on click.
+--------------------------------------------------------------------------- */
+
+.lp-gallery {
+  display: grid;
+  gap: 10px;
+}
+
+.lp-gallery:focus {
+  outline: none;
+}
+
+.lp-gallery:focus-visible .lp-gallery-stage {
+  outline: 2px solid var(--lp-gold);
+  outline-offset: 3px;
+}
+
+.lp-gallery-stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--lp-radius);
+  overflow: hidden;
+  background: rgba(7, 24, 38, 0.06);
+  /* The arrows sit over the photo; stop a drag selecting it instead. */
+  user-select: none;
+}
+
+/* Keyed on src, so React remounts it and this runs on every change. */
+.lp-gallery-photo {
+  animation: lp-gallery-fade 260ms var(--lp-ease);
+}
+
+@keyframes lp-gallery-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.lp-gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: var(--lp-navy);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 6px 20px rgba(7, 24, 38, 0.22);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 180ms var(--lp-ease), background 180ms var(--lp-ease);
+}
+
+/* Revealed on approach, but always present for keyboard and touch users. */
+.lp-gallery-stage:hover .lp-gallery-arrow,
+.lp-gallery-arrow:focus-visible {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .lp-gallery-arrow {
+    opacity: 1;
+  }
+}
+
+.lp-gallery-arrow:hover {
+  background: #fff;
+}
+
+.lp-gallery-arrow--prev {
+  left: 12px;
+}
+
+.lp-gallery-arrow--next {
+  right: 12px;
+}
+
+.lp-gallery-count {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(7, 24, 38, 0.62);
+  backdrop-filter: blur(6px);
+}
+
+/* ------------------------------------------------------------------ strip */
+
+.lp-gallery-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding-bottom: 2px;
+}
+
+.lp-gallery-thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: 104px;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--lp-radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(7, 24, 38, 0.06);
+  border: 2px solid transparent;
+  opacity: 0.72;
+  transition: opacity 160ms var(--lp-ease), border-color 160ms var(--lp-ease);
+}
+
+.lp-gallery-thumb:hover,
+.lp-gallery-thumb:focus-visible {
+  opacity: 1;
+}
+
+.lp-gallery-thumb.is-active {
+  opacity: 1;
+  border-color: var(--lp-gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-gallery-photo {
+    animation: none;
+  }
+
+  .lp-gallery-arrow,
+  .lp-gallery-thumb {
+    transition: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .lp-gallery-thumb {
+    width: 84px;
+  }
+
+  .lp-gallery-arrow {
+    width: 36px;
+    height: 36px;
   }
 }

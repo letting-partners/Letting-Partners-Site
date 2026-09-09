@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import LPIcon from "@/components/LPIcon";
 import PropertyChat from "@/components/PropertyChat";
+import PropertyGallery from "@/components/PropertyGallery";
 import { WebsiteProperty } from "@/components/WebsitePropertyCard";
 import { PROPERTY_FALLBACK_IMAGES } from "@/lib/images";
 import { getWebsiteApiJson, WebsiteApiEnvelope } from "@/lib/website-api";
@@ -158,7 +159,6 @@ export default async function PropertyDetailPage({
     ? property.images
     : [{ url: property.image || getFallbackImage(property.id), alt: property.title }];
 
-  const cover = gallery[0];
   const price =
     typeof property.price === "number"
       ? `£${property.price.toLocaleString("en-GB")}/${property.priceLabel ?? "pcm"}`
@@ -294,34 +294,7 @@ export default async function PropertyDetailPage({
 
           <div className="lp-listing-grid">
             <div className="lp-listing-main">
-              <figure className="lp-listing-gallery">
-                <div className="lp-listing-gallery-hero">
-                  <Image
-                    src={cover.url}
-                    alt={cover.alt ?? property.title}
-                    fill
-                    sizes="(max-width: 960px) 100vw, 62vw"
-                    className="lp-cover-img"
-                    priority
-                  />
-                </div>
-
-                {gallery.length > 1 && (
-                  <div className="lp-listing-gallery-strip">
-                    {gallery.slice(1, 7).map((image) => (
-                      <div key={image.url} className="lp-listing-thumb">
-                        <Image
-                          src={image.url}
-                          alt={image.alt ?? property.title}
-                          fill
-                          sizes="(max-width: 960px) 30vw, 12vw"
-                          className="lp-cover-img"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </figure>
+              <PropertyGallery images={gallery} title={property.title} />
 
               {property.description && (
                 <section className="lp-listing-block">
