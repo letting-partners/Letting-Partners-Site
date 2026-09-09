@@ -1559,7 +1559,15 @@ a:hover .lp-text-link svg,
   gap: 22px;
 }
 
+/*
+ * Fills its cell, so a title that wraps to two lines does not make one card
+ * taller than the row. The button is pushed to the bottom, which keeps every
+ * "View Property" on the same line across a row.
+ */
 .lp-property-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius);
@@ -1570,6 +1578,7 @@ a:hover .lp-text-link svg,
 .lp-property-card-media {
   position: relative;
   display: block;
+  flex: 0 0 auto;
   aspect-ratio: 4 / 3;
   overflow: hidden;
 }
@@ -1594,9 +1603,15 @@ a:hover .lp-text-link svg,
 }
 
 .lp-property-card-body {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
   padding: 20px;
+  flex: 1;
+}
+
+.lp-property-card-body > .lp-btn {
+  margin-top: auto;
 }
 
 .lp-property-price span {
@@ -3303,8 +3318,13 @@ a:hover .lp-text-link svg,
 }
 
 .lp-featured-slide {
+  display: flex;
   min-width: 0;
   padding-inline: 10px;
+}
+
+.lp-featured-slide > * {
+  width: 100%;
 }
 
 .lp-featured-dots {
