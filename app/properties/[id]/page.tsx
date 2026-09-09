@@ -215,8 +215,8 @@ export default async function PropertyDetailPage({
     label: string;
   }[];
 
+  // Deposit and availability live in the pricing card, so they are not repeated here.
   const facts = [
-    property.deposit != null && { term: "Deposit", value: formatMoney(property.deposit)! },
     property.furnished != null && { term: "Furnished", value: property.furnished ? "Yes" : "No" },
     property.postcode && { term: "Postcode", value: property.postcode },
     property.area && { term: "Area", value: property.area },
@@ -270,35 +270,26 @@ export default async function PropertyDetailPage({
               )}
             </div>
 
-            <div className="lp-listing-head-price">
-              <span className="lp-listing-price">
-                {property.rooms && property.rooms.length > 0 ? `From ${price}` : price}
-              </span>
-              {property.deposit != null && (
-                <span className="lp-listing-price-note">
-                  {formatMoney(property.deposit)} deposit
-                </span>
-              )}
-            </div>
           </header>
-
-          {stats.length > 0 && (
-            <ul className="lp-listing-stats">
-              {stats.map((stat) => (
-                <li key={stat.label}>
-                  <LPIcon name={stat.icon} size={19} />
-                  <span>
-                    <strong>{stat.value}</strong>
-                    {stat.label}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
 
           <div className="lp-listing-grid">
             <div className="lp-listing-main">
               <PropertyGallery images={gallery} title={property.title} />
+
+              {/* Directly under the photos, where a renter looks next. */}
+              {stats.length > 0 && (
+                <ul className="lp-listing-stats">
+                  {stats.map((stat) => (
+                    <li key={stat.label}>
+                      <LPIcon name={stat.icon} size={19} />
+                      <span>
+                        <strong>{stat.value}</strong>
+                        {stat.label}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
 
               {property.description && (
                 <section className="lp-listing-block">
@@ -374,6 +365,33 @@ export default async function PropertyDetailPage({
             {/* Contact first - it is what the page is for. Everything else
                 stacks beneath it. */}
             <aside className="lp-listing-aside">
+              <div className="lp-listing-card lp-listing-card--price">
+                <h2>{property.rooms && property.rooms.length > 0 ? "Rent from" : "Rent"}</h2>
+
+                <p className="lp-listing-price">
+                  {property.rooms && property.rooms.length > 0 ? `From ${price}` : price}
+                </p>
+
+                <dl className="lp-listing-facts">
+                  {property.deposit != null && (
+                    <div>
+                      <dt>Deposit</dt>
+                      <dd>{formatMoney(property.deposit)}</dd>
+                    </div>
+                  )}
+                  {availableFrom && (
+                    <div>
+                      <dt>Available from</dt>
+                      <dd>{availableFrom}</dd>
+                    </div>
+                  )}
+                  <div>
+                    <dt>Status</dt>
+                    <dd>{property.available === false ? "Let agreed" : "Available now"}</dd>
+                  </div>
+                </dl>
+              </div>
+
               <div className="lp-listing-card lp-listing-card--contact">
                 <h2>Arrange a viewing</h2>
 

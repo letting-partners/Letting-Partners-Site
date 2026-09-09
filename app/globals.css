@@ -2669,7 +2669,7 @@ a:hover .lp-text-link svg,
   justify-content: space-between;
   gap: 28px;
   flex-wrap: wrap;
-  padding-bottom: 22px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--lp-border);
 }
 
@@ -2762,7 +2762,6 @@ a:hover .lp-text-link svg,
   border: 1px solid var(--lp-border);
   border-radius: var(--lp-radius);
   overflow: hidden;
-  margin-top: 22px;
 }
 
 .lp-listing-stats li {
@@ -2876,6 +2875,28 @@ a:hover .lp-text-link svg,
 .lp-listing-card--contact {
   border-color: rgba(198, 154, 75, 0.45);
   box-shadow: 0 14px 40px rgba(7, 24, 38, 0.09);
+}
+
+/* The price leads the sidebar, so it is the one figure that shouts. */
+.lp-listing-card--price h2 {
+  margin-bottom: 2px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lp-muted);
+}
+
+.lp-listing-card--price .lp-listing-price {
+  display: block;
+  margin: 0 0 14px;
+  font-size: clamp(1.6rem, 2.6vw, 2.05rem);
+  line-height: 1.1;
+}
+
+.lp-listing-card--price .lp-listing-facts {
+  padding-top: 12px;
+  border-top: 1px solid var(--lp-border);
 }
 
 .lp-listing-agent {
