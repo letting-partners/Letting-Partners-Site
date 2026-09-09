@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildAutoReply, buildTenantAdminEmail } from "@/lib/email-template";
 import { getTenantRegistrationRecipient, sendAutoReply, sendMail } from "@/lib/mailer";
+import { buildWebsiteApiUrl, websiteApiHeaders, websiteApiKeyConfigured } from "@/lib/website-api";
+
+/** The website's free-text property type mapped to what the portal stores. */
+function portalPropertyType(value?: string | null): "HOUSE" | "FLAT" | "STUDIO_FLAT" | null {
+  const normalized = value?.toLowerCase() ?? "";
+  if (normalized.includes("studio")) return "STUDIO_FLAT";
+  if (normalized.includes("flat") || normalized.includes("apartment")) return "FLAT";
+  if (normalized.includes("house") || normalized.includes("hmo")) return "HOUSE";
+  return null;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,7 +36,50 @@ export async function POST(req: NextRequest) {
       .filter(Boolean)
       .join("\n");
 
+    /*
+     * Put the lead in the portal as well as the inbox, so it can be assigned
+     * and matched rather than read once and forgotten.
+     *
+     * Deliberately not fatal: if the portal is unreachable the registration
+     * still succeeds and the emails still go, because losing a tenant lead to
+     * an outage is worse than a record arriving late.
+     */
+    const toPortal = (async () => {
+      if (!websiteApiKeyConfigured()) {
+        console.error("WEBSITE_API_KEY is not set, so tenant registrations are not reaching the portal.");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          buildWebsiteApiUrl("/tenant-registration", { serverPortal: true }),
+          {
+            method: "POST",
+            cache: "no-store",
+            headers: { ...websiteApiHeaders(), "content-type": "application/json" },
+            body: JSON.stringify({
+              name: body.name,
+              email: body.email,
+              phone: body.phone,
+              area: body.preferredArea ?? null,
+              requirements: body.message ?? null,
+              maxBudget: body.maxBudget ?? null,
+              moveInDate: body.moveDate ?? null,
+              propertyType: portalPropertyType(body.propertyType),
+            }),
+          },
+        );
+
+        if (!response.ok) {
+          console.error("Portal rejected a tenant registration:", response.status, await response.text());
+        }
+      } catch (error) {
+        console.error("Could not send the tenant registration to the portal:", error);
+      }
+    })();
+
     await Promise.all([
+      toPortal,
       // Admin notification
       sendMail({
         to: recipient,

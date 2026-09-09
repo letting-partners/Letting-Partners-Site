@@ -6,8 +6,8 @@ import { getWebsiteApiJson, WebsiteApiEnvelope } from "@/lib/website-api";
 
 const SITE_URL = "https://www.lettingpartners.co.uk";
 
-type PropertyIndexResponse = WebsiteApiEnvelope & {
-  properties?: { id: string | number }[];
+type SitemapResponse = WebsiteApiEnvelope & {
+  entries?: { slug: string; updatedAt: string }[];
 };
 
 /**
@@ -15,17 +15,18 @@ type PropertyIndexResponse = WebsiteApiEnvelope & {
  * whatever is actually live. A failure here must not break the sitemap, so the
  * static routes are always returned.
  */
-async function propertyRoutes(now: Date): Promise<MetadataRoute.Sitemap> {
+async function propertyRoutes(): Promise<MetadataRoute.Sitemap> {
   try {
-    const data = await getWebsiteApiJson<PropertyIndexResponse>(
-      "/properties?limit=100",
-      undefined,
-      { serverPortal: true },
-    );
+    // Every published listing, with the date it actually last changed. The
+    // properties endpoint would cap the list and could only offer the time of
+    // generation, which tells a crawler nothing.
+    const data = await getWebsiteApiJson<SitemapResponse>("/sitemap", undefined, {
+      serverPortal: true,
+    });
 
-    return (data?.properties ?? []).map((property) => ({
-      url: `${SITE_URL}/properties/${property.id}`,
-      lastModified: now,
+    return (data?.entries ?? []).map((entry) => ({
+      url: `${SITE_URL}/properties/${entry.slug}`,
+      lastModified: new Date(entry.updatedAt),
       changeFrequency: "daily" as const,
       priority: 0.8,
     }));
@@ -73,7 +74,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  const propertyPages = await propertyRoutes(now);
+  const propertyPages = await propertyRoutes();
 
   const allRoutes = [
     ...staticRoutes,
