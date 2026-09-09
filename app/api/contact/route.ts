@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendEnquiryToPortal } from "@/lib/portal-enquiry";
 import { buildAutoReply, buildContactAdminEmail } from "@/lib/email-template";
 import { getContactRecipient, sendAutoReply, sendMail } from "@/lib/mailer";
 
@@ -26,6 +27,14 @@ export async function POST(req: NextRequest) {
       .join("\n");
 
     await Promise.all([
+      sendEnquiryToPortal({
+        form: "contact",
+        name: body.name,
+        email: body.email,
+        phone: body.phone,
+        message: body.message,
+        details: { "Enquiry type": body.enquiry },
+      }),
       // Admin notification
       sendMail({
         to: recipient,

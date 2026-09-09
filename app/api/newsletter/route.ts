@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildAutoReply } from "@/lib/email-template";
 import { getContactRecipient, sendAutoReply, sendMail } from "@/lib/mailer";
+import { sendEnquiryToPortal } from "@/lib/portal-enquiry";
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,6 +19,11 @@ export async function POST(req: NextRequest) {
     const recipient = getContactRecipient();
 
     await Promise.all([
+      sendEnquiryToPortal({
+        form: "newsletter",
+        email,
+        message: "Subscribed to property alerts from the website.",
+      }),
       // Admin notification
       sendMail({
         to: recipient,
