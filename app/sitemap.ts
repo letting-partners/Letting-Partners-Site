@@ -6,8 +6,16 @@ import { getWebsiteApiJson, WebsiteApiEnvelope } from "@/lib/website-api";
 
 const SITE_URL = "https://www.lettingpartners.co.uk";
 
+/*
+ * Always generated at request time. It has to reflect what the portal has
+ * published right now, and without this Next tries to prerender it and the
+ * uncached fetch throws mid-build.
+ */
+export const dynamic = "force-dynamic";
+
 type SitemapResponse = WebsiteApiEnvelope & {
   entries?: { slug: string; updatedAt: string }[];
+  posts?: { slug: string; updatedAt: string }[];
 };
 
 /**
@@ -15,7 +23,8 @@ type SitemapResponse = WebsiteApiEnvelope & {
  * whatever is actually live. A failure here must not break the sitemap, so the
  * static routes are always returned.
  */
-async function propertyRoutes(): Promise<MetadataRoute.Sitemap> {
+/** Listings and articles, both of which the portal publishes. */
+async function portalRoutes(): Promise<MetadataRoute.Sitemap> {
   try {
     // Every published listing, with the date it actually last changed. The
     // properties endpoint would cap the list and could only offer the time of
@@ -24,19 +33,27 @@ async function propertyRoutes(): Promise<MetadataRoute.Sitemap> {
       serverPortal: true,
     });
 
-    return (data?.entries ?? []).map((entry) => ({
-      url: `${SITE_URL}/properties/${entry.slug}`,
-      lastModified: new Date(entry.updatedAt),
-      changeFrequency: "daily" as const,
-      priority: 0.8,
-    }));
+    return [
+      ...(data?.entries ?? []).map((entry) => ({
+        url: `${SITE_URL}/properties/${entry.slug}`,
+        lastModified: new Date(entry.updatedAt),
+        changeFrequency: "daily" as const,
+        priority: 0.8,
+      })),
+      ...(data?.posts ?? []).map((post) => ({
+        url: `${SITE_URL}/blog/${post.slug}`,
+        lastModified: new Date(post.updatedAt),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      })),
+    ];
   } catch (error) {
     /*
      * The static routes still go out - a sitemap missing its listings beats no
      * sitemap at all - but this must not be silent. Every property vanishing
      * from the sitemap is exactly the kind of failure nobody notices for weeks.
      */
-    console.error("Could not load properties for the sitemap:", error);
+    console.error("Could not load portal content for the sitemap:", error);
     return [];
   }
 }
@@ -49,6 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/properties`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
+    { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/areas`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/landlord-services`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/landlord-services/landlord-guide`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
@@ -80,14 +98,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  const propertyPages = await propertyRoutes();
+  const portalPages = await portalRoutes();
 
   const allRoutes = [
     ...staticRoutes,
     ...areaRoutes,
     ...serviceRoutes,
     ...otherServiceRoutes,
-    ...propertyPages,
+    ...portalPages,
   ];
   const seen = new Set<string>();
   return allRoutes.filter((route) => {

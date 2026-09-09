@@ -110,6 +110,7 @@ const footerCompany = [
   ["About", "/about"],
   ["Properties", "/properties"],
   ["Areas", "/areas"],
+  ["Blog", "/blog"],
   ["Contact", "/contact"],
   ["Landlord Guide", "/landlord-services/landlord-guide"],
   ["Tenant Guide", "/tenant-services/tenant-guide"],

@@ -3313,3 +3313,328 @@ a:hover .lp-text-link svg,
     padding-inline: 6px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   BLOG
+   Index, article cards, and the article itself.
+--------------------------------------------------------------------------- */
+
+.lp-blog-hero {
+  padding-top: 150px;
+  padding-bottom: 46px;
+  background: var(--lp-cream-2);
+  border-bottom: 1px solid var(--lp-border);
+}
+
+.lp-blog-hero h1 {
+  margin: 10px 0 0;
+  font-size: clamp(2.1rem, 4.4vw, 3.3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+}
+
+.lp-blog-hero p {
+  margin-top: 14px;
+  max-width: 62ch;
+  color: var(--lp-muted);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.lp-blog-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  color: var(--lp-muted);
+}
+
+/* ------------------------------------------------------------------ lead */
+
+.lp-blog-lead {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 0;
+  align-items: stretch;
+  background: #fff;
+  border: 1px solid var(--lp-border);
+  border-radius: var(--lp-radius);
+  overflow: hidden;
+  margin-bottom: 34px;
+  transition: box-shadow 200ms var(--lp-ease), transform 200ms var(--lp-ease);
+}
+
+.lp-blog-lead:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 50px rgba(7, 24, 38, 0.12);
+}
+
+.lp-blog-lead-media {
+  position: relative;
+  min-height: 320px;
+}
+
+.lp-blog-lead-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 32px;
+  justify-content: center;
+}
+
+.lp-blog-lead-body h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.lp-blog-lead-body p {
+  margin: 0;
+  color: var(--lp-muted);
+  line-height: 1.7;
+}
+
+/* ------------------------------------------------------------------ grid */
+
+.lp-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+  gap: 22px;
+}
+
+.lp-blog-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--lp-border);
+  border-radius: var(--lp-radius);
+  overflow: hidden;
+  transition: box-shadow 200ms var(--lp-ease), transform 200ms var(--lp-ease);
+}
+
+.lp-blog-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 42px rgba(7, 24, 38, 0.11);
+}
+
+.lp-blog-card-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: rgba(7, 24, 38, 0.06);
+}
+
+.lp-blog-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 20px;
+}
+
+.lp-blog-card-body h3 {
+  margin: 0;
+  font-size: 1.12rem;
+  line-height: 1.32;
+  letter-spacing: -0.01em;
+}
+
+.lp-blog-card-body h3 a:hover {
+  color: var(--lp-gold-2);
+}
+
+.lp-blog-card-body p {
+  margin: 0;
+  color: var(--lp-muted);
+  font-size: 0.9rem;
+  line-height: 1.62;
+}
+
+/* --------------------------------------------------------------- article */
+
+.lp-article {
+  padding-top: 122px;
+  padding-bottom: 60px;
+  background: var(--lp-cream-2);
+}
+
+.lp-article-inner {
+  max-width: 860px;
+}
+
+.lp-article-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--lp-muted);
+  margin-bottom: 20px;
+}
+
+.lp-article-crumbs a:hover {
+  color: var(--lp-navy);
+  text-decoration: underline;
+}
+
+.lp-article-crumbs span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lp-article-head h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.lp-article-standfirst {
+  margin: 14px 0 0;
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--lp-muted);
+}
+
+.lp-article-head .lp-blog-meta {
+  margin-top: 16px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--lp-border);
+}
+
+.lp-article-banner {
+  position: relative;
+  margin: 26px 0 30px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--lp-radius);
+  overflow: hidden;
+  background: rgba(7, 24, 38, 0.06);
+}
+
+/*
+ * Body copy set wider and looser than the rest of the site. An article is read
+ * top to bottom rather than scanned, which is a different job.
+ */
+.lp-article-body {
+  font-size: 1.05rem;
+  color: var(--lp-ink, var(--lp-navy));
+}
+
+.lp-article-body h2 {
+  margin: 1.7em 0 0.5em;
+  font-size: 1.55rem;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.lp-article-body h3 {
+  margin: 1.5em 0 0.4em;
+  font-size: 1.2rem;
+}
+
+.lp-article-body p {
+  margin: 0 0 1.05em;
+  line-height: 1.8;
+}
+
+.lp-article-body ul,
+.lp-article-body ol {
+  margin: 0 0 1.2em;
+  padding-left: 1.35em;
+}
+
+.lp-article-body li {
+  margin-bottom: 0.5em;
+  line-height: 1.75;
+}
+
+.lp-article-body blockquote {
+  margin: 1.6em 0;
+  padding: 4px 0 4px 20px;
+  border-left: 3px solid var(--lp-gold);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--lp-muted);
+}
+
+.lp-article-body a {
+  color: var(--lp-navy);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lp-article-body a:hover {
+  color: var(--lp-gold-2);
+}
+
+.lp-article-body figure {
+  margin: 1.8em 0;
+}
+
+.lp-article-body img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--lp-radius);
+}
+
+.lp-article-body figcaption {
+  margin-top: 9px;
+  font-size: 0.85rem;
+  color: var(--lp-muted);
+}
+
+.lp-article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.4em 0;
+  font-size: 0.94rem;
+}
+
+.lp-article-body th,
+.lp-article-body td {
+  padding: 10px 12px;
+  border: 1px solid var(--lp-border);
+  text-align: left;
+}
+
+.lp-article-body th {
+  background: rgba(7, 24, 38, 0.04);
+  font-weight: 700;
+}
+
+.lp-article-footer {
+  margin-top: 36px;
+  padding-top: 22px;
+  border-top: 1px solid var(--lp-border);
+}
+
+/* The back link points left, so the shared arrow icon is flipped. */
+.lp-article-footer .lp-text-link svg {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 860px) {
+  .lp-blog-lead {
+    grid-template-columns: 1fr;
+  }
+
+  .lp-blog-lead-media {
+    min-height: 220px;
+    aspect-ratio: 16 / 9;
+  }
+
+  .lp-blog-lead-body {
+    padding: 24px 20px;
+  }
+
+  .lp-blog-hero {
+    padding-top: 118px;
+  }
+
+  .lp-article {
+    padding-top: 100px;
+  }
+}

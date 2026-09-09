@@ -3,6 +3,13 @@ const PORTAL_API_BASE = "https://portal.lettingpartners.co.uk/api/website";
 
 type WebsiteApiOptions = {
   serverPortal?: boolean;
+  /**
+   * Seconds to cache the response for. Without it the call is uncached, which
+   * is right for listings and chat but wrong for articles: a blog page that
+   * declares an ISR interval cannot also refuse to cache its own data, and
+   * Next rejects the combination outright.
+   */
+  revalidate?: number;
 };
 
 function normalizeBaseUrl(baseUrl: string) {
@@ -68,7 +75,10 @@ export async function getWebsiteApiJson<T>(
   options: WebsiteApiOptions = {},
 ) {
   const response = await fetch(buildWebsiteApiUrl(path, options), {
-    cache: "no-store",
+    // Conflicting cache options are rejected, so it is one or the other.
+    ...(options.revalidate === undefined
+      ? { cache: "no-store" as const }
+      : { next: { revalidate: options.revalidate } }),
     headers: websiteApiHeaders(),
     signal,
   });
