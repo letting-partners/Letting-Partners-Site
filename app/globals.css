@@ -275,6 +275,23 @@ a:hover .lp-text-link svg,
   backdrop-filter: blur(18px);
 }
 
+/*
+ * Listing pages have no hero behind the header, so it is opaque from the top.
+ * Solid white rather than the scrolled cream, so the page reads as a document
+ * rather than a continuation of the marketing pages.
+ */
+.lp-header--solid {
+  padding-block: 10px;
+  background: #fff;
+  border-bottom: 1px solid rgba(7, 24, 38, 0.09);
+  box-shadow: 0 1px 0 rgba(7, 24, 38, 0.02);
+}
+
+.lp-header--solid.lp-header--scrolled {
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(7, 24, 38, 0.07);
+}
+
 .lp-header-inner {
   display: flex;
   align-items: center;
@@ -294,6 +311,7 @@ a:hover .lp-text-link svg,
   transition: filter 220ms var(--lp-ease);
 }
 
+.lp-header--solid .lp-header-logo img,
 .lp-header--scrolled .lp-header-logo img {
   filter: none;
 }
@@ -321,6 +339,8 @@ a:hover .lp-text-link svg,
   transition: background 180ms var(--lp-ease), color 180ms var(--lp-ease);
 }
 
+.lp-header--solid .lp-desktop-nav > a,
+.lp-header--solid .lp-nav-dropdown > button,
 .lp-header--scrolled .lp-desktop-nav > a,
 .lp-header--scrolled .lp-nav-dropdown > button {
   color: var(--lp-navy);
@@ -333,6 +353,9 @@ a:hover .lp-text-link svg,
   background: rgba(255, 255, 255, 0.12);
 }
 
+.lp-header--solid .lp-desktop-nav > a:hover,
+.lp-header--solid .lp-nav-dropdown > button:hover,
+.lp-header--solid .lp-desktop-nav .is-active,
 .lp-header--scrolled .lp-desktop-nav > a:hover,
 .lp-header--scrolled .lp-nav-dropdown > button:hover,
 .lp-header--scrolled .lp-desktop-nav .is-active {
@@ -508,6 +531,7 @@ a:hover .lp-text-link svg,
   font-weight: 900;
 }
 
+.lp-header--solid .lp-phone-link,
 .lp-header--scrolled .lp-phone-link {
   color: var(--lp-navy);
   border-color: var(--lp-border-strong);
@@ -526,6 +550,7 @@ a:hover .lp-text-link svg,
   background: rgba(255, 255, 255, 0.1);
 }
 
+.lp-header--solid .lp-menu-button,
 .lp-header--scrolled .lp-menu-button {
   color: var(--lp-navy);
   border-color: var(--lp-border-strong);
@@ -2606,4 +2631,423 @@ a:hover .lp-text-link svg,
 .lp-room-status--let {
   background: #eef1f4;
   color: #4a5a68;
+}
+
+/* ---------------------------------------------------------------------------
+   PROPERTY LISTING
+   The single property page. Title, gallery and description read down the main
+   column; the contact card leads a sidebar of supporting detail.
+--------------------------------------------------------------------------- */
+
+.lp-listing {
+  /* Clears the fixed header, which is solid rather than overlaid here. */
+  padding-top: 112px;
+  padding-bottom: 72px;
+  background: var(--lp-cream-2);
+  min-height: 100svh;
+}
+
+.lp-listing-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--lp-muted);
+  margin-bottom: 18px;
+}
+
+.lp-listing-crumbs a:hover {
+  color: var(--lp-navy);
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------ head */
+
+.lp-listing-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  flex-wrap: wrap;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--lp-border);
+}
+
+.lp-listing-head-main {
+  min-width: 0;
+  flex: 1 1 420px;
+}
+
+.lp-listing-head h1 {
+  margin: 10px 0 0;
+  font-size: clamp(1.75rem, 3.4vw, 2.7rem);
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+}
+
+.lp-listing-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lp-listing-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(7, 24, 38, 0.06);
+  color: var(--lp-navy);
+}
+
+.lp-listing-tag--available {
+  background: rgba(22, 122, 78, 0.12);
+  color: #126541;
+}
+
+.lp-listing-tag--let {
+  background: rgba(126, 33, 33, 0.1);
+  color: #8a2020;
+}
+
+.lp-listing-address {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  color: var(--lp-muted);
+  font-size: 0.95rem;
+}
+
+.lp-listing-address svg {
+  flex-shrink: 0;
+  color: var(--lp-gold);
+}
+
+.lp-listing-head-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  padding-top: 4px;
+}
+
+.lp-listing-price {
+  font-size: clamp(1.5rem, 2.6vw, 2.05rem);
+  font-weight: 800;
+  color: var(--lp-navy);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.lp-listing-price-note {
+  font-size: 0.82rem;
+  color: var(--lp-muted);
+}
+
+/* ----------------------------------------------------------------- stats */
+
+.lp-listing-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--lp-border);
+  border: 1px solid var(--lp-border);
+  border-radius: var(--lp-radius);
+  overflow: hidden;
+  margin-top: 22px;
+}
+
+.lp-listing-stats li {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 16px 18px;
+  background: #fff;
+}
+
+.lp-listing-stats svg {
+  flex-shrink: 0;
+  color: var(--lp-gold);
+}
+
+.lp-listing-stats span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 0.78rem;
+  color: var(--lp-muted);
+}
+
+.lp-listing-stats strong {
+  font-size: 1rem;
+  color: var(--lp-navy);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* ------------------------------------------------------------------ grid */
+
+.lp-listing-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 366px);
+  gap: 32px;
+  align-items: start;
+  margin-top: 28px;
+}
+
+.lp-listing-main {
+  display: grid;
+  gap: 26px;
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------- gallery */
+
+.lp-listing-gallery {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.lp-listing-gallery-hero {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--lp-radius);
+  overflow: hidden;
+  background: rgba(7, 24, 38, 0.06);
+}
+
+.lp-listing-gallery-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 10px;
+}
+
+.lp-listing-thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--lp-radius-sm, 10px);
+  overflow: hidden;
+  background: rgba(7, 24, 38, 0.06);
+}
+
+/* ---------------------------------------------------------------- blocks */
+
+.lp-listing-block {
+  background: #fff;
+  border: 1px solid var(--lp-border);
+  border-radius: var(--lp-radius);
+  padding: 24px 26px;
+}
+
+.lp-listing-block h2 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+}
+
+.lp-listing-block-note {
+  color: var(--lp-muted);
+  font-size: 0.88rem;
+  margin: 0 0 14px;
+}
+
+.lp-listing-prose p {
+  margin: 0 0 12px;
+  line-height: 1.75;
+}
+
+.lp-listing-prose p:last-child {
+  margin-bottom: 0;
+}
+
+/* Wide tables scroll inside their own box rather than the whole page. */
+.lp-table-scroll {
+  overflow-x: auto;
+}
+
+.lp-room-rent-alt {
+  color: var(--lp-muted);
+  font-size: 0.8rem;
+}
+
+/* ----------------------------------------------------------------- aside */
+
+.lp-listing-aside {
+  display: grid;
+  gap: 16px;
+  position: sticky;
+  top: 96px;
+}
+
+.lp-listing-card {
+  background: #fff;
+  border: 1px solid var(--lp-border);
+  border-radius: var(--lp-radius);
+  padding: 20px 22px;
+}
+
+.lp-listing-card h2 {
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+
+.lp-listing-card--contact {
+  border-color: rgba(198, 154, 75, 0.45);
+  box-shadow: 0 14px 40px rgba(7, 24, 38, 0.09);
+}
+
+.lp-listing-agent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.lp-listing-agent strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.lp-listing-agent span {
+  font-size: 0.8rem;
+  color: var(--lp-muted);
+}
+
+.lp-listing-actions {
+  display: grid;
+  gap: 9px;
+}
+
+/* Full width in a narrow column reads as one clear next step. */
+.lp-listing-actions .lp-btn {
+  width: 100%;
+}
+
+.lp-listing-contact-links {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--lp-border);
+}
+
+.lp-listing-contact-links a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.87rem;
+  color: var(--lp-navy);
+}
+
+.lp-listing-contact-links svg {
+  flex-shrink: 0;
+  color: var(--lp-gold);
+}
+
+.lp-listing-contact-links a:hover {
+  text-decoration: underline;
+}
+
+.lp-listing-facts {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.lp-listing-facts > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--lp-border);
+}
+
+.lp-listing-facts > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.lp-listing-facts dt {
+  color: var(--lp-muted);
+  font-size: 0.85rem;
+}
+
+.lp-listing-facts dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.lp-listing-features {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lp-listing-features li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.88rem;
+}
+
+.lp-listing-features svg {
+  flex-shrink: 0;
+  color: #126541;
+}
+
+.lp-listing-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--lp-navy);
+  padding: 2px 4px;
+}
+
+.lp-listing-back:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 960px) {
+  .lp-listing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stuck to the top of a stacked column it would cover the content below. */
+  .lp-listing-aside {
+    position: static;
+  }
+}
+
+@media (max-width: 700px) {
+  .lp-listing {
+    padding-top: 92px;
+  }
+
+  .lp-listing-head-price {
+    align-items: flex-start;
+    padding-top: 0;
+  }
+
+  .lp-listing-block,
+  .lp-listing-card {
+    padding: 18px 16px;
+  }
 }

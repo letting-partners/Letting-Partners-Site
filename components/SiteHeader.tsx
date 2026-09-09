@@ -30,6 +30,13 @@ export default function SiteHeader() {
   const [openMenu, setOpenMenu] = useState<"services" | "areas" | null>(null);
   const [mobileGroup, setMobileGroup] = useState<"services" | "areas" | null>("services");
 
+  /*
+   * A property listing has no cover image behind the header, so the
+   * transparent treatment - white logo, light nav - would sit on white and
+   * disappear. These pages get a solid header from the top instead.
+   */
+  const solid = /^\/properties\/.+/.test(pathname);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
@@ -65,7 +72,11 @@ export default function SiteHeader() {
 
   return (
     <>
-      <header className={`lp-header${scrolled ? " lp-header--scrolled" : ""}`}>
+      <header
+        className={`lp-header${scrolled ? " lp-header--scrolled" : ""}${
+          solid ? " lp-header--solid" : ""
+        }`}
+      >
         <div className="lp-container lp-header-inner">
           <Link href="/" className="lp-header-logo" aria-label="Letting Partners home">
             <Image src={LOGO.main} alt="Letting Partners" width={190} height={54} priority />

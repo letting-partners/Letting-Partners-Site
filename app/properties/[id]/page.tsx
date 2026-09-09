@@ -192,6 +192,37 @@ export default async function PropertyDetailPage({
     },
   };
 
+  const stats = [
+    property.bedrooms != null && {
+      icon: "bed" as const,
+      value: String(property.bedrooms),
+      label: property.bedrooms === 1 ? "Bedroom" : "Bedrooms",
+    },
+    property.bathrooms != null && {
+      icon: "bath" as const,
+      value: String(property.bathrooms),
+      label: property.bathrooms === 1 ? "Bathroom" : "Bathrooms",
+    },
+    property.type && { icon: "home" as const, value: property.type, label: "Property type" },
+    availableFrom && { icon: "calendar" as const, value: availableFrom, label: "Available from" },
+  ].filter(Boolean) as {
+    icon: "bed" | "bath" | "home" | "calendar";
+    value: string;
+    label: string;
+  }[];
+
+  const facts = [
+    property.deposit != null && { term: "Deposit", value: formatMoney(property.deposit)! },
+    property.furnished != null && { term: "Furnished", value: property.furnished ? "Yes" : "No" },
+    property.postcode && { term: "Postcode", value: property.postcode },
+    property.area && { term: "Area", value: property.area },
+    property.rooms &&
+      property.rooms.length > 0 && {
+        term: "Rooms available",
+        value: `${availableRooms.length} of ${property.rooms.length}`,
+      },
+  ].filter(Boolean) as { term: string; value: string }[];
+
   return (
     <>
       <script
@@ -201,176 +232,182 @@ export default async function PropertyDetailPage({
         }}
       />
 
-      <section className="lp-section" style={{ paddingTop: "140px" }}>
+      <div className="lp-listing">
         <div className="lp-container">
-          <div className="lp-property-detail">
-            <div>
-              <div className="lp-property-detail-media">
-                <Image
-                  src={cover.url}
-                  alt={cover.alt ?? property.title}
-                  fill
-                  sizes="(max-width: 900px) 100vw, 58vw"
-                  className="lp-cover-img"
-                  priority
-                />
-              </div>
+          <nav className="lp-listing-crumbs" aria-label="Breadcrumb">
+            <Link href="/properties">Properties</Link>
+            <span aria-hidden="true">/</span>
+            <span>{property.area ?? property.title}</span>
+          </nav>
 
-              {gallery.length > 1 && (
-                <div className="lp-properties-grid" style={{ marginTop: "1rem" }}>
-                  {gallery.slice(1, 7).map((image) => (
-                    <div
-                      key={image.url}
-                      style={{
-                        position: "relative",
-                        aspectRatio: "4 / 3",
-                        borderRadius: "var(--lp-radius-sm)",
-                        overflow: "hidden",
-                      }}
-                    >
-                      <Image
-                        src={image.url}
-                        alt={image.alt ?? property.title}
-                        fill
-                        sizes="(max-width: 900px) 50vw, 20vw"
-                        className="lp-cover-img"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="lp-property-detail-panel">
-              <span className="lp-kicker">Property Details</span>
-              <h1>{property.title}</h1>
-
-              <div className="lp-property-price lp-property-detail-price">
-                <span>
-                  {property.rooms && property.rooms.length > 0 ? `From ${price}` : price}
+          {/* Title, address and price lead, ahead of everything else. */}
+          <header className="lp-listing-head">
+            <div className="lp-listing-head-main">
+              <div className="lp-listing-tags">
+                {property.type && <span className="lp-listing-tag">{property.type}</span>}
+                <span
+                  className={
+                    property.available === false
+                      ? "lp-listing-tag lp-listing-tag--let"
+                      : "lp-listing-tag lp-listing-tag--available"
+                  }
+                >
+                  {property.available === false ? "Let agreed" : "Available now"}
                 </span>
               </div>
 
+              <h1>{property.title}</h1>
+
               {property.address && (
-                <p className="lp-property-address">
-                  <LPIcon name="map-pin" size={16} />
+                <p className="lp-listing-address">
+                  <LPIcon name="map-pin" size={17} />
                   {property.address}
                 </p>
               )}
+            </div>
 
-              <div className="lp-property-meta">
-                {property.bedrooms != null && (
+            <div className="lp-listing-head-price">
+              <span className="lp-listing-price">
+                {property.rooms && property.rooms.length > 0 ? `From ${price}` : price}
+              </span>
+              {property.deposit != null && (
+                <span className="lp-listing-price-note">
+                  {formatMoney(property.deposit)} deposit
+                </span>
+              )}
+            </div>
+          </header>
+
+          {stats.length > 0 && (
+            <ul className="lp-listing-stats">
+              {stats.map((stat) => (
+                <li key={stat.label}>
+                  <LPIcon name={stat.icon} size={19} />
                   <span>
-                    <LPIcon name="bed" size={16} />
-                    {property.bedrooms} {property.bedrooms === 1 ? "bed" : "beds"}
+                    <strong>{stat.value}</strong>
+                    {stat.label}
                   </span>
-                )}
-                {property.bathrooms != null && (
-                  <span>
-                    <LPIcon name="bath" size={16} />
-                    {property.bathrooms} {property.bathrooms === 1 ? "bath" : "baths"}
-                  </span>
-                )}
-                {property.type && <span>{property.type}</span>}
-                {property.available === false && <span>Let agreed</span>}
-              </div>
+                </li>
+              ))}
+            </ul>
+          )}
 
-              {property.description && <p>{property.description}</p>}
+          <div className="lp-listing-grid">
+            <div className="lp-listing-main">
+              <figure className="lp-listing-gallery">
+                <div className="lp-listing-gallery-hero">
+                  <Image
+                    src={cover.url}
+                    alt={cover.alt ?? property.title}
+                    fill
+                    sizes="(max-width: 960px) 100vw, 62vw"
+                    className="lp-cover-img"
+                    priority
+                  />
+                </div>
 
-              <div className="lp-property-detail-facts">
-                {property.deposit != null && (
-                  <p>
-                    <strong>Deposit:</strong> {formatMoney(property.deposit)}
-                  </p>
-                )}
-                {property.furnished != null && (
-                  <p>
-                    <strong>Furnished:</strong> {property.furnished ? "Yes" : "No"}
-                  </p>
-                )}
-                {availableFrom && (
-                  <p>
-                    <strong>Available from:</strong> {availableFrom}
-                  </p>
-                )}
-              </div>
-
-              {property.features && property.features.length > 0 && (
-                <div>
-                  <h2>Features</h2>
-                  <div className="lp-property-meta">
-                    {property.features.map((feature) => (
-                      <span key={feature}>{feature}</span>
+                {gallery.length > 1 && (
+                  <div className="lp-listing-gallery-strip">
+                    {gallery.slice(1, 7).map((image) => (
+                      <div key={image.url} className="lp-listing-thumb">
+                        <Image
+                          src={image.url}
+                          alt={image.alt ?? property.title}
+                          fill
+                          sizes="(max-width: 960px) 30vw, 12vw"
+                          className="lp-cover-img"
+                        />
+                      </div>
                     ))}
                   </div>
-                </div>
+                )}
+              </figure>
+
+              {property.description && (
+                <section className="lp-listing-block">
+                  <h2>About this property</h2>
+                  <div className="lp-listing-prose">
+                    {property.description.split(/\n{2,}/).map((paragraph, index) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
+                  </div>
+                </section>
               )}
 
+              {/* The rooms table is wide and tabular, so it stays in the main
+                  column where its columns have room to breathe. */}
               {property.rooms && property.rooms.length > 0 && (
-                <div>
+                <section className="lp-listing-block">
                   <h2>Rooms</h2>
-                  <p style={{ color: "var(--lp-muted)", fontSize: "0.9rem" }}>
+                  <p className="lp-listing-block-note">
                     {availableRooms.length} of {property.rooms.length} rooms available.
                   </p>
 
-                  <table className="lp-room-table">
-                    <thead>
-                      <tr>
-                        <th>Room</th>
-                        <th>Rent</th>
-                        <th>Available from</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {property.rooms.map((room) => (
-                        <tr key={room.id}>
-                          <td>{room.name}</td>
-                          <td>
-                            {room.rent != null ? (
-                              <>
-                                {formatMoney(room.rent)} pcm
-                                {room.rentPerWeek != null && (
-                                  <div style={{ color: "var(--lp-muted)", fontSize: "0.8rem" }}>
-                                    {formatMoney(room.rentPerWeek)} pw
-                                  </div>
-                                )}
-                              </>
-                            ) : (
-                              "POA"
-                            )}
-                          </td>
-                          <td>{formatDate(room.availableFrom) ?? "On request"}</td>
-                          <td>
-                            <span
-                              className={
-                                room.status === "Available"
-                                  ? "lp-room-status lp-room-status--available"
-                                  : room.status === "Under offer"
-                                    ? "lp-room-status lp-room-status--offer"
-                                    : "lp-room-status lp-room-status--let"
-                              }
-                            >
-                              {room.status}
-                            </span>
-                          </td>
+                  <div className="lp-table-scroll">
+                    <table className="lp-room-table">
+                      <thead>
+                        <tr>
+                          <th>Room</th>
+                          <th>Rent</th>
+                          <th>Available from</th>
+                          <th>Status</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {property.rooms.map((room) => (
+                          <tr key={room.id}>
+                            <td>{room.name}</td>
+                            <td>
+                              {room.rent != null ? (
+                                <>
+                                  {formatMoney(room.rent)} pcm
+                                  {room.rentPerWeek != null && (
+                                    <div className="lp-room-rent-alt">
+                                      {formatMoney(room.rentPerWeek)} pw
+                                    </div>
+                                  )}
+                                </>
+                              ) : (
+                                "POA"
+                              )}
+                            </td>
+                            <td>{formatDate(room.availableFrom) ?? "On request"}</td>
+                            <td>
+                              <span
+                                className={
+                                  room.status === "Available"
+                                    ? "lp-room-status lp-room-status--available"
+                                    : room.status === "Under offer"
+                                      ? "lp-room-status lp-room-status--offer"
+                                      : "lp-room-status lp-room-status--let"
+                                }
+                              >
+                                {room.status}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
               )}
+            </div>
 
-              {property.agent && (
-                <div>
-                  <h2>Your agent</h2>
-                  <div className="lp-agent-card">
+            {/* Contact first - it is what the page is for. Everything else
+                stacks beneath it. */}
+            <aside className="lp-listing-aside">
+              <div className="lp-listing-card lp-listing-card--contact">
+                <h2>Arrange a viewing</h2>
+
+                {property.agent ? (
+                  <div className="lp-listing-agent">
                     {property.agent.avatarUrl ? (
                       <Image
                         src={property.agent.avatarUrl}
                         alt={property.agent.name}
-                        width={56}
-                        height={56}
+                        width={52}
+                        height={52}
                         className="lp-agent-avatar"
                       />
                     ) : (
@@ -378,50 +415,89 @@ export default async function PropertyDetailPage({
                         {initials(property.agent.name)}
                       </span>
                     )}
-
                     <div>
-                      <h3>{property.agent.name}</h3>
-                      {property.agent.jobTitle && (
-                        <p className="lp-agent-role">{property.agent.jobTitle}</p>
-                      )}
-                      {property.agent.bio && <p className="lp-agent-bio">{property.agent.bio}</p>}
-
-                      <div className="lp-agent-contact">
-                        {property.agent.phone && (
-                          <a href={`tel:${property.agent.phone.replace(/\s+/g, "")}`}>
-                            <LPIcon name="phone" size={15} />
-                            {property.agent.phone}
-                          </a>
-                        )}
-                        {property.agent.email && (
-                          <a href={`mailto:${property.agent.email}`}>
-                            <LPIcon name="mail" size={15} />
-                            {property.agent.email}
-                          </a>
-                        )}
-                      </div>
+                      <strong>{property.agent.name}</strong>
+                      {property.agent.jobTitle && <span>{property.agent.jobTitle}</span>}
                     </div>
                   </div>
+                ) : (
+                  <p className="lp-listing-block-note">
+                    Our lettings team will reply the same working day.
+                  </p>
+                )}
+
+                <div className="lp-listing-actions">
+                  <PropertyChat
+                    propertyId={String(property.id)}
+                    propertyTitle={property.title}
+                    agentName={property.agent?.name ?? null}
+                  />
+                  <Link href="/contact" className="lp-btn lp-btn--outline">
+                    Enquire now
+                  </Link>
+                </div>
+
+                {(property.agent?.phone || property.agent?.email) && (
+                  <div className="lp-listing-contact-links">
+                    {property.agent?.phone && (
+                      <a href={`tel:${property.agent.phone.replace(/\s+/g, "")}`}>
+                        <LPIcon name="phone" size={15} />
+                        {property.agent.phone}
+                      </a>
+                    )}
+                    {property.agent?.email && (
+                      <a href={`mailto:${property.agent.email}`}>
+                        <LPIcon name="mail" size={15} />
+                        {property.agent.email}
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {facts.length > 0 && (
+                <div className="lp-listing-card">
+                  <h2>Key facts</h2>
+                  <dl className="lp-listing-facts">
+                    {facts.map((fact) => (
+                      <div key={fact.term}>
+                        <dt>{fact.term}</dt>
+                        <dd>{fact.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
                 </div>
               )}
 
-              <div className="lp-property-detail-actions">
-                <PropertyChat
-                  propertyId={String(property.id)}
-                  propertyTitle={property.title}
-                  agentName={property.agent?.name ?? null}
-                />
-                <Link href="/contact" className="lp-btn lp-btn--outline">
-                  Enquire Now
-                </Link>
-                <Link href="/properties" className="lp-btn lp-btn--outline">
-                  Browse All Properties
-                </Link>
-              </div>
-            </div>
+              {property.features && property.features.length > 0 && (
+                <div className="lp-listing-card">
+                  <h2>Features</h2>
+                  <ul className="lp-listing-features">
+                    {property.features.map((feature) => (
+                      <li key={feature}>
+                        <LPIcon name="check" size={14} />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {property.agent?.bio && (
+                <div className="lp-listing-card">
+                  <h2>About {property.agent.name.split(" ")[0]}</h2>
+                  <p className="lp-listing-block-note">{property.agent.bio}</p>
+                </div>
+              )}
+
+              <Link href="/properties" className="lp-listing-back">
+                <LPIcon name="arrow-right" size={15} />
+                Browse all properties
+              </Link>
+            </aside>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }
