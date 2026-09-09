@@ -37,8 +37,10 @@ type WebsitePropertyDetails = WebsiteProperty & {
   images?: { url: string; alt?: string | null }[];
   rooms?: PropertyRoom[];
   agent?: PropertyAgent | null;
+  /* The portal always sends these, derived from the listing when nobody wrote them. */
   metaTitle?: string | null;
   metaDescription?: string | null;
+  keywords?: string[];
 };
 
 type PropertyApiResponse = WebsiteApiEnvelope & {
@@ -106,14 +108,15 @@ export async function generateMetadata({
     typeof property.price === "number"
       ? `£${property.price.toLocaleString("en-GB")}/${property.priceLabel ?? "pcm"}`
       : (property.price ?? "POA");
-  const bedroomLabel = property.bedrooms != null ? `${property.bedrooms} bed ` : "";
 
-  // The portal supplies SEO fields when an agent has written them; otherwise
-  // they are derived from the listing.
-  const title = property.metaTitle ?? `${bedroomLabel}${property.title} - ${price} | Letting Partners`;
+  /*
+   * The portal derives title, description and keywords for every listing, so
+   * these are only fallbacks for a payload from an older portal build.
+   */
+  const title = property.metaTitle || `${property.title} | Letting Partners`;
   const description =
-    property.metaDescription ??
-    property.description?.slice(0, 155) ??
+    property.metaDescription ||
+    property.description?.slice(0, 155) ||
     `${property.title}${property.address ? ` in ${property.address}` : ""} - rental property from Letting Partners, ${price}.`;
 
   const image = property.images?.[0]?.url || property.image || getFallbackImage(property.id);
@@ -121,6 +124,7 @@ export async function generateMetadata({
   return {
     title,
     description,
+    keywords: property.keywords?.length ? property.keywords : undefined,
     alternates: { canonical: `/properties/${id}` },
     openGraph: {
       title,
