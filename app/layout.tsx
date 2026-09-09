@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Letting Partners | UK Property Letting & Management",
   description:
-    "Premium property letting, management, tenant support, legal coordination, maintenance, mortgage consultancy, and development support across London and Birmingham.",
+    "Premium property letting, management, tenant support, legal coordination, maintenance, mortgage consultancy and development support across the UK.",
   keywords: [
     "letting agents London",
     "property management London",
@@ -46,14 +46,14 @@ export const metadata: Metadata = {
     siteName: "Letting Partners",
     title: "Letting Partners | UK Property Letting & Management",
     description:
-      "Professional letting, management, tenant, legal, maintenance, mortgage, and development support across London and Birmingham.",
+      "Professional letting, management, tenant, legal, maintenance, mortgage and development support across the UK.",
     images: [{ url: "/lp-logo.webp", width: 190, height: 54, alt: "Letting Partners" }],
   },
   twitter: {
     card: "summary",
     title: "Letting Partners | UK Property Letting & Management",
     description:
-      "Professional letting, management, tenant, legal, maintenance, mortgage, and development support across London and Birmingham.",
+      "Professional letting, management, tenant, legal, maintenance, mortgage and development support across the UK.",
     images: ["/lp-logo.webp"],
   },
   robots: {
@@ -65,6 +65,7 @@ export const metadata: Metadata = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
+  "@id": `${SITE_URL}/#organization`,
   name: "Letting Partners",
   alternateName: "Letting Partners LTD",
   url: SITE_URL,
@@ -136,7 +137,7 @@ function FooterLinkList({ title, items }: { title: string; items: string[][] }) 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en-GB" className={inter.variable}>
       <body>
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-JKM4WL3BWX" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">

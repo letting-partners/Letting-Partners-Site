@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import LPIcon from "@/components/LPIcon";
 import WebsitePropertyCard, { WebsiteProperty } from "@/components/WebsitePropertyCard";
 import { getWebsiteApiJson, WebsiteApiEnvelope } from "@/lib/website-api";
@@ -19,7 +20,13 @@ export default function PropertiesGrid({ limit, area, showSearch }: Props) {
   const [properties, setProperties] = useState<WebsiteProperty[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [search, setSearch] = useState("");
+  /*
+   * Seeded from ?search= so a link to a search actually shows that search.
+   * Google's sitelinks searchbox sends people to this URL, and the box used to
+   * ignore it entirely, which made a shared result page show everything.
+   */
+  const params = useSearchParams();
+  const [search, setSearch] = useState(() => params.get("search") ?? "");
 
   useEffect(() => {
     const controller = new AbortController();

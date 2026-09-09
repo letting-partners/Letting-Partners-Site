@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import LPIcon from "@/components/LPIcon";
+import { Suspense } from "react";
 import PropertiesGrid from "@/components/PropertiesGrid";
 import { PAGE_BANNER_IMAGES } from "@/lib/images";
 
@@ -34,7 +35,9 @@ export default function PropertiesPage() {
 
       <section className="lp-section">
         <div className="lp-container">
-          <PropertiesGrid showSearch />
+          <Suspense fallback={<div className="lp-skeleton" />}>
+            <PropertiesGrid showSearch />
+          </Suspense>
         </div>
       </section>
 

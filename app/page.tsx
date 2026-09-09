@@ -10,15 +10,20 @@ import { AREAS, getAreaHref } from "@/lib/areas";
 import { AREA_IMAGES, ABOUT_IMAGES, CTA_IMAGES, HERO_IMAGES, LEGAL_IMAGES, PARTNER_LOGOS, PROCESS_IMAGES, WHY_LP_IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
-  title: "Letting Partners | London & Birmingham Letting, Management & Tenant Services",
+  /*
+   * Deliberately not naming cities. The home page is the whole company, and
+   * area pages already rank for their own towns; a title that says London and
+   * Birmingham puts a ceiling on the one page that should not have one.
+   */
+  title: "Letting Partners | UK Property Letting & Management Agency",
   description:
-    "Premium UK property letting, management, tenant support, legal coordination, maintenance, mortgage consultancy, and construction support across London and Birmingham.",
+    "Property letting, management, tenant support, legal coordination, maintenance, mortgage consultancy and development guidance from one UK agency.",
   keywords: [
-    "letting agents London",
-    "property management Birmingham",
-    "landlord services London",
-    "tenant services London",
-    "property letting Ilford",
+    "letting agents",
+    "property management",
+    "landlord services",
+    "tenant services",
+    "property letting agency UK",
   ],
   alternates: { canonical: "/" },
 };
@@ -155,9 +160,43 @@ const faqs = [
   },
 ];
 
+/**
+ * The WebSite entity is what Google reads to decide the name shown above a
+ * search result, in place of the bare domain. It has to be on the home page
+ * specifically, and the name has to agree with the other signals - og:site_name
+ * and the organisation entity both say "Letting Partners" too.
+ */
+const SITE_URL = "https://www.lettingpartners.co.uk";
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  name: "Letting Partners",
+  alternateName: "Letting Partners LTD",
+  url: `${SITE_URL}/`,
+  publisher: { "@id": `${SITE_URL}/#organization` },
+  inLanguage: "en-GB",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE_URL}/properties?search={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
+
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+
       <section className="lp-home-hero">
         <Image src={HERO_IMAGES.home} alt="London residential property street" fill priority sizes="100vw" className="lp-cover-img" />
         <div className="lp-image-overlay lp-image-overlay--hero" />

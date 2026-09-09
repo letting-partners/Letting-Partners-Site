@@ -30,7 +30,13 @@ async function propertyRoutes(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily" as const,
       priority: 0.8,
     }));
-  } catch {
+  } catch (error) {
+    /*
+     * The static routes still go out - a sitemap missing its listings beats no
+     * sitemap at all - but this must not be silent. Every property vanishing
+     * from the sitemap is exactly the kind of failure nobody notices for weeks.
+     */
+    console.error("Could not load properties for the sitemap:", error);
     return [];
   }
 }

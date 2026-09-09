@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import AreaFaqAccordion from "@/components/AreaFaqAccordion";
 import LPIcon, { type LPIconName } from "@/components/LPIcon";
+import { Suspense } from "react";
 import PropertiesGrid from "@/components/PropertiesGrid";
 import { AREAS, getAreaBySlug, getAreaPropertiesHref } from "@/lib/areas";
 import { AREA_BANNER_IMAGES, AREA_MENU_IMAGES } from "@/lib/images";
@@ -185,7 +186,9 @@ export default async function AreaPage({ params }: Props) {
             <span className="lp-kicker">Available now</span>
             <h2>Properties in {area.title}.</h2>
           </div>
-          <PropertiesGrid area={area.slug} limit={6} />
+          <Suspense fallback={<div className="lp-skeleton" />}>
+            <PropertiesGrid area={area.slug} limit={6} />
+          </Suspense>
           <div className="lp-section-actions">
             <Link href={getAreaPropertiesHref(area.slug)} className="lp-btn lp-btn--outline">
               View all {area.title} properties
