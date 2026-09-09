@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { buildWebsiteApiUrl, websiteApiHeaders } from "@/lib/website-api";
+import {
+  buildWebsiteApiUrl,
+  websiteApiHeaders,
+  websiteApiKeyConfigured,
+} from "@/lib/website-api";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -9,6 +13,17 @@ export async function GET(req: NextRequest) {
   });
 
   try {
+    if (!websiteApiKeyConfigured()) {
+      console.error(
+        "WEBSITE_API_KEY is not set on the website deployment, so the portal " +
+          "rejects every request and no listings can be shown.",
+      );
+      return NextResponse.json(
+        { ok: false, error: "The property service is not configured." },
+        { status: 503 },
+      );
+    }
+
     const response = await fetch(upstreamUrl, {
       cache: "no-store",
       headers: websiteApiHeaders(),
