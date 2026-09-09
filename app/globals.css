@@ -3177,3 +3177,139 @@ a:hover .lp-text-link svg,
     height: 36px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   FEATURED PROPERTIES
+   The home page carousel. Which listings appear is chosen in the portal.
+--------------------------------------------------------------------------- */
+
+.lp-featured {
+  margin-top: 46px;
+  padding-top: 34px;
+  border-top: 1px solid var(--lp-border);
+}
+
+.lp-featured-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.lp-featured-head h3 {
+  margin: 6px 0 0;
+  font-size: clamp(1.3rem, 2.4vw, 1.85rem);
+  letter-spacing: -0.015em;
+}
+
+.lp-featured-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lp-featured-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--lp-border-strong);
+  color: var(--lp-navy);
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: background 160ms var(--lp-ease), border-color 160ms var(--lp-ease);
+}
+
+.lp-featured-arrow:hover {
+  background: #fff;
+  border-color: var(--lp-gold);
+}
+
+/* The window the track slides behind. */
+.lp-featured-viewport {
+  overflow: hidden;
+  /* Cards have shadows; a little room stops them being shaved off. */
+  margin: -8px;
+  padding: 8px;
+}
+
+.lp-featured-track {
+  display: flex;
+  transition: transform 520ms var(--lp-ease);
+  will-change: transform;
+}
+
+/* Draggable, and never selecting the text of the cards while doing it. */
+.lp-featured-viewport {
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.lp-featured-viewport.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* Images are the easiest thing to accidentally drag instead of the track. */
+.lp-featured-viewport img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.lp-featured-slide {
+  min-width: 0;
+  padding-inline: 10px;
+}
+
+.lp-featured-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 20px;
+}
+
+.lp-featured-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  background: rgba(7, 24, 38, 0.2);
+  transition: background 160ms var(--lp-ease), width 160ms var(--lp-ease);
+}
+
+.lp-featured-dot:hover {
+  background: rgba(7, 24, 38, 0.4);
+}
+
+.lp-featured-dot.is-active {
+  width: 22px;
+  border-radius: 999px;
+  background: var(--lp-gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-featured-track {
+    transition: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .lp-featured {
+    margin-top: 34px;
+    padding-top: 26px;
+  }
+
+  .lp-featured-head {
+    align-items: flex-start;
+  }
+
+  .lp-featured-slide {
+    padding-inline: 6px;
+  }
+}

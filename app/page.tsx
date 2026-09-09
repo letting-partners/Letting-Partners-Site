@@ -5,6 +5,7 @@ import LPIcon, { type LPIconName } from "@/components/LPIcon";
 import HomeContactForm from "@/components/HomeContactForm";
 import TestimonialsSlider from "@/components/TestimonialsSlider";
 import PartnersSlider from "@/components/PartnersSlider";
+import FeaturedProperties from "@/components/FeaturedProperties";
 import { AREAS, getAreaHref } from "@/lib/areas";
 import { AREA_IMAGES, ABOUT_IMAGES, CTA_IMAGES, HERO_IMAGES, LEGAL_IMAGES, PARTNER_LOGOS, PROCESS_IMAGES, WHY_LP_IMAGES } from "@/lib/images";
 
@@ -257,6 +258,9 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          {/* Renders nothing until the team features something in the portal. */}
+          <FeaturedProperties />
         </div>
       </section>
 
