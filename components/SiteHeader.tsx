@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import LPIcon, { type LPIconName } from "@/components/LPIcon";
 import { AREAS, getAreaHref } from "@/lib/areas";
 import { AREA_MENU_IMAGES, LOGO } from "@/lib/images";
@@ -40,6 +40,37 @@ export default function SiteHeader() {
    * disappear. These pages get a solid header from the top instead.
    */
   const solid = /^\/properties\/.+/.test(pathname);
+
+  /*
+   * The panel opens at the header's bottom edge, which leaves a band of header
+   * between the button and the menu. Closing the moment the pointer left the
+   * button meant the menu vanished while you were on your way to it - it was
+   * unusable with a mouse. Closing is delayed instead, and cancelled the
+   * moment the pointer arrives anywhere in the menu.
+   */
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelClose = useCallback(() => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  }, []);
+
+  const openNow = useCallback(
+    (menu: "services" | "areas") => {
+      cancelClose();
+      setOpenMenu(menu);
+    },
+    [cancelClose],
+  );
+
+  const closeSoon = useCallback(() => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpenMenu(null), 260);
+  }, [cancelClose]);
+
+  useEffect(() => cancelClose, [cancelClose]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -80,6 +111,13 @@ export default function SiteHeader() {
         className={`lp-header${scrolled ? " lp-header--scrolled" : ""}${
           solid ? " lp-header--solid" : ""
         }`}
+        /*
+         * The panel is a descendant of the header even though it hangs below
+         * it, so this does not fire while the pointer is inside the menu. It
+         * fires when the pointer genuinely leaves the whole header region,
+         * which is the moment the menu should go.
+         */
+        onMouseLeave={() => setOpenMenu(null)}
       >
         <div className="lp-container lp-header-inner">
           <Link href="/" className="lp-header-logo" aria-label="Letting Partners home">
@@ -93,8 +131,8 @@ export default function SiteHeader() {
 
             <div
               className="lp-nav-dropdown"
-              onMouseEnter={() => setOpenMenu("services")}
-              onMouseLeave={() => setOpenMenu(null)}
+              onMouseEnter={() => openNow("services")}
+              onMouseLeave={closeSoon}
             >
               <button
                 type="button"
@@ -107,7 +145,36 @@ export default function SiteHeader() {
                 <LPIcon name="chevron-down" size={16} />
               </button>
               {openMenu === "services" && (
-                <div id="lp-services-menu" className="lp-mega lp-mega--services">
+                <div
+                  id="lp-services-menu"
+                  className="lp-mega lp-mega--services"
+                  // Stated on the panel as well as the dropdown around it:
+                  // arriving anywhere in the menu keeps it open, without
+                  // relying on the enter event reaching the ancestor.
+                  onMouseEnter={() => openNow("services")}
+                  onMouseLeave={closeSoon}
+                >
+                  {/* A promotional rail, then the groups. Four equal boxes in a
+                      row read as a sitemap; this reads as a menu. */}
+                  <aside className="lp-mega-rail">
+                    <span className="lp-mega-rail-eyebrow">Our Services</span>
+                    <h2>Everything a let needs, under one roof.</h2>
+                    <p>
+                      Letting, management, tenant support and legal help - handled by one team, so
+                      nothing falls between two of them.
+                    </p>
+
+                    <Link href="/contact" className="lp-btn lp-btn--gold lp-btn--sm">
+                      Speak to Us
+                      <LPIcon name="arrow-right" size={15} />
+                    </Link>
+
+                    <a href="tel:07782273674" className="lp-mega-rail-phone">
+                      <LPIcon name="phone" size={15} />
+                      07782 273674
+                    </a>
+                  </aside>
+
                   <div className="lp-mega-service-grid">
                     {SERVICE_GROUPS.map((group) => (
                       <section key={group.href} className="lp-mega-card">
@@ -115,17 +182,18 @@ export default function SiteHeader() {
                           <span className="lp-mega-card-icon">
                             <LPIcon name={serviceIcons[group.href] ?? "sparkles"} size={19} />
                           </span>
-                          <span>
-                            <strong>{group.label}</strong>
+                          <span className="lp-mega-card-heading">
                             <small>{group.eyebrow}</small>
+                            <strong>{group.label}</strong>
                           </span>
+                          <LPIcon name="arrow-right" size={15} />
                         </Link>
 
                         <ul>
                           {group.items.map((item) => (
                             <li key={item.href}>
                               <Link href={item.href}>
-                                <LPIcon name="arrow-right" size={13} />
+                                <span className="lp-mega-dot" aria-hidden="true" />
                                 {item.label}
                               </Link>
                             </li>
@@ -134,22 +202,14 @@ export default function SiteHeader() {
                       </section>
                     ))}
                   </div>
-
-                  <div className="lp-mega-foot">
-                    <p>Not sure which service you need? We will point you to the right one.</p>
-                    <Link href="/contact" className="lp-btn lp-btn--gold lp-btn--sm">
-                      Speak to Us
-                      <LPIcon name="arrow-right" size={15} />
-                    </Link>
-                  </div>
                 </div>
               )}
             </div>
 
             <div
               className="lp-nav-dropdown"
-              onMouseEnter={() => setOpenMenu("areas")}
-              onMouseLeave={() => setOpenMenu(null)}
+              onMouseEnter={() => openNow("areas")}
+              onMouseLeave={closeSoon}
             >
               <button
                 type="button"
@@ -162,8 +222,22 @@ export default function SiteHeader() {
                 <LPIcon name="chevron-down" size={16} />
               </button>
               {openMenu === "areas" && (
-                <div id="lp-areas-menu" className="lp-mega lp-mega--areas">
-                  <div className="lp-mega-area-list">
+                <div
+                  id="lp-areas-menu"
+                  className="lp-mega lp-mega--areas"
+                  onMouseEnter={() => openNow("areas")}
+                  onMouseLeave={closeSoon}
+                >
+                  <div className="lp-mega-area-col">
+                    <div className="lp-mega-area-head">
+                      <span className="lp-mega-rail-eyebrow">Where We Work</span>
+                      <Link href="/areas" className="lp-text-link">
+                        All areas
+                        <LPIcon name="arrow-right" size={14} />
+                      </Link>
+                    </div>
+
+                    <div className="lp-mega-area-list">
                     {AREAS.map((area) => (
                       <Link
                         key={area.slug}
@@ -181,6 +255,7 @@ export default function SiteHeader() {
                         <LPIcon name="arrow-right" size={15} />
                       </Link>
                     ))}
+                    </div>
                   </div>
 
                   <Link
@@ -199,6 +274,7 @@ export default function SiteHeader() {
                     <span className="lp-mega-area-preview-body">
                       <small>{previewArea.coverageLabel}</small>
                       <strong>{previewArea.title}</strong>
+                      <em>{previewArea.description}</em>
                       <span className="lp-text-link">
                         Letting services in {previewArea.title}
                         <LPIcon name="arrow-right" size={15} />

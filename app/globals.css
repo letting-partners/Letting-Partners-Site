@@ -408,13 +408,73 @@ a:hover .lp-text-link svg,
 
 .lp-mega--services {
   display: grid;
-  gap: 14px;
+  grid-template-columns: 268px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px;
+  background: linear-gradient(180deg, #fff 0%, var(--lp-cream) 100%);
+}
+
+/* The rail carries the invitation, so the grid beside it can be purely
+   navigational rather than trying to sell at the same time. */
+.lp-mega-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 16px;
+  padding: 22px 20px;
+  color: #fff;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(198, 154, 75, 0.34), transparent 62%),
+    var(--lp-navy);
+}
+
+.lp-mega-rail-eyebrow {
+  color: var(--lp-gold-2);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lp-mega-rail h2 {
+  margin: 0;
+  font-size: 1.32rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.lp-mega-rail p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.lp-mega-rail .lp-btn {
+  margin-top: 4px;
+}
+
+.lp-mega-rail-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 12px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.lp-mega-rail-phone:hover {
+  color: var(--lp-gold-2);
 }
 
 .lp-mega-service-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-content: start;
 }
 
 .lp-mega-card {
@@ -422,24 +482,22 @@ a:hover .lp-text-link svg,
   flex-direction: column;
   border: 1px solid var(--lp-border);
   border-radius: 16px;
-  padding: 16px;
+  padding: 13px;
   background: #fff;
-  transition: border-color 180ms var(--lp-ease), box-shadow 180ms var(--lp-ease),
-    transform 180ms var(--lp-ease);
+  transition: border-color 180ms var(--lp-ease), box-shadow 180ms var(--lp-ease);
 }
 
 .lp-mega-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(198, 154, 75, 0.6);
-  box-shadow: 0 14px 32px rgba(7, 24, 38, 0.1);
+  border-color: rgba(198, 154, 75, 0.55);
+  box-shadow: 0 12px 26px rgba(7, 24, 38, 0.08);
 }
 
 .lp-mega-card-head {
   display: flex;
   align-items: center;
   gap: 11px;
-  padding-bottom: 12px;
-  margin-bottom: 10px;
+  padding: 4px 4px 11px;
+  margin-bottom: 8px;
   border-bottom: 1px solid var(--lp-border);
 }
 
@@ -450,26 +508,46 @@ a:hover .lp-text-link svg,
   flex: 0 0 auto;
   width: 38px;
   height: 38px;
-  border-radius: 11px;
+  border-radius: 12px;
   color: var(--lp-navy);
-  background: linear-gradient(135deg, rgba(226, 191, 119, 0.55), rgba(198, 154, 75, 0.3));
+  background: linear-gradient(135deg, rgba(226, 191, 119, 0.6), rgba(198, 154, 75, 0.28));
 }
 
-.lp-mega-card-head strong {
-  display: block;
-  color: var(--lp-navy);
-  font-size: 0.93rem;
-  line-height: 1.25;
+.lp-mega-card-heading {
+  flex: 1;
+  min-width: 0;
 }
 
-.lp-mega-card-head small {
+/* Eyebrow above the name: the small label reads as a category, and the name
+   lands where the eye is already going. */
+.lp-mega-card-heading small {
   display: block;
-  margin-top: 2px;
-  color: var(--lp-muted);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  color: var(--lp-gold);
+  font-size: 0.67rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
+}
+
+.lp-mega-card-heading strong {
+  display: block;
+  margin-top: 1px;
+  color: var(--lp-navy);
+  font-size: 0.97rem;
+  line-height: 1.2;
+}
+
+.lp-mega-card-head > svg {
+  flex: 0 0 auto;
+  color: var(--lp-gold);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 160ms var(--lp-ease), transform 160ms var(--lp-ease);
+}
+
+.lp-mega-card:hover .lp-mega-card-head > svg {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .lp-mega-card ul {
@@ -483,22 +561,24 @@ a:hover .lp-text-link svg,
 .lp-mega-card li a {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 9px;
   border-radius: 9px;
   padding: 6px 8px;
   color: var(--lp-muted);
-  font-size: 0.83rem;
+  font-size: 0.84rem;
   font-weight: 600;
   transition: background 150ms var(--lp-ease), color 150ms var(--lp-ease);
 }
 
-/* The arrow is a hover cue, so it stays out of the way until then. */
-.lp-mega-card li a svg {
+/* A dot rather than an arrow: it holds its place, so the row does not shift
+   when the arrow appears. */
+.lp-mega-dot {
   flex: 0 0 auto;
-  opacity: 0;
-  color: var(--lp-gold);
-  transition: opacity 150ms var(--lp-ease), transform 150ms var(--lp-ease);
-  transform: translateX(-3px);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--lp-border-strong);
+  transition: background 150ms var(--lp-ease), transform 150ms var(--lp-ease);
 }
 
 .lp-mega-card li a:hover {
@@ -506,28 +586,9 @@ a:hover .lp-text-link svg,
   background: rgba(198, 154, 75, 0.13);
 }
 
-.lp-mega-card li a:hover svg {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.lp-mega-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  border-radius: 14px;
-  padding: 13px 18px;
-  background: var(--lp-cream-2);
-  border: 1px solid var(--lp-border);
-}
-
-.lp-mega-foot p {
-  margin: 0;
-  color: var(--lp-muted);
-  font-size: 0.87rem;
-  font-weight: 600;
+.lp-mega-card li a:hover .lp-mega-dot {
+  background: var(--lp-gold);
+  transform: scale(1.5);
 }
 
 /* ---------------------------------------------------------------- areas */
@@ -537,12 +598,29 @@ a:hover .lp-text-link svg,
   grid-template-columns: minmax(0, 1fr) 340px;
   gap: 16px;
   align-items: stretch;
+  padding: 16px;
+  background: linear-gradient(180deg, #fff 0%, var(--lp-cream) 100%);
+}
+
+.lp-mega-area-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lp-mega-area-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 4px 8px;
+  border-bottom: 1px solid var(--lp-border);
 }
 
 .lp-mega-area-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px;
+  gap: 6px;
   align-content: start;
 }
 
@@ -551,10 +629,12 @@ a:hover .lp-text-link svg,
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  border-radius: 12px;
+  border-radius: 13px;
   padding: 11px 13px;
-  border: 1px solid transparent;
-  transition: background 150ms var(--lp-ease), border-color 150ms var(--lp-ease);
+  border: 1px solid var(--lp-border);
+  background: #fff;
+  transition: background 150ms var(--lp-ease), border-color 150ms var(--lp-ease),
+    box-shadow 150ms var(--lp-ease);
 }
 
 .lp-mega-area-list a strong {
@@ -567,7 +647,7 @@ a:hover .lp-text-link svg,
   display: block;
   margin-top: 1px;
   color: var(--lp-muted);
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
@@ -582,8 +662,9 @@ a:hover .lp-text-link svg,
 /* Marked on the one being previewed, not only the one under the pointer, so
    the list and the picture always agree. */
 .lp-mega-area-list a.is-previewing {
-  background: rgba(198, 154, 75, 0.13);
-  border-color: rgba(198, 154, 75, 0.4);
+  background: rgba(198, 154, 75, 0.12);
+  border-color: rgba(198, 154, 75, 0.5);
+  box-shadow: 0 8px 20px rgba(7, 24, 38, 0.07);
 }
 
 .lp-mega-area-list a.is-previewing svg {
@@ -604,7 +685,7 @@ a:hover .lp-text-link svg,
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7, 24, 38, 0.05) 30%, rgba(7, 24, 38, 0.88) 100%);
+  background: linear-gradient(180deg, rgba(7, 24, 38, 0.05) 25%, rgba(7, 24, 38, 0.9) 100%);
 }
 
 /* Keyed on the slug, so React remounts it and this runs on every change. */
@@ -643,20 +724,17 @@ a:hover .lp-text-link svg,
   letter-spacing: -0.01em;
 }
 
-.lp-mega-area-preview-body .lp-text-link {
-  margin-top: 6px;
-  color: #fff;
-  font-size: 0.86rem;
+.lp-mega-area-preview-body em {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.84rem;
+  font-style: normal;
+  line-height: 1.5;
 }
 
-@media (max-width: 1180px) {
-  .lp-mega-service-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .lp-mega--areas {
-    grid-template-columns: minmax(0, 1fr) 280px;
-  }
+.lp-mega-area-preview-body .lp-text-link {
+  margin-top: 8px;
+  color: #fff;
+  font-size: 0.86rem;
 }
 
 .lp-header-actions {
