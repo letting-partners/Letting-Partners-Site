@@ -4,6 +4,8 @@
 export const LOGO = {
   main: "/lp-logo.webp",
   footer: "/lp-logo.webp",
+  /** Square mark, for the places a wordmark will not fit - a chat avatar. */
+  mark: "/favicon.svg",
 };
 
 // ---------------------------------------------------------------------------

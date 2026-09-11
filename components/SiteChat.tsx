@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import LPIcon from "@/components/LPIcon";
+import { LOGO } from "@/lib/images";
 
 /**
  * The site-wide chat widget.
@@ -29,6 +31,14 @@ export type OpenChatDetail = {
   agentName?: string | null;
 };
 
+/** Who the visitor is talking to, once somebody has taken the conversation. */
+type Agent = {
+  name: string;
+  jobTitle: string | null;
+  avatarUrl: string | null;
+  online: boolean;
+};
+
 type Message = {
   id: string;
   sender: "VISITOR" | "STAFF" | "SYSTEM";
@@ -36,6 +46,15 @@ type Message = {
   body: string;
   createdAt: string;
 };
+
+/** Two letters for an agent with no photo, the way a contacts app does it. */
+function initialsOf(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "LP";
+  const first = parts[0][0] ?? "";
+  const last = parts.length > 1 ? (parts[parts.length - 1][0] ?? "") : "";
+  return `${first}${last}`.toUpperCase();
+}
 
 function readToken(): string | null {
   try {
@@ -57,6 +76,7 @@ export default function SiteChat() {
   const [open, setOpen] = useState(false);
   const [started, setStarted] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [agent, setAgent] = useState<Agent | null>(null);
   const [context, setContext] = useState<OpenChatDetail | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -82,6 +102,7 @@ export default function SiteChat() {
 
       const thread: Message[] = payload.thread.messages ?? [];
       setMessages(thread);
+      setAgent(payload.thread.agent ?? null);
       setStarted(true);
 
       if (isOpen) {
@@ -132,6 +153,47 @@ export default function SiteChat() {
     const element = messagesRef.current;
     if (element) element.scrollTop = element.scrollHeight;
   }, [messages.length]);
+
+  /*
+   * The panel covers the whole screen on a phone, so the page behind it must
+   * stop scrolling: without this a swipe inside the conversation drags the
+   * page underneath, and closing the chat leaves the visitor somewhere they
+   * never navigated to.
+   */
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
+  /*
+   * An on-screen keyboard shrinks the visual viewport but not the layout one,
+   * so a panel sized in viewport units keeps its full height and pushes the
+   * composer - the part being typed into - underneath the keyboard. Measuring
+   * the visual viewport keeps the message box on screen while typing.
+   */
+  useEffect(() => {
+    if (!open) return;
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+
+    const apply = () => {
+      document.documentElement.style.setProperty("--lp-chat-vh", `${viewport.height}px`);
+    };
+
+    apply();
+    viewport.addEventListener("resize", apply);
+    viewport.addEventListener("scroll", apply);
+
+    return () => {
+      viewport.removeEventListener("resize", apply);
+      viewport.removeEventListener("scroll", apply);
+      document.documentElement.style.removeProperty("--lp-chat-vh");
+    };
+  }, [open]);
 
   // Escape closes, as it does for any dialog.
   useEffect(() => {
@@ -216,10 +278,55 @@ export default function SiteChat() {
             aria-label={subject ? `Chat about ${subject}` : "Chat with Letting Partners"}
           >
             <header className="lp-chat-header">
-              <div>
-                <strong>{subject ? "Chat about this property" : "Chat with us"}</strong>
-                <p>{replier}</p>
+              {/* Letting Partners answers until somebody picks the conversation
+                  up; from then on the visitor is talking to a named person, and
+                  the header says who. */}
+              <div className="lp-chat-ident">
+                <span
+                  className={
+                    agent?.online
+                      ? "lp-chat-avatar lp-chat-avatar--online"
+                      : "lp-chat-avatar"
+                  }
+                >
+                  {agent?.avatarUrl ? (
+                    <Image
+                      src={agent.avatarUrl}
+                      alt=""
+                      width={44}
+                      height={44}
+                      className="lp-chat-avatar-photo"
+                    />
+                  ) : agent ? (
+                    <span className="lp-chat-avatar-initials">{initialsOf(agent.name)}</span>
+                  ) : (
+                    <Image
+                      src={LOGO.mark}
+                      alt=""
+                      width={24}
+                      height={24}
+                      className="lp-chat-avatar-mark"
+                    />
+                  )}
+                </span>
+
+                <span className="lp-chat-ident-text">
+                  <strong>{agent ? agent.name : "Letting Partners"}</strong>
+                  <p>
+                    {agent ? (
+                      <>
+                        {agent.jobTitle && <span>{agent.jobTitle}</span>}
+                        <span className={agent.online ? "lp-chat-status is-online" : "lp-chat-status"}>
+                          {agent.online ? "Online" : "Away"}
+                        </span>
+                      </>
+                    ) : (
+                      <span>{replier}</span>
+                    )}
+                  </p>
+                </span>
               </div>
+
               <button type="button" onClick={() => setOpen(false)} aria-label="Close chat">
                 <LPIcon name="x" size={18} />
               </button>

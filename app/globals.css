@@ -2528,10 +2528,15 @@ a:hover .lp-text-link svg,
    published the listing, through the portal.
 --------------------------------------------------------------------------- */
 
+/*
+ * Above the fixed site header (1000) and the mobile menu (1200). On a phone
+ * the panel covers the whole screen, and at a lower layer the site header was
+ * drawn straight over the chat's own title bar - and its close button with it.
+ */
 .lp-chat-scrim {
   position: fixed;
   inset: 0;
-  z-index: 120;
+  z-index: 1300;
   background: rgba(7, 24, 38, 0.55);
   display: flex;
   align-items: flex-end;
@@ -2552,22 +2557,127 @@ a:hover .lp-text-link svg,
 
 .lp-chat-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 16px 18px;
+  padding: 13px 16px;
   background: var(--lp-navy);
   color: var(--lp-white);
 }
 
+/* Who the visitor is talking to: a face, a name and a role. */
+.lp-chat-ident {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.lp-chat-avatar {
+  position: relative;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid var(--lp-gold);
+  background: rgba(255, 255, 255, 0.08);
+  overflow: visible;
+}
+
+/* The mark is white, so it sits on the navy rather than on the gold ring. */
+.lp-chat-avatar-mark {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.lp-chat-avatar-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.lp-chat-avatar-initials {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--lp-gold-2);
+}
+
+/*
+ * Presence dot on the rim of the avatar. Only drawn when the agent is online:
+ * a grey dot on every offline agent reads as a fault rather than an absence,
+ * and the header already says "Away" in words.
+ */
+.lp-chat-avatar--online::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #2fbf71;
+  border: 2px solid var(--lp-navy);
+}
+
+.lp-chat-ident-text {
+  min-width: 0;
+}
+
 .lp-chat-header strong {
+  display: block;
   font-size: 0.98rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lp-chat-header p {
-  margin-top: 3px;
-  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 2px;
+  font-size: 0.79rem;
   color: rgba(255, 255, 255, 0.7);
+}
+
+.lp-chat-header p > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Separated from the job role by a dot, so the two read as distinct facts. */
+.lp-chat-status {
+  position: relative;
+  flex: 0 0 auto;
+  padding-left: 12px;
+}
+
+.lp-chat-status::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.lp-chat-status.is-online {
+  color: #6ee7a8;
+}
+
+.lp-chat-status.is-online::before {
+  background: #2fbf71;
+  opacity: 1;
 }
 
 .lp-chat-header button {
@@ -2682,10 +2792,22 @@ a:hover .lp-text-link svg,
     align-items: stretch;
   }
 
+  /*
+   * Full screen, and exactly as tall as the part of the screen that is
+   * actually visible: --lp-chat-vh follows the visual viewport, so an open
+   * keyboard shortens the panel instead of pushing the message box beneath it.
+   * The fallback is for browsers with no visualViewport.
+   */
   .lp-chat-panel {
     width: 100%;
-    max-height: 100dvh;
+    height: var(--lp-chat-vh, 100dvh);
+    max-height: var(--lp-chat-vh, 100dvh);
     border-radius: 0;
+  }
+
+  /* Never below the composer - there is no room to spare on a phone. */
+  .lp-chat-privacy {
+    padding-bottom: 10px;
   }
 }
 
