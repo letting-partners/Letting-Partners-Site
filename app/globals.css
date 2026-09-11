@@ -2582,11 +2582,11 @@ a:hover .lp-text-link svg,
   place-items: center;
   border-radius: 50%;
   border: 2px solid var(--lp-gold);
-  background: rgba(255, 255, 255, 0.08);
+  /* The mark is drawn in navy, so the circle has to be light for it to read. */
+  background: var(--lp-white);
   overflow: visible;
 }
 
-/* The mark is white, so it sits on the navy rather than on the gold ring. */
 .lp-chat-avatar-mark {
   width: 24px;
   height: 24px;
@@ -2600,11 +2600,12 @@ a:hover .lp-text-link svg,
   object-fit: cover;
 }
 
+/* An agent with no photo yet: their initials, on the same light circle. */
 .lp-chat-avatar-initials {
   font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--lp-gold-2);
+  color: var(--lp-navy);
 }
 
 /*
@@ -2787,25 +2788,27 @@ a:hover .lp-text-link svg,
 }
 
 @media (max-width: 560px) {
+  /*
+   * A window on a phone too, not a takeover. Taking the whole screen made a
+   * quick question feel like leaving the page, and left the visitor hunting
+   * for a close button to get back to what they were reading. Sitting in the
+   * corner, the page stays visible behind it and a tap outside dismisses it.
+   */
   .lp-chat-scrim {
-    padding: 0;
-    align-items: stretch;
+    padding: 14px;
   }
 
   /*
-   * Full screen, and exactly as tall as the part of the screen that is
-   * actually visible: --lp-chat-vh follows the visual viewport, so an open
-   * keyboard shortens the panel instead of pushing the message box beneath it.
-   * The fallback is for browsers with no visualViewport.
+   * Height is capped against --lp-chat-vh, which follows the visual viewport,
+   * so an open keyboard shortens the window rather than pushing the message
+   * box underneath it. The fallback is for browsers with no visualViewport.
    */
   .lp-chat-panel {
     width: 100%;
-    height: var(--lp-chat-vh, 100dvh);
-    max-height: var(--lp-chat-vh, 100dvh);
-    border-radius: 0;
+    max-height: min(520px, calc(var(--lp-chat-vh, 100dvh) - 96px));
   }
 
-  /* Never below the composer - there is no room to spare on a phone. */
+  /* Space is short in a window this size; the composer keeps what there is. */
   .lp-chat-privacy {
     padding-bottom: 10px;
   }
