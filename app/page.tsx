@@ -506,7 +506,7 @@ export default function HomePage() {
               Whether you want to list a property, register as a tenant, request maintenance support, or discuss a more complex issue, start here.
             </p>
             <div className="lp-contact-methods">
-              <a href="tel:07782273674"><LPIcon name="phone" size={18} /> 07782 273674</a>
+              <a href="tel:02038977033"><LPIcon name="phone" size={18} /> 0203 897 7033</a>
               <a href="mailto:info@lettingpartners.co.uk"><LPIcon name="mail" size={18} /> info@lettingpartners.co.uk</a>
             </div>
           </div>

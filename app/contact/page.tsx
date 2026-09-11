@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const contactDetails: Array<{ icon: LPIconName; label: string; value: string; href?: string }> = [
-  { icon: "phone", label: "Phone", value: "07782 273674", href: "tel:07782273674" },
+  { icon: "phone", label: "Phone", value: "0203 897 7033", href: "tel:02038977033" },
   { icon: "mail", label: "Email", value: "info@lettingpartners.co.uk", href: "mailto:info@lettingpartners.co.uk" },
   { icon: "map-pin", label: "Coverage", value: "London & Birmingham, UK" },
   { icon: "clock", label: "Hours", value: "Mon-Fri 9am-6pm, Sat 10am-4pm" },

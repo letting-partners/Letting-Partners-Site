@@ -146,9 +146,9 @@ export default function ServiceDetailPage({ service }: Props) {
                 {service.primaryCta.label}
                 <LPIcon name="arrow-right" size={18} />
               </Link>
-              <a href="tel:07782273674" className="lp-btn lp-btn--glass">
+              <a href="tel:02038977033" className="lp-btn lp-btn--glass">
                 <LPIcon name="phone" size={18} />
-                07782 273674
+                0203 897 7033
               </a>
             </div>
           </div>

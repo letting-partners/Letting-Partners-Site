@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
         to: body.email,
         subject: "Your tenant registration is confirmed — Letting Partners",
         html: buildAutoReply(body.name, "tenant"),
-        text: `Hi ${body.name},\n\nThank you for registering with Letting Partners. We'll match your requirements to suitable properties and get back to you within 24 hours.\n\nCall us: 07782 273674\nEmail: info@lettingpartners.co.uk\n\nWarm regards,\nThe Letting Partners Team`,
+        text: `Hi ${body.name},\n\nThank you for registering with Letting Partners. We'll match your requirements to suitable properties and get back to you within 24 hours.\n\nCall us: 0203 897 7033\nEmail: info@lettingpartners.co.uk\n\nWarm regards,\nThe Letting Partners Team`,
       }),
     ]);
 

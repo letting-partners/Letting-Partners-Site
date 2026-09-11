@@ -34,7 +34,7 @@ export default function PrivacyPolicyPage() {
 
           <div className="lp-prose">
             <h2>1. Who We Are</h2>
-            <p>Letting Partners (&ldquo;we&rdquo;, &ldquo;our&rdquo;, &ldquo;us&rdquo;) is a property letting and management agency operating in London and Birmingham. Our contact email is <a href="mailto:info@lettingpartners.co.uk">info@lettingpartners.co.uk</a> and our phone number is <a href="tel:07782273674">07782 273674</a>.</p>
+            <p>Letting Partners (&ldquo;we&rdquo;, &ldquo;our&rdquo;, &ldquo;us&rdquo;) is a property letting and management agency operating in London and Birmingham. Our contact email is <a href="mailto:info@lettingpartners.co.uk">info@lettingpartners.co.uk</a> and our phone number is <a href="tel:02038977033">0203 897 7033</a>.</p>
 
             <h2>2. What Information We Collect</h2>
             <p>We collect personal information you provide directly to us, including:</p>

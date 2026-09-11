@@ -42,7 +42,7 @@ function emailShell(bodyContent: string): string {
               <strong style="color:${BRAND_NAVY};">Letting Partners</strong> — London &amp; Birmingham, UK
             </p>
             <p style="margin:0 0 6px;font-size:13px;color:#666;">
-              <a href="tel:07782273674" style="color:${BRAND_NAVY};text-decoration:none;">07782 273674</a>
+              <a href="tel:02038977033" style="color:${BRAND_NAVY};text-decoration:none;">0203 897 7033</a>
               &nbsp;&bull;&nbsp;
               <a href="mailto:info@lettingpartners.co.uk" style="color:${BRAND_NAVY};text-decoration:none;">info@lettingpartners.co.uk</a>
             </p>
@@ -198,7 +198,7 @@ export function buildAutoReply(name: string, formType: "contact" | "legal" | "te
       </tr>
       <tr>
         <td style="padding:4px 0;">
-          <a href="tel:07782273674" style="font-size:14px;color:${BRAND_NAVY};text-decoration:none;">&#128222; 07782 273674</a>
+          <a href="tel:02038977033" style="font-size:14px;color:${BRAND_NAVY};text-decoration:none;">&#128222; 0203 897 7033</a>
         </td>
       </tr>
       <tr>

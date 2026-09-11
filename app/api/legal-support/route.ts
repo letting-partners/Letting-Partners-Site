@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
         to: body.email,
         subject: "We've received your legal support request — Letting Partners",
         html: buildAutoReply(body.name, "legal"),
-        text: `Hi ${body.name},\n\nThank you for reaching out. Our specialist legal support team will review your request and contact you within 24 hours.\n\nCall us: 07782 273674\nEmail: info@lettingpartners.co.uk\n\nWarm regards,\nThe Letting Partners Team`,
+        text: `Hi ${body.name},\n\nThank you for reaching out. Our specialist legal support team will review your request and contact you within 24 hours.\n\nCall us: 0203 897 7033\nEmail: info@lettingpartners.co.uk\n\nWarm regards,\nThe Letting Partners Team`,
       }),
     ]);
 

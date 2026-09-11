@@ -71,7 +71,7 @@ const organizationJsonLd = {
   url: SITE_URL,
   logo: `${SITE_URL}/lp-logo.webp`,
   image: `${SITE_URL}/lp-logo.webp`,
-  telephone: "+447782273674",
+  telephone: "+442038977033",
   email: "info@lettingpartners.co.uk",
   areaServed: [
     "Ilford", "Redbridge", "Stratford", "Barking", "Walthamstow", "Croydon", "Hounslow", "Birmingham",
@@ -169,9 +169,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Letting Partners LTD. Registered in England and Wales. Registration No. 17436005.
               </p>
               <div className="lp-footer-contact">
-                <a href="tel:07782273674">
+                <a href="tel:02038977033">
                   <LPIcon name="phone" size={17} />
-                  07782 273674
+                  0203 897 7033
                 </a>
                 <a href="mailto:info@lettingpartners.co.uk">
                   <LPIcon name="mail" size={17} />

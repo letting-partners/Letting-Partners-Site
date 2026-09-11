@@ -169,9 +169,9 @@ export default function SiteHeader() {
                       <LPIcon name="arrow-right" size={15} />
                     </Link>
 
-                    <a href="tel:07782273674" className="lp-mega-rail-phone">
+                    <a href="tel:02038977033" className="lp-mega-rail-phone">
                       <LPIcon name="phone" size={15} />
-                      07782 273674
+                      0203 897 7033
                     </a>
                   </aside>
 
@@ -297,9 +297,9 @@ export default function SiteHeader() {
           </nav>
 
           <div className="lp-header-actions">
-            <a href="tel:07782273674" className="lp-phone-link">
+            <a href="tel:02038977033" className="lp-phone-link">
               <LPIcon name="phone" size={17} />
-              07782 273674
+              0203 897 7033
             </a>
             <Link href="/contact" className="lp-btn lp-btn--gold lp-btn--sm">
               Speak to Us
@@ -383,9 +383,9 @@ export default function SiteHeader() {
             </nav>
 
             <div className="lp-mobile-contact">
-              <a href="tel:07782273674">
+              <a href="tel:02038977033">
                 <LPIcon name="phone" size={17} />
-                07782 273674
+                0203 897 7033
               </a>
               <a href="mailto:info@lettingpartners.co.uk">
                 <LPIcon name="mail" size={17} />
