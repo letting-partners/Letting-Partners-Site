@@ -58,6 +58,12 @@ async function portalRoutes(): Promise<MetadataRoute.Sitemap> {
   }
 }
 
+/*
+ * The legal pages carry a visible "Last updated" date, so the sitemap has to
+ * agree with what the page itself says rather than drift to the build time.
+ */
+const LEGAL_LAST_UPDATED = new Date("2026-09-03T00:00:00.000Z");
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
@@ -73,8 +79,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/tenant-services/register-as-tenant`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/specialist-legal-support/request-support`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/other-services`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE_URL}/privacy-policy`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${SITE_URL}/terms-conditions`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${SITE_URL}/privacy-policy`, lastModified: LEGAL_LAST_UPDATED, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${SITE_URL}/terms-conditions`, lastModified: LEGAL_LAST_UPDATED, changeFrequency: "yearly", priority: 0.3 },
   ];
 
   const areaRoutes: MetadataRoute.Sitemap = AREAS.map((area) => ({

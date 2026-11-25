@@ -1992,8 +1992,28 @@ a:hover .lp-text-link svg,
   color: var(--lp-muted);
 }
 
+/* Numbered clauses need to read as separate clauses, not one block of text. */
+.lp-prose p {
+  margin-bottom: 11px;
+}
+
+.lp-prose > :last-child {
+  margin-bottom: 0;
+}
+
 .lp-prose ul {
+  margin: 0 0 11px;
   padding-left: 1.2rem;
+  /* Preflight strips list markers, and clause lists are unreadable without them. */
+  list-style: disc;
+}
+
+.lp-prose li {
+  margin-bottom: 7px;
+}
+
+.lp-prose li::marker {
+  color: var(--lp-gold);
 }
 
 .lp-prose a {
@@ -2006,6 +2026,77 @@ a:hover .lp-text-link svg,
   display: grid;
   align-items: center;
   padding-top: 150px;
+}
+
+/*
+ * Consent bar. Above the sticky header and the floating buttons, which it
+ * covers while it is up, but below the two full-screen overlays - the mobile
+ * menu (1200) and the chat scrim (1300) - so it never floats over a modal.
+ */
+.lp-cookie-banner {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1100;
+  padding-block: 20px;
+  color: rgba(255, 255, 255, 0.86);
+  background: var(--lp-navy);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 -16px 44px rgba(7, 24, 38, 0.3);
+}
+
+.lp-cookie-inner {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.lp-cookie-copy h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 7px;
+  color: var(--lp-white);
+  font-size: 1.05rem;
+}
+
+.lp-cookie-copy h2 svg {
+  color: var(--lp-gold-2);
+}
+
+.lp-cookie-copy p {
+  max-width: 68ch;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.lp-cookie-copy a {
+  color: var(--lp-gold-2);
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.lp-cookie-actions {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.lp-cookie-settings-link {
+  cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .lp-cookie-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .lp-cookie-actions .lp-btn {
+    flex: 1 1 200px;
+  }
 }
 
 .lp-scroll-top {
@@ -2231,7 +2322,8 @@ a:hover .lp-text-link svg,
 
 .lp-footer-col a:hover,
 .lp-footer-contact a:hover,
-.lp-footer-bottom a:hover {
+.lp-footer-bottom a:hover,
+.lp-footer-bottom .lp-cookie-settings-link:hover {
   color: var(--lp-gold-2);
 }
 
@@ -2244,11 +2336,16 @@ a:hover .lp-text-link svg,
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding-block: 22px;
+  /*
+   * The chat launcher is fixed to the bottom-right corner, so at the foot of
+   * the page it sits straight on top of this row. Leave it a lane of its own.
+   */
+  padding: 22px 0 90px;
 }
 
 .lp-footer-bottom p,
-.lp-footer-bottom a {
+.lp-footer-bottom a,
+.lp-footer-bottom .lp-cookie-settings-link {
   color: rgba(255, 255, 255, 0.55);
   font-size: 0.88rem;
 }

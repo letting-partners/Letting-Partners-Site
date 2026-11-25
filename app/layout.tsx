@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import "./globals.css";
+import CookieConsent, { CookieSettingsLink } from "@/components/CookieConsent";
 import LPIcon from "@/components/LPIcon";
 import ScrollAnimator from "@/components/ScrollAnimator";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
@@ -67,7 +67,8 @@ const organizationJsonLd = {
   "@type": "RealEstateAgent",
   "@id": `${SITE_URL}/#organization`,
   name: "Letting Partners",
-  alternateName: "Letting Partners LTD",
+  legalName: "Letting Partners LTD",
+  alternateName: ["Letting Partners LTD", "More Ways Hub"],
   url: SITE_URL,
   logo: `${SITE_URL}/lp-logo.webp`,
   image: `${SITE_URL}/lp-logo.webp`,
@@ -140,15 +141,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-GB" className={inter.variable}>
       <body>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-JKM4WL3BWX" strategy="afterInteractive" />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-JKM4WL3BWX');
-          `}
-        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}
@@ -167,6 +159,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </p>
               <p className="lp-footer-legal">
                 Letting Partners LTD. Registered in England and Wales. Registration No. 17436005.
+                Trading as Letting Partners and More Ways Hub.
+              </p>
+              <p className="lp-footer-legal">
+                Payments are handled by Musa Limited.
               </p>
               <div className="lp-footer-contact">
                 <a href="tel:02038977033">
@@ -195,12 +191,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div>
                 <Link href="/privacy-policy">Privacy Policy</Link>
                 <Link href="/terms-conditions">Terms & Conditions</Link>
+                <CookieSettingsLink />
               </div>
             </div>
           </div>
         </footer>
         <ScrollToTopButton />
         <SiteChat />
+        <CookieConsent />
       </body>
     </html>
   );
