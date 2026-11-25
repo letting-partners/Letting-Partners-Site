@@ -92,10 +92,10 @@ export default function TermsConditionsPage() {
             <p>7.5 This website does not process payments. No payment can be made through this website, and payment card details must never be submitted through any form on this website or sent to us by email.</p>
 
             <h2>8. Payment Handling</h2>
-            <p>8.1 Payments in connection with our Services are handled by <strong>Musa Limited</strong>.</p>
-            <p>8.2 The payment instructions that apply to you — including the account details, payment reference, payment method and due date to be used — will be provided to you in writing by us or by Musa Limited at the time the payment becomes due. You must make payment only in accordance with those written instructions.</p>
+            <p>8.1 Payments in connection with our Services are handled by <strong>Musa Limited LTD</strong>, company registration number 17410300.</p>
+            <p>8.2 The payment instructions that apply to you — including the account details, payment reference, payment method and due date to be used — will be provided to you in writing by us or by Musa Limited LTD at the time the payment becomes due. You must make payment only in accordance with those written instructions.</p>
             <p>8.3 A payment made in accordance with the written payment instructions issued to you discharges your payment obligation to Letting Partners LTD to the extent of the sum received, and will be recorded and credited to your account with us.</p>
-            <p>8.4 Letting Partners LTD remains the contracting party for the Services and remains responsible to you for their performance. The handling of payments by Musa Limited does not transfer, vary, limit or exclude any obligation or liability of Letting Partners LTD owed to you, and does not create any contractual relationship between you and Musa Limited in respect of the Services.</p>
+            <p>8.4 Letting Partners LTD remains the contracting party for the Services and remains responsible to you for their performance. The handling of payments by Musa Limited LTD does not transfer, vary, limit or exclude any obligation or liability of Letting Partners LTD owed to you, and does not create any contractual relationship between you and Musa Limited LTD in respect of the Services.</p>
             <p>8.5 We maintain records of sums invoiced and payments received, and will on request provide you with a receipt or a statement of your account.</p>
             <p>8.6 <strong>Payment fraud warning.</strong> We will never ask you to send funds to an account other than the one set out in the written payment instructions we have issued to you. If you receive payment details that differ from those instructions, or any request to change them, do not act on them. Verify the details with us by telephone on <a href="tel:02038977033">0203 897 7033</a> before making any payment.</p>
             <p>8.7 Any query, dispute or request for a refund relating to a payment should be raised with us at <a href="mailto:info@lettingpartners.co.uk">info@lettingpartners.co.uk</a>. Refunds and the reconciliation of sums held will be dealt with in accordance with your Service Agreement and applicable law.</p>
@@ -148,7 +148,7 @@ export default function TermsConditionsPage() {
               <li><strong>Trading names:</strong> Letting Partners; More Ways Hub</li>
               <li><strong>Registered in:</strong> England and Wales</li>
               <li><strong>Company registration number:</strong> 17436005</li>
-              <li><strong>Payments handled by:</strong> Musa Limited</li>
+              <li><strong>Payments handled by:</strong> Musa Limited LTD, company registration number 17410300</li>
               <li><strong>Email:</strong> <a href="mailto:info@lettingpartners.co.uk">info@lettingpartners.co.uk</a></li>
               <li><strong>Telephone:</strong> <a href="tel:02038977033">0203 897 7033</a></li>
             </ul>

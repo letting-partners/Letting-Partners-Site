@@ -162,7 +162,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Trading as Letting Partners and More Ways Hub.
               </p>
               <p className="lp-footer-legal">
-                Payments are handled by Musa Limited.
+                Payments are handled by Musa Limited LTD, company number 17410300.
               </p>
               <div className="lp-footer-contact">
                 <a href="tel:02038977033">

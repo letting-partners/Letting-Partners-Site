@@ -92,12 +92,12 @@ export default function PrivacyPolicyPage() {
             <p>6.2 You can withdraw your consent or opt out of marketing at any time by using the unsubscribe link in any marketing email, or by emailing <a href="mailto:info@lettingpartners.co.uk">info@lettingpartners.co.uk</a>. Withdrawing consent does not affect service messages we must send you in connection with a tenancy, instruction or payment.</p>
 
             <h2>7. Payments and Payment Handling</h2>
-            <p>7.1 Payments in connection with our services are handled by <strong>Musa Limited</strong>.</p>
+            <p>7.1 Payments in connection with our services are handled by <strong>Musa Limited LTD</strong>, company registration number 17410300.</p>
             <p>7.2 Where a payment is made to or by us, the personal data involved in handling it typically comprises your name, the payment reference, the amount and date of the payment, the invoice or account it relates to, and the account details that appear on the payment itself.</p>
             <p>7.3 That data is processed for the purposes of requesting, collecting, receiving, allocating, reconciling, recording and, where applicable, refunding payments, and of managing arrears and keeping accurate financial records.</p>
             <p>7.4 Our lawful bases for this processing are the performance of our contract with you, compliance with our legal obligations (including accounting, tax and anti-money-laundering obligations), and our legitimate interests in maintaining accurate financial records and in preventing and detecting payment fraud.</p>
-            <p>7.5 Personal data is shared with Musa Limited only to the extent necessary for payments to be handled, and it is not used by us for any unrelated purpose.</p>
-            <p>7.6 Letting Partners LTD remains the data controller in respect of the personal data it holds about you, and remains responsible to you for the services it provides. The handling of payments by Musa Limited does not change who you contract with or who is accountable to you under this policy.</p>
+            <p>7.5 Personal data is shared with Musa Limited LTD only to the extent necessary for payments to be handled, and it is not used by us for any unrelated purpose.</p>
+            <p>7.6 Letting Partners LTD remains the data controller in respect of the personal data it holds about you, and remains responsible to you for the services it provides. The handling of payments by Musa Limited LTD does not change who you contract with or who is accountable to you under this policy.</p>
             <p>7.7 This website does not process payments. No payment can be made through this website. You should never send payment card details to us, or to anyone else, by email, website form or website chat.</p>
             <p>7.8 Payment instructions, including the account details and reference to be used, are issued to you in writing. We will never ask you to send funds to an account other than the one set out in those written instructions. If you receive details that differ from them, do not act on them — verify them with us by telephone on <a href="tel:02038977033">0203 897 7033</a> first.</p>
             <p>7.9 Records of payments, invoices and related correspondence are retained for a minimum of six years, as required by UK accounting and tax law.</p>
@@ -106,7 +106,7 @@ export default function PrivacyPolicyPage() {
             <h2>8. Who We Share Your Information With</h2>
             <p>8.1 We may share your personal data, to the extent necessary for the purpose concerned, with:</p>
             <ul>
-              <li><strong>Musa Limited</strong>, in connection with the handling of payments, as described in section 7;</li>
+              <li><strong>Musa Limited LTD</strong> (company registration number 17410300), in connection with the handling of payments, as described in section 7;</li>
               <li><strong>landlords and tenants</strong> (and their guarantors, where relevant) in connection with a tenancy or prospective tenancy;</li>
               <li><strong>referencing, credit-check and identity-verification providers</strong>;</li>
               <li><strong>Government-authorised tenancy deposit schemes</strong>, where a deposit is taken or protected;</li>
@@ -197,7 +197,7 @@ export default function PrivacyPolicyPage() {
               <li><strong>Trading names:</strong> Letting Partners; More Ways Hub</li>
               <li><strong>Registered in:</strong> England and Wales</li>
               <li><strong>Company registration number:</strong> 17436005</li>
-              <li><strong>Payments handled by:</strong> Musa Limited</li>
+              <li><strong>Payments handled by:</strong> Musa Limited LTD, company registration number 17410300</li>
               <li><strong>Email:</strong> <a href="mailto:info@lettingpartners.co.uk">info@lettingpartners.co.uk</a></li>
               <li><strong>Telephone:</strong> <a href="tel:02038977033">0203 897 7033</a></li>
             </ul>
